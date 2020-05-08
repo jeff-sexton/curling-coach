@@ -32,6 +32,3 @@ Things you may want to cover:
 5. Create database ```rails db:create```
 6. Start server ``` rails server ```
 7. Start web pack for live updates during development ```bin/webpack-dev-server```
-
-
-sdvjkhdsfvndlkvsdlvnl 
