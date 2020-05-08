@@ -22,3 +22,13 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+## Setup
+
+1. clone 
+2. run ```bundle install```
+3. run ```yarn install```
+4. run ```yarn update```
+5. Create database ```rails db:create```
+6. Start server ``` rails server ```
+7. Start web pack for live updates during development ```bin/webpack-dev-server```
