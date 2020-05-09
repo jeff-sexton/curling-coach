@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  shot_number: 1
+  rotation: MyString
+  rating: 1
+  shot_type: MyString
+  rock_paths: 
+  comments: MyText
+  target_position: 
+  sweep_score: 1
+  hog_time: 2020-05-09 10:48:07
+
+two:
+  shot_number: 1
+  rotation: MyString
+  rating: 1
+  shot_type: MyString
+  rock_paths: 
+  comments: MyText
+  target_position: 
+  sweep_score: 1
+  hog_time: 2020-05-09 10:48:07
