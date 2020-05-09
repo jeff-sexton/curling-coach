@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
-
+import React, { useState, useEffect, useRef } from 'react';
 
 const usePrevious = (value) => {
   const ref = useRef();
@@ -7,7 +6,7 @@ const usePrevious = (value) => {
     ref.current = value;
   }, [value]);
   return ref.current;
-}
+};
 
 const Rock = ({ x, y, color, parentRef, shot, replay, setReplay }) => {
   const [position, setPosition] = useState({ x, y });
@@ -16,23 +15,19 @@ const Rock = ({ x, y, color, parentRef, shot, replay, setReplay }) => {
 
   const previousShot = usePrevious(shot);
 
-
-
-
-
   useEffect(() => {
     const storeHistory = ({ x, y }) => {
-      console.log("update");
+      console.log('update');
       setPathHistory((prev) => {
         const updatedHistory = [...prev];
-  
+
         if (prev[shot]) {
           const lastPositionIndex = prev[shot].length - 1;
           console.log(lastPositionIndex);
           const prevPosition = prev[shot][lastPositionIndex];
-          console.log("prev", prevPosition);
-          console.log("new", { x, y });
-  
+          console.log('prev', prevPosition);
+          console.log('new', { x, y });
+
           if (
             Math.abs(x - prevPosition.x) > 5 ||
             Math.abs(y - prevPosition.y) > 5
@@ -42,7 +37,7 @@ const Rock = ({ x, y, color, parentRef, shot, replay, setReplay }) => {
         } else {
           updatedHistory[shot] = [{ x, y }];
         }
-  
+
         return updatedHistory;
       });
     };
@@ -60,7 +55,7 @@ const Rock = ({ x, y, color, parentRef, shot, replay, setReplay }) => {
       // x: 644.65625
       // y: 0
 
-      //limits?
+      // limits?
 
       const x = Math.max(
         0,
@@ -85,32 +80,27 @@ const Rock = ({ x, y, color, parentRef, shot, replay, setReplay }) => {
       }
     };
 
-    
     if (selected) {
-      document.addEventListener("mousemove", trackMouse);
+      document.addEventListener('mousemove', trackMouse);
     }
 
     return () => {
-      document.removeEventListener("mousemove", trackMouse);
+      document.removeEventListener('mousemove', trackMouse);
     };
   }, [selected, parentRef]);
 
   useEffect(() => {
-    //Set inital position into history on shot state change
+    // Set inital position into history on shot state change
     if (!pathHistory[shot]) {
       setPathHistory((prev) => [...prev, (prev[shot] = [position])]);
     }
   }, [shot, setPathHistory, pathHistory, position]);
 
-
-
   useEffect(() => {
-
-    
     const stepBack = (shot) => {
       let rockStep = pathHistory[shot].length - 1;
-      console.log("last rockstep", rockStep);
-  
+      console.log('last rockstep', rockStep);
+
       return () => {
         rockStep -= 1;
         return pathHistory[shot][rockStep];
@@ -119,7 +109,7 @@ const Rock = ({ x, y, color, parentRef, shot, replay, setReplay }) => {
 
     const stepForward = (shot) => {
       let rockStep = 0;
-  
+
       return () => {
         rockStep += 1;
         return pathHistory[shot][rockStep];
@@ -127,7 +117,7 @@ const Rock = ({ x, y, color, parentRef, shot, replay, setReplay }) => {
     };
 
     if (shot !== previousShot) {
-      console.log("replay?");
+      console.log('replay?');
 
       let getPathStep;
       if (shot < previousShot) {
@@ -135,7 +125,6 @@ const Rock = ({ x, y, color, parentRef, shot, replay, setReplay }) => {
       } else {
         getPathStep = stepForward(shot);
       }
-
 
       const replayInterval = setInterval(() => {
         const stepPosition = getPathStep();
@@ -146,21 +135,20 @@ const Rock = ({ x, y, color, parentRef, shot, replay, setReplay }) => {
           clearInterval(replayInterval);
         }
 
-        console.log("interval");
+        console.log('interval');
       }, 20);
     }
-
   }, [pathHistory, shot, previousShot]);
 
   const move = (event) => {
     setSelected(true);
 
-    console.log("move");
+    console.log('move');
   };
 
   const endMove = () => {
     setSelected(false);
-    console.log("stop");
+    console.log('stop');
   };
 
   return (
