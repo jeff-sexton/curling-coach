@@ -1,23 +1,21 @@
-import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
+import React, { useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
-import PropTypes from "prop-types";
-import axios from "axios";
+import PropTypes from 'prop-types';
+import axios from 'axios';
 
-import IceSurface from "./components/IceSurface";
+import IceSurface from './components/IceSurface';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    "& > *": {
+    '& > *': {
       margin: theme.spacing(1),
     },
   },
 }));
 
-
-
-function App() {
+const App = () => {
   const classes = useStyles();
 
   const [shot, setShot] = useState(0);
@@ -51,6 +49,6 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
 export default App;
