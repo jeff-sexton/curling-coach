@@ -48,4 +48,6 @@ const exampleState = {
     },
   ],
   teams: [],
+  players: []
+  
 };
