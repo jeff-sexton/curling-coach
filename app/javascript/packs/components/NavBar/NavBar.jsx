@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NavBar = ({setView}) => {
+const NavBar = ({setMenu, setView}) => {
   const classes = useStyles();
 
   return (
@@ -27,7 +27,7 @@ const NavBar = ({setView}) => {
       <AppBar position="static">
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
+            <MenuIcon  onClick={()=> setMenu('menu')}/>
           </IconButton>
           <Typography variant="h6" className={classes.title}>
             Curling Coach
