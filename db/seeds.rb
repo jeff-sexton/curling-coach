@@ -39,18 +39,9 @@ puts "Re-Creating Ends ..."
 
 End.destroy_all
 
-game1.ends.create!
-game1.ends.create!
-game1.ends.create!
-game1.ends.create!
-game1.ends.create!
-game1.ends.create!
-game1.ends.create!
-game1.ends.create!
-game1.ends.create!
-game1.ends.create!
-game1.ends.create!
-game1.ends.create!
+10.times do 
+  game1.ends.create!
+end
 
 ## TEAMS
 

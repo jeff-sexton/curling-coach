@@ -1,7 +1,7 @@
 class Api::GamesController < ApplicationController
   def index
-    @games = Game.find_each
-    render json: @games
+    games = Game.find_each
+    render json: games
   end
 
   def create
@@ -10,4 +10,6 @@ class Api::GamesController < ApplicationController
   def edit
   end
 
+  private
+  
 end
