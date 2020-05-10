@@ -28,7 +28,7 @@ const GameView = () => {
 
   return (
     <div className={classes.root}>
-      <Box display="flex" justifyContent="space-around">
+      <Box display="flex" justifyContent="space-around" height='70vh' >
         <StrategyBoard />
 
         <Box
