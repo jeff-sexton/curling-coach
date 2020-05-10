@@ -10,8 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    maxWidth: '1000px',
-    margin: 'auto',
+    marginTop: '10px',
   },
   paper: {
     display: 'flex',
@@ -49,31 +48,6 @@ const GameView = () => {
           </Paper>
         </Box>
       </Box>
-
-      {/* <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
-          <StrategyBoard />
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          sm={6}
-          container
-          direction="column"
-          justify="space-around"
-          alignItems="center"
-        >
-          <Grid item>
-            <ShotDetails />
-          </Grid>
-          <Grid item>
-            <ShotDetails />
-          </Grid>
-          <Grid item>
-            <ShotDetails />
-          </Grid>
-        </Grid>
-      </Grid> */}
     </div>
   );
 };
