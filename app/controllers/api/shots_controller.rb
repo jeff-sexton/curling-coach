@@ -7,4 +7,7 @@ class Api::ShotsController < ApplicationController
 
   def update
   end
+
+  private
+  
 end
