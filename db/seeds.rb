@@ -117,5 +117,4 @@ game1.game_participations.create!({
   team_id: 2
 })
 
-
 puts "DONE!"
