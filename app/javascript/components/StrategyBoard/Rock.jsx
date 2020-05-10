@@ -173,7 +173,7 @@ const Rock = ({ x, y, color, parentRef, shot, replay, setReplay }) => {
         onMouseDown={move}
         cx={position.x}
         cy={position.y}
-        r={30}
+        r={45}
         fill="grey"
       />
       <circle
@@ -182,7 +182,7 @@ const Rock = ({ x, y, color, parentRef, shot, replay, setReplay }) => {
         onFo
         cx={position.x}
         cy={position.y}
-        r={20}
+        r={30}
         fill={color}
       />
     </g>
