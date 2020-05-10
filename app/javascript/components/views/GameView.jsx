@@ -1,11 +1,11 @@
 import React from 'react';
-
-import StrategyBoard from '../components/StrategyBoard';
-import ShotDetails from '../components/ShotDetails';
-
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
+
+import StrategyBoard from '../StrategyBoard';
+import ShotDetails from '../ShotDetails';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
