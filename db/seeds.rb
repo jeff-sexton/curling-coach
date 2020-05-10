@@ -37,18 +37,11 @@ game1 = Game.find_or_create_by!({
 
 puts "Re-Creating Ends ..."
 
-game1.ends.create!
-game1.ends.create!
-game1.ends.create!
-game1.ends.create!
-game1.ends.create!
-game1.ends.create!
-game1.ends.create!
-game1.ends.create!
-game1.ends.create!
-game1.ends.create!
-game1.ends.create!
-game1.ends.create!
+End.destroy_all
+
+10.times do 
+  game1.ends.create!
+end
 
 ## TEAMS
 
