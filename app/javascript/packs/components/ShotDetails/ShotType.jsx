@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// Draw Front Guard Raise Wick Freeze TakeOut HitAndRoll Clearing DoubleTakeOut PromotionTakeOut
 const ShotType = ({ shotType, setShotType }) => {
   const classes = useStyles();
 

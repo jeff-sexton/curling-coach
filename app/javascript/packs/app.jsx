@@ -1,15 +1,17 @@
 import React from 'react';
 
-import StrategyBoard from './components/StrategyBoard'
-import ShotDetails from './components/ShotDetails'
+import GameView from './views/GameView'
+import TestView from './views/TestView'
 
 const App = () => {
 
 
   return (
     <div className="App">
-      <StrategyBoard />
-      <ShotDetails />
+      <nav></nav>
+      <GameView />
+      {/* <TestView /> */}
+
     </div>
   );
 };
