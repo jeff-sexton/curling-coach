@@ -12,7 +12,7 @@ const IceSurface = ({shot}) => {
     id='ice'
     ref={iceRef}
     width='500px'
-    height='500px'
+    height='900px'
     viewbox='0 0 300 900'
     style={{backgroundColor:'blue'}}>
       <Rock x='25' y='50' color='red' parentRef={iceRef} shot={shot}></Rock>
