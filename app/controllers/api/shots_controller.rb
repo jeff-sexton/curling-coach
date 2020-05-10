@@ -1,4 +1,4 @@
-class ShotsController < ApplicationController
+class Api::ShotsController < ApplicationController
   def index
   end
 

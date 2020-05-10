@@ -37,6 +37,8 @@ game1 = Game.find_or_create_by!({
 
 puts "Re-Creating Ends ..."
 
+End.destroy_all
+
 game1.ends.create!
 game1.ends.create!
 game1.ends.create!
