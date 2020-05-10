@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 
 import GameView from './views/GameView'
 import TestView from './views/TestView'
 import DashboardView from './views/DashboardView'
-import NavBar from './components/NavBar'
-import { makeStyles } from '@material-ui/core/styles';
+import NavBar from './NavBar'
 
 const useStyles = makeStyles((theme) => ({
   root: {
