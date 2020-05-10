@@ -44,7 +44,9 @@ const Rock = ({ x, y, color, parentRef, shot, replay, setReplay }) => {
 
     const trackMouse = (event) => {
       const parentLocation = parentRef.current.getBoundingClientRect();
-      // console.log(parentLocation);
+      // console.log('parent-location', parentLocation)
+      // console.log('parent ref', parentRef)
+
       // DOMRect {x: 644.65625, y: 0, width: 500, height: 500, top: 0, …}
       // bottom: 500
       // height: 500
@@ -57,14 +59,28 @@ const Rock = ({ x, y, color, parentRef, shot, replay, setReplay }) => {
 
       // limits?
 
-      const x = Math.max(
-        0,
-        Math.min(parentLocation.width, event.clientX - parentLocation.x)
-      );
-      const y = Math.max(
-        0,
-        Math.min(parentLocation.height, event.clientY - parentLocation.y)
-      );
+      // const x = Math.max(
+      //   0,
+      //   Math.min(parentLocation.width, event.clientX - parentLocation.x)
+      // );
+
+      const svgWidth = parentLocation.width;
+      const viewWidth = 750;
+      const relativeX = event.clientX - parentLocation.x
+
+
+      const x = relativeX / svgWidth * viewWidth
+
+      // const y = Math.max(
+      //   0,
+      //   Math.min(parentLocation.height, event.clientY - parentLocation.y)
+      // );
+
+      const svgHeight = parentLocation.height;
+      const viewHeight = 1650;
+      const relativeY = event.clientY - parentLocation.y
+
+      const y = relativeY / svgHeight * viewHeight
 
       setPosition({ x, y });
       storeHistory({ x, y });
