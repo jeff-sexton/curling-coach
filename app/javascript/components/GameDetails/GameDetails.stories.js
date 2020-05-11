@@ -3,8 +3,8 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import GameDetails from './GameDetails';
+import ScoreBoard from './ScoreBoard';
 
 
-storiesOf('Game Details', module)
-  .add('Game Details', () => <GameDetails setRating={action('value')} />)
+storiesOf('Score Board', module)
+  .add('Score Board', () => <ScoreBoard />)

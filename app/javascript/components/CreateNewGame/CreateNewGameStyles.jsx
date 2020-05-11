@@ -1,4 +1,4 @@
-const GameInfoStyles = {
+const CreateNewGameStyles = {
   container: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -16,6 +16,6 @@ const GameInfoStyles = {
     // fontFamily: 'Roboto, Arial, san-serif',
     fontWeight: 400,
   },
-}
+};
 
-export default GameInfoStyles;
+export default CreateNewGameStyles;
