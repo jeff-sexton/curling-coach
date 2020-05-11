@@ -13,7 +13,7 @@ class Shot < ApplicationRecord
   validates :rating, inclusion:      { in: 1..4, 
                                        message: "must be a number between 1 and 4" }, 
                                        allow_nil: true
-  validates :sweep_score, inclusion   { in: 1..10,
+  validates :sweep_score, inclusion: { in: 1..10,
                                        message: "must be a number bewtween 1 and 10" },
                                        allow_nil: true
                                       

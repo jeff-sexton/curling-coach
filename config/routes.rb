@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     
-    resources :games, only: [:index, :create, :update]
+    resources :games, only: [:index, :show, :create, :update]
     resources :ends, only: [:index, :update]
     resources :shots, except: [:new, :show, :update]
 
