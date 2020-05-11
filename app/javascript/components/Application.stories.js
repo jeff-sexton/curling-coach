@@ -1,10 +1,10 @@
 import React from 'react';
-import App from './app';
+import Application from './Application';
 
 
 export default {
-  title: 'App',
+  title: 'Application',
 };
 
 
-export const app = () => <App/>;
+export const application = () => <Application/>;
