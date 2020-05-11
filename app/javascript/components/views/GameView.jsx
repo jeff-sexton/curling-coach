@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
@@ -26,10 +26,29 @@ const useStyles = makeStyles((theme) => ({
 const GameView = () => {
   const classes = useStyles();
 
+  const [shot, setShot] = useState(1);
+
+  const nextShot = () => {
+    setShot((prev) => prev + 1);
+  };
+  const prevShot = () => {
+    setShot((prev) => {
+      if (prev > 1) {
+        return prev - 1;
+      }
+      return prev;
+    });
+  };
+
+  const save = () => {
+    nextShot();
+    // Save forms & shot path history to server here
+  };
+
   return (
     <div className={classes.root}>
-      <Box display="flex" justifyContent="space-around">
-        <StrategyBoard />
+      <Box display="flex" justifyContent="space-around" height='70vh' >
+        <StrategyBoard shot={shot} nextShot={nextShot} prevShot={prevShot}/>
 
         <Box
           display="flex"
@@ -46,6 +65,9 @@ const GameView = () => {
           <Paper elevation={3}>
             <ShotDetails />
           </Paper>
+          <div>
+            <button onClick={save}>Save</button>
+          </div>
         </Box>
       </Box>
     </div>

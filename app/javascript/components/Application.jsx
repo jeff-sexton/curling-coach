@@ -19,7 +19,7 @@ const GAME = 'GAME'
 const App = () => {
   const classes = useStyles();
 
-  const [view, setView] = useState(DASHBOARD)
+  const [view, setView] = useState(GAME)
   
 
   return (

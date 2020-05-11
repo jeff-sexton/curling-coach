@@ -1,27 +1,39 @@
 import React, { useState } from 'react';
 import IceSurface from './IceSurface';
 
-const StrategyBoard = () => {
-  const [shot, setShot] = useState(0);
+const StrategyBoard = ({ shot, nextShot, prevShot }) => {
+  const [pathHistory, setPathHistory] = useState([[]]);
 
-  const nextShot = () => {
-    setShot((prev) => prev + 1);
-  };
-  const prevShot = () => {
-    setShot((prev) => {
-      if (prev > 0) {
-        return prev - 1;
-      }
-      return prev;
-    });
-  };
+  // const resetShot = () => {
+  //   setPathHistory((prev) => {
+  //     const updatedHistory = [...prev];
+
+  //     if (prev[shot]) {
+  //       updatedHistory[shot] = [];
+  //     } else {
+  //       updatedHistory[shot] = [];
+  //     }
+
+  //     return updatedHistory;
+  //   });
+  // };
 
   return (
     <div className="strategy-board">
-      <IceSurface shot={shot}></IceSurface>
+      <IceSurface
+        shot={shot}
+        pathHistory={pathHistory}
+        setPathHistory={setPathHistory}
+      ></IceSurface>
       <h1>Shot number: {shot}</h1>
-      <button onClick={nextShot}>Next</button>
+      {/* {shot > 1 && <button onClick={prevShot}>Prev</button>}
+      {pathHistory[shot + 1] && <button onClick={nextShot}>Next</button>} */}
+
       <button onClick={prevShot}>Prev</button>
+      <button onClick={nextShot}>Next</button>
+
+      {/* {pathHistory[shot] && <button onClick={resetShot}>Reset Shot</button>}
+      <button onClick={resetShot}>Reset Shot</button> */}
     </div>
   );
 };
