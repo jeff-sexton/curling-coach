@@ -71,7 +71,7 @@ const GameView = () => {
   return (
     <div className={classes.root}>
       <Box display="flex" justifyContent="space-around" height='70vh' >
-        <StrategyBoard shot={gameState.currentShot} nextShot={nextShot} prevShot={prevShot} gameState={gameState} />
+        <StrategyBoard nextShot={nextShot} prevShot={prevShot} gameState={gameState} />
 
         <Box
           display="flex"
