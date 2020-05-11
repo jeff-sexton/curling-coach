@@ -1,4 +1,4 @@
-const Styles = {
+const ScoreBoardStyles = {
   table: {
     // minWidth: 650,
   },
@@ -43,7 +43,6 @@ const Styles = {
     letterSpacing: -2,
   },
   textInput: {
-    '&:focus': {},
     '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
       borderBottom: 'none',
     },
@@ -59,4 +58,4 @@ const Styles = {
   },
 };
 
-export default Styles;
+export default ScoreBoardStyles;

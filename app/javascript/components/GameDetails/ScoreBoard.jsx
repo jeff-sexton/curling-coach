@@ -7,15 +7,15 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TextField from '@material-ui/core/TextField';
-import Styles from './Styles';
+import ScoreBoardStyles from './ScoreBoardStyles';
 
-const useStyles = makeStyles(Styles);
+const useStyles = makeStyles(ScoreBoardStyles);
 
 function createData(name) {
   return { name };
 }
 
-const rows = [createData('Lighthouse'), createData('Brainstation')];
+const rows = [createData('Canada'), createData('Switzerland')];
 
 export default function SimpleTable() {
   const classes = useStyles();
