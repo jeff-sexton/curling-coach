@@ -9,9 +9,10 @@ const usePrevious = (value) => {
   return ref.current;
 };
 
-const IceSurface = ({ shot, setPathHistory, pathHistory }) => {
+const IceSurface = ({ gameState, setPathHistory, pathHistory }) => {
   const iceRef = useRef();
 
+  const shot = gameState.currentShot;
   const previousShot = usePrevious(shot);
   const [positionChange, setPositionChange] = useState({});
 

@@ -1,7 +1,19 @@
 class Api::GamesController < ApplicationController
   def index
-    games = Game.find_each
-    render json: games
+  end
+
+  def show
+    game = Game.find(params[:id])
+    ends = game.ends.map { |curl_end| { end: curl_end, shots: curl_end.shots }}
+    teams = game.game_participations.map { |participation| { team: participation.team, players: participation.team.players}}
+
+    game_details = { 
+      game: game, 
+      ends: ends,
+      teams_with_players: teams,
+    } 
+
+    render json: game_details
   end
 
   def create

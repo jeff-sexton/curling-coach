@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import IceSurface from './IceSurface';
 
-const StrategyBoard = ({ shot, nextShot, prevShot }) => {
+const StrategyBoard = ({ nextShot, prevShot, gameState }) => {
   const [pathHistory, setPathHistory] = useState([[]]);
 
   // const resetShot = () => {
@@ -21,11 +21,11 @@ const StrategyBoard = ({ shot, nextShot, prevShot }) => {
   return (
     <div className="strategy-board">
       <IceSurface
-        shot={shot}
+        gameState={gameState}
         pathHistory={pathHistory}
         setPathHistory={setPathHistory}
       ></IceSurface>
-      <h1>Shot number: {shot}</h1>
+      <h1>Shot number: {gameState.currentShot}</h1>
       {/* {shot > 1 && <button onClick={prevShot}>Prev</button>}
       {pathHistory[shot + 1] && <button onClick={nextShot}>Next</button>} */}
 
