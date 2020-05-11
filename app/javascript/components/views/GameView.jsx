@@ -42,7 +42,7 @@ const GameView = () => {
 
   const save = () => {
     nextShot();
-    // Save forms
+    // Save forms & shot path history to server here
   };
 
   return (

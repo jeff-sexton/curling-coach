@@ -28,8 +28,8 @@ const IceSurface = ({ shot, setPathHistory, pathHistory }) => {
         console.log('new', { x, y });
 
         if (
-          Math.abs(x - prevPosition.x) > 5 ||
-          Math.abs(y - prevPosition.y) > 5
+          Math.abs(x - prevPosition.x) >  10 ||
+          Math.abs(y - prevPosition.y) > 10
         ) {
           updatedHistory[shot] = [...prev[shot], { id, x, y }];
         }
@@ -108,8 +108,8 @@ const IceSurface = ({ shot, setPathHistory, pathHistory }) => {
   return (
     <svg id="ice" ref={iceRef} height="100%" viewBox="0 0 750 1650">
       <rect x="0" y="0" width="100%" height="100%" fill="aliceblue" />
-      <rect x="0" y="150" width="100%" height="25" fill="red" />
-      <rect x="0" y="1475" width="100%" height="25" fill="blue" />
+      <rect x="0" y="150" width="100%" height="17" fill="red" />
+      <rect x="0" y="1485" width="100%" height="15" fill="blue" />
       <circle
         cx="375"
         cy="1200"
@@ -159,7 +159,6 @@ const IceSurface = ({ shot, setPathHistory, pathHistory }) => {
         color="red"
         parentRef={iceRef}
         storeHistory={storeHistory}
-        shot={shot}
       />
       <Rock
         id={2}
@@ -169,7 +168,6 @@ const IceSurface = ({ shot, setPathHistory, pathHistory }) => {
         color="red"
         parentRef={iceRef}
         storeHistory={storeHistory}
-        shot={shot}
       />
       <Rock
         id={3}
@@ -179,7 +177,6 @@ const IceSurface = ({ shot, setPathHistory, pathHistory }) => {
         color="red"
         parentRef={iceRef}
         storeHistory={storeHistory}
-        shot={shot}
       />
       <Rock
         id={4}
@@ -189,7 +186,6 @@ const IceSurface = ({ shot, setPathHistory, pathHistory }) => {
         color="red"
         parentRef={iceRef}
         storeHistory={storeHistory}
-        shot={shot}
       />
       <Rock
         id={5}
@@ -199,7 +195,6 @@ const IceSurface = ({ shot, setPathHistory, pathHistory }) => {
         color="red"
         parentRef={iceRef}
         storeHistory={storeHistory}
-        shot={shot}
       />
       <Rock
         id={6}
@@ -209,7 +204,6 @@ const IceSurface = ({ shot, setPathHistory, pathHistory }) => {
         color="red"
         parentRef={iceRef}
         storeHistory={storeHistory}
-        shot={shot}
       />
       <Rock
         id={7}
@@ -219,7 +213,6 @@ const IceSurface = ({ shot, setPathHistory, pathHistory }) => {
         color="red"
         parentRef={iceRef}
         storeHistory={storeHistory}
-        shot={shot}
       />
       <Rock
         id={8}
@@ -229,7 +222,6 @@ const IceSurface = ({ shot, setPathHistory, pathHistory }) => {
         color="red"
         parentRef={iceRef}
         storeHistory={storeHistory}
-        shot={shot}
       />
 
       <Rock
@@ -240,7 +232,6 @@ const IceSurface = ({ shot, setPathHistory, pathHistory }) => {
         color="yellow"
         parentRef={iceRef}
         storeHistory={storeHistory}
-        shot={shot}
       />
       <Rock
         id={10}
@@ -250,7 +241,6 @@ const IceSurface = ({ shot, setPathHistory, pathHistory }) => {
         color="yellow"
         parentRef={iceRef}
         storeHistory={storeHistory}
-        shot={shot}
       />
       <Rock
         id={11}
@@ -260,7 +250,6 @@ const IceSurface = ({ shot, setPathHistory, pathHistory }) => {
         color="yellow"
         parentRef={iceRef}
         storeHistory={storeHistory}
-        shot={shot}
       />
       <Rock
         id={12}
@@ -270,7 +259,6 @@ const IceSurface = ({ shot, setPathHistory, pathHistory }) => {
         color="yellow"
         parentRef={iceRef}
         storeHistory={storeHistory}
-        shot={shot}
       />
       <Rock
         id={13}
@@ -280,7 +268,6 @@ const IceSurface = ({ shot, setPathHistory, pathHistory }) => {
         color="yellow"
         parentRef={iceRef}
         storeHistory={storeHistory}
-        shot={shot}
       />
       <Rock
         id={14}
@@ -290,7 +277,6 @@ const IceSurface = ({ shot, setPathHistory, pathHistory }) => {
         color="yellow"
         parentRef={iceRef}
         storeHistory={storeHistory}
-        shot={shot}
       />
       <Rock
         id={15}
@@ -300,7 +286,6 @@ const IceSurface = ({ shot, setPathHistory, pathHistory }) => {
         color="yellow"
         parentRef={iceRef}
         storeHistory={storeHistory}
-        shot={shot}
       />
       <Rock
         id={16}
@@ -310,7 +295,6 @@ const IceSurface = ({ shot, setPathHistory, pathHistory }) => {
         color="yellow"
         parentRef={iceRef}
         storeHistory={storeHistory}
-        shot={shot}
       />
     </svg>
   );

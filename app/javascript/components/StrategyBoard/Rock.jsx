@@ -46,10 +46,10 @@ const Rock = ({ id, positionChange, x, y, color, parentRef, storeHistory }) => {
 
       // Stop rock selection if mouse leaves ice surface
       if (
-        event.clientX > parentLocation.right ||
-        event.clientX < parentLocation.left ||
-        event.clientY > parentLocation.bottom ||
-        event.clientY < parentLocation.top
+        event.clientX > parentLocation.right - 5 ||
+        event.clientX < parentLocation.left + 5 ||
+        event.clientY > parentLocation.bottom - 5 ||
+        event.clientY < parentLocation.top + 5
       ) {
         setSelected(false);
       }
@@ -76,22 +76,19 @@ const Rock = ({ id, positionChange, x, y, color, parentRef, storeHistory }) => {
   };
 
   return (
-    <g>
+    <g onMouseDown={move} onMouseUp={endMove}>
       <circle
-        onMouseDown={move}
         cx={position.x}
         cy={position.y}
         r={25}
         fill="grey"
+        stroke="lightgrey"
+        strokeWidth="2"
       />
-      <circle
-        onMouseDown={move}
-        onMouseUp={endMove}
-        cx={position.x}
-        cy={position.y}
-        r={15}
-        fill={color}
-      />
+      <circle cx={position.x} cy={position.y} r={15} fill={color} />
+      {/* <rect x={position.x} y={position.y} width='5' height='10' rx='1' fill='black' stroke="black"
+        strokeWidth="1"/> */}
+
     </g>
   );
 };
