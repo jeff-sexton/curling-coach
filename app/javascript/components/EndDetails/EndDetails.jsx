@@ -1,5 +1,5 @@
 import React from 'react';
-import EndTab from './EndTab';
+import Box from '@material-ui/core/Box'
 import ProgressBar from './ProgressBar';
 
 
@@ -7,9 +7,9 @@ import ProgressBar from './ProgressBar';
 const EndDetails = () => {
   return (
     <div>
-     <h3>End Info</h3>
-      <EndTab />
-      <ProgressBar end={7} />
+     <Box  bgcolor="info.main" textAlign="center">End Info</Box> 
+     
+      <ProgressBar end={10} currentShot={15} />
     </div>
   );
 }
