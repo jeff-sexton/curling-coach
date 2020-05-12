@@ -7,9 +7,9 @@ import ProgressBar from './ProgressBar';
 const EndDetails = () => {
   return (
     <div>
-     <Box  bgcolor="info.main" textAlign="center">End Info</Box> 
+     <h3>End Info</h3>
      
-      <ProgressBar end={10} currentShot={15} />
+      <ProgressBar end={5} currentShot={15} />
     </div>
   );
 }

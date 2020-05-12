@@ -10,7 +10,7 @@ import StrategyBoard from '../StrategyBoard';
 import GameDetails from '../GameDetails';
 import EndDetails from '../EndDetails'
 import ShotDetails from '../ShotDetails';
-import Buttons from '../Buttons';
+// import Buttons from '../Buttons';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -58,7 +58,7 @@ const GameView = () => {
           <Paper elevation={3} className={classes.padding10}>
             <ShotDetails />
           </Paper>
-          <Buttons saveShot={saveShot} endGame={endGame} />
+          {/* <Buttons saveShot={saveShot} endGame={endGame} /> */}
         </Box>
       </Box>
     </div>
