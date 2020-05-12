@@ -1,9 +1,30 @@
 import React, { useState, useEffect } from 'react';
 
-const Rock = ({ id, positionChange, x, y, color, parentRef, storeHistory }) => {
+const Rock = ({
+  id,
+  positionChange,
+  x,
+  y,
+  color,
+  parentRef,
+  storeHistory,
+  pathHistory,
+  shot,
+}) => {
   const [position, setPosition] = useState({ x, y });
   const [selected, setSelected] = useState(false);
 
+  // Add current position to pathHistory for every new show
+  useEffect(() => {
+    // console.log(pathHistory[shot] === undefined || pathHistory[shot].length === 0);
+
+    if (pathHistory[shot] === undefined || pathHistory[shot].length === 0) {
+      console.log('store initial position');
+      storeHistory({ id, x: position.x, y: position.y });
+    }
+  }, [shot]);
+
+  // Respond to replay position changes
   useEffect(() => {
     const { id: changeId, x: changeX, y: changeY } = positionChange;
     if (changeId === id) {
@@ -11,6 +32,7 @@ const Rock = ({ id, positionChange, x, y, color, parentRef, storeHistory }) => {
     }
   }, [positionChange]);
 
+  // Add new rock paths to pathHistory on user drag
   useEffect(() => {
     const trackMouse = (event) => {
       const parentLocation = parentRef.current.getBoundingClientRect();
@@ -88,7 +110,6 @@ const Rock = ({ id, positionChange, x, y, color, parentRef, storeHistory }) => {
       <circle cx={position.x} cy={position.y} r={15} fill={color} />
       {/* <rect x={position.x} y={position.y} width='5' height='10' rx='1' fill='black' stroke="black"
         strokeWidth="1"/> */}
-
     </g>
   );
 };
