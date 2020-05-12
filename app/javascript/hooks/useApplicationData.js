@@ -17,7 +17,9 @@ const reducer = (state, action) => {
 
       for (const teamObj of state.teams_with_players) {
         let teamOffset;
-        if (teamObj.team.id === state.ends[state.currentEnd].end.first_team_id) {
+        if (
+          teamObj.team.id === state.ends[state.currentEnd].end.first_team_id
+        ) {
           teamOffset = 0;
         } else {
           teamOffset = 1;
@@ -30,7 +32,10 @@ const reducer = (state, action) => {
       }
 
       const ends = [...state.ends];
-      ends[state.currentEnd].end = { ...state.ends[state.currentEnd].end, throw_order };
+      ends[state.currentEnd].end = {
+        ...state.ends[state.currentEnd].end,
+        throw_order,
+      };
 
       return { ...state, ends };
     }
@@ -38,7 +43,10 @@ const reducer = (state, action) => {
 
   const SET_FIRST_TEAM = ({ value: first_team_id }) => {
     const ends = [...state.ends];
-    ends[state.currentEnd].end = { ...state.ends[state.currentEnd].end, first_team_id };
+    ends[state.currentEnd].end = {
+      ...state.ends[state.currentEnd].end,
+      first_team_id,
+    };
 
     return { ...state, ends };
   };
@@ -53,18 +61,17 @@ const reducer = (state, action) => {
     return { ...state, currentShot };
   };
 
-  const SET_SHOT = ({value: shot}) => {
+  const SET_SHOT = ({ value: shot }) => {
     const currentEnd = state.currentEnd;
     const currentShot = state.currentShot;
 
-     const shots = [...state.ends[currentEnd].shots];
-     shots[currentShot] = shot;
+    const shots = [...state.ends[currentEnd].shots];
+    shots[currentShot] = shot;
 
-     const ends = [...state.ends];
-     ends[currentEnd] = { ...ends[currentEnd], shots };
+    const ends = [...state.ends];
+    ends[currentEnd] = { ...ends[currentEnd], shots };
 
-     return { ...state, ends };
-
+    return { ...state, ends };
   };
 
   const DEFAULT = () => {
@@ -126,6 +133,7 @@ const useApplicationData = () => {
   };
 
   const saveShot = (shot) => {
+    // Save forms & shot path history to server here
     // axios.post('/api/shots', shot)
     //   .then(()=> {
     //     dispatch({type: SET_SHOT, value: shot})
@@ -134,34 +142,15 @@ const useApplicationData = () => {
     //     console.log(err);
     //   });
 
-      dispatch({type: SET_SHOT, value: shot})
+    dispatch({ type: SET_SHOT, value: shot });
 
     nextShot();
-    // Save forms & shot path history to server here
-    // console.log('throwOrder', initializeEnd(gameState.teams_with_players[1]));
   };
 
   const initializeEnd = (team_id) => {
     dispatch({ type: SET_FIRST_TEAM, value: team_id });
     dispatch({ type: SET_THROW_ORDER, value: null });
   };
-
-
-  // // Initialize shot if empty
-  // useEffect(() =>{
-  //   if (gameState.ends[gameState.currentEnd] && gameState.ends[gameState.currentEnd].shots[gameState.currentShot] === undefined ) {
-  //     dispatch({type: INIIALIZE_SHOT, value: null});
-  //   }
-
-  // },[gameState.currentShot])
-
-  // TODO
-  const resetShot = () => {
-
-  }
-
-
-
 
   return {
     gameState,
