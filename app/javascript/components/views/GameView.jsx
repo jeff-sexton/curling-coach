@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 
 import useApplicationData from '../../hooks/useApplicationData'
 
@@ -34,40 +34,8 @@ const useStyles = makeStyles((theme) => ({
 const GameView = () => {
   const classes = useStyles();
 
-  const { gameState, getGameDetails, nextShot, prevShot, saveShot, endGame } = useApplicationData();
+  const { gameState, nextShot, prevShot, saveShot, endGame } = useApplicationData();
 
-  // const [gameState, setGameState] = useState({});
-
-  // const [shot, setShot] = useState(1);
-  // const [end, setEnd] = useState(1);
-
-
-  // Get Game details from API
-  useEffect(()=> {
-    getGameDetails()
-
-  },[]);
-
-
-
-  
-
-  // const nextShot = () => {
-  //   setShot((prev) => prev + 1);
-  // };
-  // const prevShot = () => {
-  //   setShot((prev) => {
-  //     if (prev > 1) {
-  //       return prev - 1;
-  //     }
-  //     return prev;
-  //   });
-  // };
-
-  // const save = () => {
-  //   nextShot();
-  //   // Save forms & shot path history to server here
-  // };
 
   return (
     <div className={classes.root}>
