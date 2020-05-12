@@ -11,16 +11,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProgressBar = ({ end, currentShot }) => {
+const ProgressBar = ({currentShot }) => {
   const classes = useStyles();
-
-  const calculateBar = (end, currentShot) => {
-    return ((end / 10) * 100) - 10 + ((currentShot / 16) * 10)
-  }
   
   return (
     <div className={classes.root}>
-      <LinearProgress variant="determinate" value={calculateBar(end, currentShot)} />
+      <LinearProgress variant="determinate" value={(currentShot / 16) * 100} />
     </div>
   );
 }
