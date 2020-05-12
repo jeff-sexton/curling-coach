@@ -9,6 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import StrategyBoard from '../StrategyBoard';
 import GameDetails from '../GameDetails';
 import ShotDetails from '../ShotDetails';
+import Buttons from '../Buttons';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -33,8 +34,7 @@ const useStyles = makeStyles((theme) => ({
 const GameView = () => {
   const classes = useStyles();
 
-  const { gameState, nextShot, prevShot, saveShot, } = useApplicationData();
-
+  const { gameState, nextShot, prevShot, saveShot, endGame } = useApplicationData();
 
 
   return (
@@ -57,9 +57,7 @@ const GameView = () => {
           <Paper elevation={3} className={classes.padding10}>
             <ShotDetails />
           </Paper>
-          <div>
-            <button onClick={saveShot}>Save</button>
-          </div>
+          <Buttons saveShot={saveShot} endGame={endGame} />
         </Box>
       </Box>
     </div>
