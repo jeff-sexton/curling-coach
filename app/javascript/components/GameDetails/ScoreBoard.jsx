@@ -17,12 +17,12 @@ function createData(name) {
 
 const rows = [createData('Canada'), createData('Switzerland')];
 
-export default function SimpleTable() {
+const ScoreBoard = () => {
   const classes = useStyles();
 
   return (
     <TableContainer>
-      <form className={classes.textInput} noValidate autoComplete="off">
+      <form noValidate autoComplete="off">
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
@@ -45,7 +45,7 @@ export default function SimpleTable() {
               <TableCell className={classes.ends}>TOTAL</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody  className={classes.teamNameRow}>
+          <TableBody className={classes.teamNameRow}>
             {rows.map((row) => (
               <TableRow key={row.name}>
                 <TableCell
@@ -56,7 +56,7 @@ export default function SimpleTable() {
                   {row.name}
                 </TableCell>
                 <TableCell className={classes.tableCell}>
-                  <TextField inputProps={{ type: 'number' }} />
+                  <TextField inputProps={{ type: 'number' }} classes={{ root: classes.textInput }} />
                 </TableCell>
                 <TableCell className={classes.tableCell}>
                   <TextField inputProps={{ type: 'number' }} />
@@ -98,4 +98,6 @@ export default function SimpleTable() {
       </form>
     </TableContainer>
   );
-}
+};
+
+export default ScoreBoard;

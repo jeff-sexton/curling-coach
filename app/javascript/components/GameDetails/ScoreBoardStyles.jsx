@@ -43,17 +43,16 @@ const ScoreBoardStyles = {
     letterSpacing: -2,
   },
   textInput: {
-    '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
+    borderBottom: 'none',
+    textAlign: 'center',
+    '& :before': {
       borderBottom: 'none',
     },
-    '& .MuiInput-underline:before': {
+    '& :after': {
       borderBottom: 'none',
     },
-    '& .MuiInput-underline:after': {
+    '& .MuiInput-underline:hover:before': {
       borderBottom: 'none',
-    },
-    '& .MuiInputBase-input': {
-      textAlign: 'center',
     },
   },
 };

@@ -8,15 +8,33 @@ import Select from '@material-ui/core/Select';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
-    margin: theme.spacing(1),
+    // margin: theme.spacing(1),
     minWidth: 120,
+    width: '100%',
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
 }));
 
-// Draw Front Guard Raise Wick Freeze TakeOut HitAndRoll Clearing DoubleTakeOut PromotionTakeOut
+function createData(value, name) {
+  return { value, name };
+}
+
+const shotTypes = [
+  createData('draw', 'Draw'),
+  createData('front', 'Front'),
+  createData('guard', 'Guard'),
+  createData('raise', 'Raise'),
+  createData('wick', 'Wick'),
+  createData('freeze', 'Freeze'),
+  createData('takeOut', 'Take Out'),
+  createData('hitAndRoll', 'Hit And Roll'),
+  createData('clearing', 'Clearing'),
+  createData('doubleTakeOut', 'Double Take Out'),
+  createData('promotionTakeOut', 'Promotion Take Out'),
+];
+
 const ShotType = ({ shotType, setShotType }) => {
   const classes = useStyles();
 
@@ -35,14 +53,12 @@ const ShotType = ({ shotType, setShotType }) => {
         displayEmpty
         className={classes.selectEmpty}
         inputProps={{ 'aria-label': 'Without label' }}
+        required={true}
       >
-
-        <MenuItem value={'draw'}>Draw</MenuItem>
-        <MenuItem value={'hit'}>Hit</MenuItem>
-        <MenuItem value={'take out'}>Take Out</MenuItem>
-        <MenuItem value={'raise'}>Raise</MenuItem>
+        {shotTypes.map((shotType, i) => (
+          <MenuItem key={i} value={shotType.value}>{shotType.name}</MenuItem>
+        ))}
       </Select>
-      <FormHelperText>Required</FormHelperText>
     </FormControl>
   );
 };
