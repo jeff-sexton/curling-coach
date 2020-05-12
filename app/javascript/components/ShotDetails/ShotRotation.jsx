@@ -8,8 +8,9 @@ import Select from '@material-ui/core/Select';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
-    margin: theme.spacing(1),
+    // margin: theme.spacing(1),
     minWidth: 120,
+    width: '100%',
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
@@ -34,11 +35,11 @@ const ShotRotation = ({ shotRotation, setShotRotation }) => {
         displayEmpty
         className={classes.selectEmpty}
         inputProps={{ 'aria-label': 'Without label' }}
+        required={true}
       >
         <MenuItem value={'cw'}>Clock Wise</MenuItem>
         <MenuItem value={'ccw'}>Counter Clock Wise</MenuItem>
       </Select>
-      <FormHelperText>Required</FormHelperText>
     </FormControl>
   );
 };
