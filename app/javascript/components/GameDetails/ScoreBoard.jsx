@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -15,33 +15,42 @@ function createData(name) {
   return { name };
 }
 
+function createData1(end) {
+  return { end };
+}
+
 const rows = [createData('Canada'), createData('Switzerland')];
+
+const ends = [
+  createData1(1),
+  createData1(2),
+  createData1(3),
+  createData1(4),
+  createData1(5),
+  createData1(6),
+  createData1(7),
+  createData1(8),
+  createData1(9),
+  createData1(10),
+  createData1(11),
+];
 
 const ScoreBoard = () => {
   const classes = useStyles();
+  const [score, setScore] = useState();
 
   return (
     <TableContainer>
       <form noValidate autoComplete="off">
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
-            <TableRow>
+            <TableRow className={classes.letterSpace}>
               <TableCell className={classes.ends}></TableCell>
-              <TableCell className={classes.ends}>1</TableCell>
-              <TableCell className={classes.ends}>2</TableCell>
-              <TableCell className={classes.ends}>3</TableCell>
-              <TableCell className={classes.ends}>4</TableCell>
-              <TableCell className={classes.ends}>5</TableCell>
-              <TableCell className={classes.ends}>6</TableCell>
-              <TableCell className={classes.ends}>7</TableCell>
-              <TableCell className={classes.ends}>8</TableCell>
-              <TableCell className={classes.ends}>9</TableCell>
-              <TableCell className={`${classes.ends} ${classes.letterSpace}`}>
-                10
-              </TableCell>
-              <TableCell className={`${classes.ends} ${classes.letterSpace}`}>
-                11
-              </TableCell>
+              {ends.map((endNumber) => (
+                <TableCell className={classes.ends} key={endNumber.end}>
+                  {endNumber.end}
+                </TableCell>
+              ))}
               <TableCell className={classes.ends}>TOTAL</TableCell>
             </TableRow>
           </TableHead>
@@ -49,48 +58,25 @@ const ScoreBoard = () => {
             {rows.map((row) => (
               <TableRow key={row.name}>
                 <TableCell
+                  id={row.name}
                   component="th"
                   scope="row"
                   className={classes.teamName}
                 >
                   {row.name}
                 </TableCell>
-                <TableCell className={classes.tableCell}>
-                  <TextField inputProps={{ type: 'number' }} classes={{ root: classes.textInput }} />
-                </TableCell>
-                <TableCell className={classes.tableCell}>
-                  <TextField inputProps={{ type: 'number' }} />
-                </TableCell>
-                <TableCell className={classes.tableCell}>
-                  <TextField inputProps={{ type: 'number' }} />
-                </TableCell>
-                <TableCell className={classes.tableCell}>
-                  <TextField inputProps={{ type: 'number' }} />
-                </TableCell>
-                <TableCell className={classes.tableCell}>
-                  <TextField inputProps={{ type: 'number' }} />
-                </TableCell>
-                <TableCell className={classes.tableCell}>
-                  <TextField inputProps={{ type: 'number' }} />
-                </TableCell>
-                <TableCell className={classes.tableCell}>
-                  <TextField inputProps={{ type: 'number' }} />
-                </TableCell>
-                <TableCell className={classes.tableCell}>
-                  <TextField inputProps={{ type: 'number' }} />
-                </TableCell>
-                <TableCell className={classes.tableCell}>
-                  <TextField inputProps={{ type: 'number' }} />
-                </TableCell>
-                <TableCell className={classes.tableCell}>
-                  <TextField inputProps={{ type: 'number' }} />
-                </TableCell>
-                <TableCell className={classes.tableCell}>
-                  <TextField inputProps={{ type: 'number' }} />
-                </TableCell>
-                <TableCell className={classes.tableCell}>
-                  <TextField inputProps={{ type: 'number' }} />
-                </TableCell>
+                {ends.map((endNumber) => (
+                  <TableCell className={classes.tableCell} key={endNumber.end}>
+                    <TextField
+                      end={endNumber.end}
+                      inputProps={{ type: 'number', id: `${endNumber.end}` }}
+                      className={`${classes.root} ${classes.textInput}`}
+                      value={score}
+                      onChange={(event) => setScore(event.target.value)}
+                    />
+                  </TableCell>
+                ))}
+                <TableCell className={classes.tableCell}></TableCell>
               </TableRow>
             ))}
           </TableBody>

@@ -1,6 +1,5 @@
 const ScoreBoardStyles = {
   table: {
-    // minWidth: 650,
   },
   TableRow: {
     width: 90,
@@ -8,10 +7,10 @@ const ScoreBoardStyles = {
   },
   teamNameRow: {
     '& tr:nth-child(1) > th': {
-      backgroundColor: 'red'
+      backgroundColor: 'red',
     },
     '& tr:nth-child(2) > th': {
-      backgroundColor: 'yellow'
+      backgroundColor: 'yellow',
     },
   },
   teamName: {
@@ -40,11 +39,15 @@ const ScoreBoardStyles = {
     border: '1px solid #aaaaaa',
   },
   letterSpace: {
-    letterSpacing: -2,
+    '& th:nth-child(11)': {
+      letterSpacing: -2,
+    },
+    '& th:nth-child(12)': {
+      letterSpacing: -2,
+    },
   },
-  textInput: {
+  root: {
     borderBottom: 'none',
-    textAlign: 'center',
     '& :before': {
       borderBottom: 'none',
     },
@@ -53,6 +56,11 @@ const ScoreBoardStyles = {
     },
     '& .MuiInput-underline:hover:before': {
       borderBottom: 'none',
+    },
+  },
+  textInput: {
+    '& .MuiInputBase-input': {
+      textAlign: 'center',
     },
   },
 };
