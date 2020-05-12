@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 const GameView = () => {
   const classes = useStyles();
 
-  // TODO - move path history into GameState
+  // move path history into GameState
   const [pathHistory, setPathHistory] = useState([]);
   const [shotDetails, setShotDetails] = useState({
     rating: '',
@@ -51,6 +51,7 @@ const GameView = () => {
     initializeEnd,
   } = useApplicationData();
 
+  // TODO - add useEffect to reset shot details or grab existing details on each shot
 
   const onSave = () => {
     const currentEnd = gameState.currentEnd;
