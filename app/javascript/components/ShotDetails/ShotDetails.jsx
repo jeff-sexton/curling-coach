@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ShotRating from './ShotRating';
 import ShotType from './ShotType';
-import ShotRotation from './ShotRotation';
+import ShotRotation from './ShotRotation'
 
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,48 +10,34 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  spacingTopBottom: {
-    '&.MuiGrid-item': {
-      padding: '0 12px',
-    },
-    "& .MuiFormHelperText-root": {
-      display: "none",
-    },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
   },
-  spacing: {
-    '&.MuiGrid-item': {
-      padding: "10px 12px",
-    },
-  },
-  marginTop: {
-    marginTop: 0,
-  }
 }));
 
 const ShotDetails = () => {
   const classes = useStyles();
 
   const [rating, setRating] = useState('');
-  const [shotType, setShotType] = useState('');
-  const [shotRotation, setShotRotation] = useState('');
+  const [shotType, setShotType] = useState('')
+  const [shotRotation, setShotRotation] = useState('')
 
   return (
     <div className={classes.root}>
-      <h3 className={classes.marginTop}>Shot Details</h3>
-      <Grid container>
-        <Grid item xs={12} sm={5} className={classes.spacingTopBottom}>
+      <h3>Shot Details</h3>
+      <Grid container spacing={3}>
+        <Grid item xs={12} sm={4}>
           <ShotRating rating={rating} setRating={setRating} />
         </Grid>
-
-        <Grid item xs={12} sm={7} className={classes.spacingTopBottom}>
+        
+        <Grid item xs={12} sm={4}>
           <ShotType shotType={shotType} setShotType={setShotType} />
         </Grid>
 
-        <Grid item sm={12} className={classes.spacing}>
-          <ShotRotation
-            shotRotation={shotRotation}
-            setShotRotation={setShotRotation}
-          />
+        <Grid item xs={12} sm={4}>
+          <ShotRotation shotRotation={shotRotation} setShotRotation={setShotRotation}/>
         </Grid>
       </Grid>
     </div>
