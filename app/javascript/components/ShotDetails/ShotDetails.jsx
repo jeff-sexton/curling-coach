@@ -22,9 +22,6 @@ const useStyles = makeStyles((theme) => ({
     '&.MuiGrid-item': {
       padding: "10px 12px",
     },
-    // "& .MuiFormHelperText-root": {
-    //   display: "none",
-    // },
   },
   marginTop: {
     marginTop: 0,

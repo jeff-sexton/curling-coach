@@ -2,13 +2,11 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
-    // margin: theme.spacing(1),
     minWidth: 120,
     width: '100%',
   },
@@ -17,8 +15,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function createData(value, name) {
-  return { value, name };
+function createData(value, type) {
+  return { value, type };
 }
 
 const shotTypes = [
@@ -56,7 +54,7 @@ const ShotType = ({ shotType, setShotType }) => {
         required={true}
       >
         {shotTypes.map((shotType, i) => (
-          <MenuItem key={i} value={shotType.value}>{shotType.name}</MenuItem>
+          <MenuItem key={i} value={shotType.value}>{shotType.type}</MenuItem>
         ))}
       </Select>
     </FormControl>
