@@ -126,14 +126,15 @@ const useApplicationData = () => {
   };
 
   const saveShot = (shot) => {
-    axios.post('/api/shots', shot)
-      .then(()=> {
-        dispatch({type: SET_SHOT, value: shot})
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    // axios.post('/api/shots', shot)
+    //   .then(()=> {
+    //     dispatch({type: SET_SHOT, value: shot})
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
 
+      dispatch({type: SET_SHOT, value: shot})
 
     nextShot();
     // Save forms & shot path history to server here

@@ -30,8 +30,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
 const GameView = () => {
   const classes = useStyles();
 
@@ -44,14 +42,17 @@ const GameView = () => {
     initializeEnd,
   } = useApplicationData();
 
+
+
   const onSave = () => {
     const currentEnd = gameState.currentEnd;
     const currentShot = gameState.currentShot;
-  
+
     const end_id = gameState.ends[currentEnd].end.id;
     const shot_number = currentShot + 1;
-    const player_id = gameState.ends[currentEnd].end.throw_order[currentShot].id;
-  
+    const player_id =
+      gameState.ends[currentEnd].end.throw_order[currentShot].id;
+
     const shot = {
       end_id,
       shot_number,
@@ -65,7 +66,6 @@ const GameView = () => {
     saveShot(shot);
   };
 
-
   return (
     <div className={classes.root}>
       <Box display="flex" justifyContent="space-around" height="70vh">
@@ -74,6 +74,7 @@ const GameView = () => {
           prevShot={prevShot}
           gameState={gameState}
         />
+          {gameState.ends[gameState.currentEnd] && !gameState.ends[gameState.currentEnd].end.first_team_id && <button onClick={()=> {initializeEnd(1)}}>Set Order</button>}
 
         <Box
           display="flex"
@@ -86,10 +87,6 @@ const GameView = () => {
           </Paper>
           <Paper elevation={3} className={classes.padding10}>
             <ShotDetails gameState={gameState} />
-            {/* <select onChange={initializeEnd()} id = 'first-team'>
-              <option value={0}>Team 1</option>
-              <option value={1}>Team 2</option>
-            </select> */}
           </Paper>
           <Paper elevation={3} className={classes.padding10}>
             <ShotDetails />
