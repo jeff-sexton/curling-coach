@@ -10,7 +10,7 @@ import StrategyBoard from '../StrategyBoard';
 import GameDetails from '../GameDetails';
 import EndDetails from '../EndDetails'
 import ShotDetails from '../ShotDetails';
-// import Buttons from '../Buttons';
+import Buttons from '../Buttons';
 
 
 const useStyles = makeStyles((theme) => ({
