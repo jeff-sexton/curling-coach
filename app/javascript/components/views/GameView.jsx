@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import StrategyBoard from '../StrategyBoard';
 import GameDetails from '../GameDetails';
+import EndDetails from '../EndDetails'
 import ShotDetails from '../ShotDetails';
 
 
@@ -83,7 +84,7 @@ const GameView = () => {
             <GameDetails gameState={gameState}/>
           </Paper>
           <Paper elevation={3} className={classes.padding10}>
-            <ShotDetails gameState={gameState}/>
+            <EndDetails gameState={gameState}/>
           </Paper>
           <Paper elevation={3} className={classes.padding10}>
             <ShotDetails />
