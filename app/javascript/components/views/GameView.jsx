@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import useApplicationData from '../../hooks/useApplicationData';
 
@@ -10,6 +10,7 @@ import StrategyBoard from '../StrategyBoard';
 import GameDetails from '../GameDetails';
 import ShotDetails from '../ShotDetails';
 import Buttons from '../Buttons';
+import { useEffect } from 'react';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,6 +34,14 @@ const useStyles = makeStyles((theme) => ({
 const GameView = () => {
   const classes = useStyles();
 
+  // TODO - move path history into GameState
+  const [pathHistory, setPathHistory] = useState([]);
+  const [shotDetails, setShotDetails] = useState({
+    rating: '',
+    shotType: '',
+    shotRotation: '',
+  });
+
   const {
     gameState,
     nextShot,
@@ -41,7 +50,6 @@ const GameView = () => {
     endGame,
     initializeEnd,
   } = useApplicationData();
-
 
 
   const onSave = () => {
@@ -53,13 +61,15 @@ const GameView = () => {
     const player_id =
       gameState.ends[currentEnd].end.throw_order[currentShot].id;
 
+      const {rating, shotType :shot_type, shotRotation :rotation} = shotDetails;
+
     const shot = {
       end_id,
       shot_number,
-      rotation: '',
-      rating: '',
-      shot_type: '',
-      rock_paths: [],
+      rotation,
+      rating,
+      shot_type,
+      rock_paths: pathHistory[gameState.currentShot],
       player_id,
     };
 
@@ -73,8 +83,19 @@ const GameView = () => {
           nextShot={nextShot}
           prevShot={prevShot}
           gameState={gameState}
+          pathHistory={pathHistory}
+          setPathHistory={setPathHistory}
         />
-          {gameState.ends[gameState.currentEnd] && !gameState.ends[gameState.currentEnd].end.first_team_id && <button onClick={()=> {initializeEnd(1)}}>Set Order</button>}
+        {gameState.ends[gameState.currentEnd] &&
+          !gameState.ends[gameState.currentEnd].end.first_team_id && (
+            <button
+              onClick={() => {
+                initializeEnd(1);
+              }}
+            >
+              Set Order
+            </button>
+          )}
 
         <Box
           display="flex"
@@ -86,10 +107,13 @@ const GameView = () => {
             <GameDetails gameState={gameState} />
           </Paper>
           <Paper elevation={3} className={classes.padding10}>
-            <ShotDetails gameState={gameState} />
+            <div>event here</div>
           </Paper>
           <Paper elevation={3} className={classes.padding10}>
-            <ShotDetails />
+            <ShotDetails
+              shotDetails={shotDetails}
+              setShotDetails={setShotDetails}
+            />
           </Paper>
           <Buttons saveShot={onSave} endGame={endGame} />
         </Box>
