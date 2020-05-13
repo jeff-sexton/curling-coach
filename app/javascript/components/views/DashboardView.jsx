@@ -1,15 +1,13 @@
-import React from 'react'
+import React from 'react';
+import Dashboard from '../Dashboard';
 
-
-const DashboardView = ({setView}) => {
-
+const DashboardView = ({ setView }) => {
   return (
     <div>
-      <h1>This is the dashboard</h1>
-      <button onClick={()=>setView('GAME')}>Go to game</button>
+      <Dashboard onClick={() => setView('GAME')} />
+      <button onClick={() => setView('GAME')}>Go to game</button>
     </div>
-  )
-
+  );
 };
 
 export default DashboardView;
