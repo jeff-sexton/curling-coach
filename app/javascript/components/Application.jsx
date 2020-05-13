@@ -27,6 +27,9 @@ const theme = createMuiTheme({
       main: '#fdd835',
     },
   },
+  typography: {
+    fontFamily: `"Roboto", "Helvetica", "Arial", sans-serif`,
+  },
   // overwrites button components
   overrides: {
     MuiButton: {

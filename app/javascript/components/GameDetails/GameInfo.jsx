@@ -3,20 +3,14 @@ import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import GameInfoStyles from './GameInfoStyles';
 
-const useStyles = makeStyles(GameInfoStyles, (theme) => ({
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: 200,
-  },
-}));
+const useStyles = makeStyles(GameInfoStyles);
 
 const GameInfo = () => {
   const classes = useStyles();
 
   return (
     <div>
-      <Box textAlign="center">
+      <Box textAlign="center" className={classes.gameInfo}>
         <Box mb={1}>Friday, May 1, 2020 | 7PM</Box>
         <Box>Vancouver Curling Club</Box>
       </Box>

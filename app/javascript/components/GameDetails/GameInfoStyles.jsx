@@ -1,21 +1,20 @@
-const GameInfoStyles = {
+const GameInfoStyles = (theme) => ({
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200,
+  },
   container: {
     display: 'flex',
     flexWrap: 'wrap',
   },
-  dateTimeField: {
-    width: '47%',
-    '& .MuiInputBase-root': {
-      fontSize: '0.85rem',
-    },
-  },
-  locationField: {
-    width: '100%',
+  gameInfo: {
+    fontFamily: theme.typography.fontFamily,
   },
   teamNames: {
-    // fontFamily: 'Roboto, Arial, san-serif',
+    fontFamily: theme.typography.fontFamily,
     fontWeight: 400,
   },
-}
+});
 
 export default GameInfoStyles;
