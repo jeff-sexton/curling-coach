@@ -10,7 +10,7 @@ class Shot < ApplicationRecord
   validates :rotation, inclusion:    { in: %w(clockwise counterclockwise), 
                                        message: "must be either clockwise or counterclockwise" },
                                        allow_nil: true
-  validates :rating, inclusion:      { in: 1..4, 
+  validates :rating, inclusion:      { in: 0..4, 
                                        message: "must be a number between 1 and 4" }, 
                                        allow_nil: true
   validates :sweep_score, inclusion: { in: 1..10,
