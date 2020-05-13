@@ -4,7 +4,21 @@ class Api::GamesController < ApplicationController
 
   def show
     game = Game.find(params[:id])
-    ends = game.ends.map { |curl_end| { end: curl_end, shots: curl_end.shots }}
+    # ends = game.ends.map { |curl_end| { end: curl_end, shots: curl_end.shots }}
+    ends = game.ends.map do |curl_end|
+
+      shots = curl_end.shots
+
+      # Parse rock paths back to an array of hashes before sending to client
+      shots.map do |shot|
+        if (shot.rock_paths)
+          shot.rock_paths = JSON.parse(shot.rock_paths)
+        end
+        shot
+      end
+      
+      { end: curl_end, shots: shots}
+    end
     teams = game.game_participations.map { |participation| { team: participation.team, players: participation.team.players}}
 
     game_details = { 
