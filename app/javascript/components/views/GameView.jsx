@@ -34,14 +34,6 @@ const useStyles = makeStyles((theme) => ({
 const GameView = () => {
   const classes = useStyles();
 
-  // move path history into GameState
-  const [pathHistory, setPathHistory] = useState([]);
-  const [shotDetails, setShotDetails] = useState({
-    rating: '',
-    shotType: '',
-    shotRotation: '',
-  });
-
   const {
     gameState,
     nextShot,
@@ -51,7 +43,29 @@ const GameView = () => {
     initializeEnd,
   } = useApplicationData();
 
-  // TODO - add useEffect to reset shot details or grab existing details on each shot
+  // move path history into GameState
+  const [pathHistory, setPathHistory] = useState([]);
+  const [shotDetails, setShotDetails] = useState({
+    rating: '',
+    shotType: '',
+    shotRotation: '',
+  });
+
+
+  // add useEffect to reset shot details or grab existing details on each shot
+  useEffect(() => {
+    if (gameState.ends[gameState.currentEnd]) {
+      const initialHistory = [];
+
+      for (const shot of gameState.ends[gameState.currentEnd].shots) {
+        if (shot.rock_paths && shot.rock_paths.length > 0) {
+          initialHistory.push(shot.rock_paths);
+        }
+      }
+
+      setPathHistory(initialHistory);
+    }
+  }, [gameState.loaded, gameState.currentEnd]);
 
   const onSave = () => {
     const currentEnd = gameState.currentEnd;
@@ -62,7 +76,7 @@ const GameView = () => {
     const player_id =
       gameState.ends[currentEnd].end.throw_order[currentShot].id;
 
-      const {rating, shotType :shot_type, shotRotation :rotation} = shotDetails;
+    const { rating, shotType: shot_type, shotRotation: rotation } = shotDetails;
 
     const shot = {
       end_id,
@@ -78,48 +92,57 @@ const GameView = () => {
   };
 
   return (
-    <div className={classes.root}>
-      <Box display="flex" justifyContent="space-around" height="70vh">
-        <StrategyBoard
-          nextShot={nextShot}
-          prevShot={prevShot}
-          gameState={gameState}
-          pathHistory={pathHistory}
-          setPathHistory={setPathHistory}
-        />
-        {gameState.ends[gameState.currentEnd] &&
-          !gameState.ends[gameState.currentEnd].end.first_team_id && (
-            <button
-              onClick={() => {
-                initializeEnd(1);
-              }}
-            >
-              Set Order
-            </button>
-          )}
-
-        <Box
-          display="flex"
-          flexDirection="column"
-          justifyContent="space-between"
-          width="40%"
-        >
-          <Paper elevation={3} className={classes.padding10}>
-            <GameDetails gameState={gameState} />
-          </Paper>
-          <Paper elevation={3} className={classes.padding10}>
-            <div>event here</div>
-          </Paper>
-          <Paper elevation={3} className={classes.padding10}>
-            <ShotDetails
-              shotDetails={shotDetails}
-              setShotDetails={setShotDetails}
+    <>
+      {!gameState.loaded && (
+        <div>
+          <h1>LOADING</h1>
+        </div>
+      )}
+      {gameState.loaded && (
+        <div className={classes.root}>
+          <Box display="flex" justifyContent="space-around" height="70vh">
+            <StrategyBoard
+              nextShot={nextShot}
+              prevShot={prevShot}
+              gameState={gameState}
+              pathHistory={pathHistory}
+              setPathHistory={setPathHistory}
             />
-          </Paper>
-          <Buttons saveShot={onSave} endGame={endGame} />
-        </Box>
-      </Box>
-    </div>
+            {gameState.ends[gameState.currentEnd] &&
+              !gameState.ends[gameState.currentEnd].end.first_team_id && (
+                <button
+                  onClick={() => {
+                    initializeEnd(1);
+                  }}
+                >
+                  Set Order
+                </button>
+              )}
+
+            <Box
+              display="flex"
+              flexDirection="column"
+              justifyContent="space-between"
+              width="40%"
+            >
+              <Paper elevation={3} className={classes.padding10}>
+                <GameDetails gameState={gameState} />
+              </Paper>
+              <Paper elevation={3} className={classes.padding10}>
+                <div>event here</div>
+              </Paper>
+              <Paper elevation={3} className={classes.padding10}>
+                <ShotDetails
+                  shotDetails={shotDetails}
+                  setShotDetails={setShotDetails}
+                />
+              </Paper>
+              <Buttons saveShot={onSave} endGame={endGame} />
+            </Box>
+          </Box>
+        </div>
+      )}
+    </>
   );
 };
 

@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import Rock from './Rock';
 
-const IceSurface = ({ pathHistory, positionChange, storeHistory, shot }) => {
+const IceSurface = ({ pathHistory, positionChange, storeHistory, shot, gameState }) => {
   const iceRef = useRef();
 
   return (
@@ -60,6 +60,7 @@ const IceSurface = ({ pathHistory, positionChange, storeHistory, shot }) => {
         storeHistory={storeHistory}
         pathHistory={pathHistory}
         shot={shot}
+        gameState={gameState}
       />
       <Rock
         id={2}
@@ -71,6 +72,7 @@ const IceSurface = ({ pathHistory, positionChange, storeHistory, shot }) => {
         storeHistory={storeHistory}
         pathHistory={pathHistory}
         shot={shot}
+        gameState={gameState}
       />
       <Rock
         id={3}
@@ -82,6 +84,7 @@ const IceSurface = ({ pathHistory, positionChange, storeHistory, shot }) => {
         storeHistory={storeHistory}
         pathHistory={pathHistory}
         shot={shot}
+        gameState={gameState}
       />
       <Rock
         id={4}
@@ -93,6 +96,7 @@ const IceSurface = ({ pathHistory, positionChange, storeHistory, shot }) => {
         storeHistory={storeHistory}
         pathHistory={pathHistory}
         shot={shot}
+        gameState={gameState}
       />
       <Rock
         id={5}
@@ -104,6 +108,7 @@ const IceSurface = ({ pathHistory, positionChange, storeHistory, shot }) => {
         storeHistory={storeHistory}
         pathHistory={pathHistory}
         shot={shot}
+        gameState={gameState}
       />
       <Rock
         id={6}
@@ -115,6 +120,7 @@ const IceSurface = ({ pathHistory, positionChange, storeHistory, shot }) => {
         storeHistory={storeHistory}
         pathHistory={pathHistory}
         shot={shot}
+        gameState={gameState}
       />
       <Rock
         id={7}
@@ -126,6 +132,7 @@ const IceSurface = ({ pathHistory, positionChange, storeHistory, shot }) => {
         storeHistory={storeHistory}
         pathHistory={pathHistory}
         shot={shot}
+        gameState={gameState}
       />
       <Rock
         id={8}
@@ -137,6 +144,7 @@ const IceSurface = ({ pathHistory, positionChange, storeHistory, shot }) => {
         storeHistory={storeHistory}
         pathHistory={pathHistory}
         shot={shot}
+        gameState={gameState}
       />
 
       <Rock
@@ -149,6 +157,7 @@ const IceSurface = ({ pathHistory, positionChange, storeHistory, shot }) => {
         storeHistory={storeHistory}
         pathHistory={pathHistory}
         shot={shot}
+        gameState={gameState}
       />
       <Rock
         id={10}
@@ -160,6 +169,7 @@ const IceSurface = ({ pathHistory, positionChange, storeHistory, shot }) => {
         storeHistory={storeHistory}
         pathHistory={pathHistory}
         shot={shot}
+        gameState={gameState}
       />
       <Rock
         id={11}
@@ -171,6 +181,7 @@ const IceSurface = ({ pathHistory, positionChange, storeHistory, shot }) => {
         storeHistory={storeHistory}
         pathHistory={pathHistory}
         shot={shot}
+        gameState={gameState}
       />
       <Rock
         id={12}
@@ -182,6 +193,7 @@ const IceSurface = ({ pathHistory, positionChange, storeHistory, shot }) => {
         storeHistory={storeHistory}
         pathHistory={pathHistory}
         shot={shot}
+        gameState={gameState}
       />
       <Rock
         id={13}
@@ -193,6 +205,7 @@ const IceSurface = ({ pathHistory, positionChange, storeHistory, shot }) => {
         storeHistory={storeHistory}
         pathHistory={pathHistory}
         shot={shot}
+        gameState={gameState}
       />
       <Rock
         id={14}
@@ -204,6 +217,7 @@ const IceSurface = ({ pathHistory, positionChange, storeHistory, shot }) => {
         storeHistory={storeHistory}
         pathHistory={pathHistory}
         shot={shot}
+        gameState={gameState}
       />
       <Rock
         id={15}
@@ -215,6 +229,7 @@ const IceSurface = ({ pathHistory, positionChange, storeHistory, shot }) => {
         storeHistory={storeHistory}
         pathHistory={pathHistory}
         shot={shot}
+        gameState={gameState}
       />
       <Rock
         id={16}
@@ -226,6 +241,7 @@ const IceSurface = ({ pathHistory, positionChange, storeHistory, shot }) => {
         storeHistory={storeHistory}
         pathHistory={pathHistory}
         shot={shot}
+        gameState={gameState}
       />
     </svg>
   );

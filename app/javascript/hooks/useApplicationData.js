@@ -4,13 +4,18 @@ import axios from 'axios';
 const SET_INITIAL_GAME_STATE = 'SET_INITIAL_GAME_STATE';
 const SET_THROW_ORDER = 'SET_THROW_ORDER';
 const SET_FIRST_TEAM = 'SET_FIRST_TEAM';
-const CHANGE_SHOT = 'CHANGE_SHOT';
-const SET_SHOT = 'SET_SHOT';
+const SET_CURRENT_SHOT = 'SET_CURRENT_SHOT';
+const SET_SHOT_DETAILS = 'SET_SHOT_DETAILS';
+const SET_CURRENT_END = 'SET_CURRENT_END';
 
 const reducer = (state, action) => {
   // Reducers
-  const SET_INITIAL_GAME_STATE = ({ value }) => ({ ...state, ...value });
-  
+  const SET_INITIAL_GAME_STATE = ({ value }) => ({
+    ...state,
+    ...value,
+    loaded: true,
+  });
+
   const SET_THROW_ORDER = ({ value: throw_order }) => {
     if (!throw_order) {
       // Calculate throw order based on firstTeam state
@@ -52,17 +57,14 @@ const reducer = (state, action) => {
     return { ...state, ends };
   };
 
-  const CHANGE_SHOT = ({ value: change }) => {
-    let currentShot = state.currentShot + change;
-    if (currentShot > 15) {
-      currentShot = 15;
-    } else if (currentShot < 0) {
-      currentShot = 0;
-    }
-    return { ...state, currentShot };
-  };
+  const SET_CURRENT_END = ({ value: currentEnd }) => ({ ...state, currentEnd });
 
-  const SET_SHOT = ({ value: shot }) => {
+  const SET_CURRENT_SHOT = ({ value: currentShot }) => ({
+    ...state,
+    currentShot,
+  });
+
+  const SET_SHOT_DETAILS = ({ value: shot }) => {
     const currentEnd = state.currentEnd;
     const currentShot = state.currentShot;
 
@@ -90,8 +92,9 @@ const reducer = (state, action) => {
     SET_INITIAL_GAME_STATE,
     SET_THROW_ORDER,
     SET_FIRST_TEAM,
-    CHANGE_SHOT,
-    SET_SHOT,
+    SET_CURRENT_SHOT,
+    SET_CURRENT_END,
+    SET_SHOT_DETAILS,
     DEFAULT,
   };
 
@@ -105,6 +108,7 @@ const useApplicationData = () => {
     teams_with_players: [],
     currentShot: 0,
     currentEnd: 0,
+    loaded: false,
   });
 
   // Get Initial Game details from API
@@ -125,32 +129,48 @@ const useApplicationData = () => {
   };
 
   const nextShot = () => {
-    dispatch({
-      type: CHANGE_SHOT,
-      value: 1,
-    });
+    const newCurrentShot = gameState.currentShot + 1;
+    if (newCurrentShot > 15) {
+      if (gameState.currentEnd < 12) {
+        dispatch({ type: SET_CURRENT_END, value: gameState.currentEnd + 1 });
+      }
+      dispatch({ type: SET_CURRENT_SHOT, value: 0 });
+    } else {
+      dispatch({ type: SET_CURRENT_SHOT, value: newCurrentShot });
+    }
   };
+
+  // {
+  //   let currentShot = state.currentShot + change;
+  //   if (currentShot > 15) {
+  //     CHANGE_END({value: state.currentEnd + 1})
+  //     currentShot = 15;
+  //   } else if (currentShot < 0) {
+  //     currentShot = 0;
+  //   }
+  //   return { ...state, currentShot };
+  // };
+
   const prevShot = () => {
-    dispatch({
-      type: CHANGE_SHOT,
-      value: -1,
-    });
+    const newCurrentShot = gameState.currentShot - 1;
+    if (newCurrentShot >= 0) {
+      dispatch({ type: SET_CURRENT_SHOT, value: newCurrentShot });
+    }
   };
 
   const saveShot = (shot) => {
     // Save forms & shot path history to server here
-    axios.post('/api/shots', shot)
-      .then((res)=> {
-        dispatch({type: SET_SHOT, value: res.data})
+    axios
+      .post('/api/shots', shot)
+      .then((res) => {
+        dispatch({ type: SET_SHOT_DETAILS, value: res.data });
         nextShot();
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
 
-    // dispatch({ type: SET_SHOT, value: shot });
-
-    
+    // dispatch({ type: SET_SHOT_DETAILS, value: shot });
   };
 
   const initializeEnd = (team_id) => {

@@ -121,13 +121,16 @@ const StrategyBoard = ({
   };
 
   const resetShot = () => {
+
+    const resetHistory = [...pathHistory[shot]]
+
+    while (resetHistory.length > 15) {
+      setPositionChange(resetHistory.pop());
+    }
     setPathHistory((prev) => {
       const updatedHistory = [...prev];
 
-      updatedHistory[gameState.currentShot] = prev[gameState.currentShot].slice(
-        0,
-        16
-      );
+      updatedHistory[shot] = resetHistory;
 
       return updatedHistory;
     });
