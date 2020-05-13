@@ -16,29 +16,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const EndDetails = () => {
+const EndDetails = ({ gameState }) => {
   const classes = useStyles();
-
+ 
   return (
     <div className={classes.root}>
       <Grid container spacing={2} justify="center" alignItems="center">
+
         <Grid item xs={6} >
-          <Paper className={classes.paper}>
-           End Info
-          </Paper>
+          <Paper className={classes.paper}>End Info</Paper>
         </Grid>
+
         <Grid item xs={12}>
-          <ProgressBar currentShot={7} />  
+          <ProgressBar currentShot={gameState.currentShot} />  
         </Grid>
+
         <Grid item xs={6}>
           <Paper className={classes.paper}>Current Player is </Paper>
         </Grid>
+
         <Grid item xs={6}>
-          <Paper className={classes.paper}>Currently on Shot / 16</Paper>
+          <Paper className={classes.paper}>Currently on shot {gameState.currentShot}/16</Paper>
         </Grid>
+
         <Grid item xs={4}>
-            <EndMenu />
+            <EndMenu ends={gameState.ends} />
         </Grid>
+        
       </Grid>
     </div>
   );

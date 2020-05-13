@@ -3,16 +3,34 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
-const EndMenu = () => {
+const EndMenu = ({ ends }) => {
   const [anchorEl, setAnchorEl] = useState(null);
-
-  const handleClick = (event) => {
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  
+  const handleClickButton = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+ 
+  const handleClick = (event, index) => {
+    setSelectedIndex(index);
     setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const EndMenuListItems = ends.map((value, index) => {
+    return (
+      <MenuItem 
+        key={value.id} 
+        selected={index === selectedIndex}
+        onClick={(event) => handleClick(event, index)}
+      >
+        End #{index + 1}
+      </MenuItem>
+    )
+  })
 
   return (
     <div>
@@ -21,20 +39,18 @@ const EndMenu = () => {
       aria-haspopup="true" 
       variant="contained"
       color="primary"
-      onClick={handleClick} 
-      textAlign="center">
+      onClick={handleClickButton} 
+      textalign="center">
         Select End
       </Button>
       <Menu
-        id="simple-menu"
+        id="lock-menu"
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>End #1</MenuItem>
-        <MenuItem onClick={handleClose}>End #2</MenuItem>
-        <MenuItem onClick={handleClose}>End #3</MenuItem>
+       {EndMenuListItems}
       </Menu>
     </div>
   );
