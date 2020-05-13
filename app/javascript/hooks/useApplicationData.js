@@ -10,6 +10,7 @@ const SET_SHOT = 'SET_SHOT';
 const reducer = (state, action) => {
   // Reducers
   const SET_INITIAL_GAME_STATE = ({ value }) => ({ ...state, ...value });
+  
   const SET_THROW_ORDER = ({ value: throw_order }) => {
     if (!throw_order) {
       // Calculate throw order based on firstTeam state
@@ -64,6 +65,10 @@ const reducer = (state, action) => {
   const SET_SHOT = ({ value: shot }) => {
     const currentEnd = state.currentEnd;
     const currentShot = state.currentShot;
+
+    // const rock_paths = JSON.parse(shot.rock_paths);
+    // console.log('rock_paths', rock_paths);
+    // const formattedShot = {...shot, rock_paths: JSON.parse(shot.rock_paths)}
 
     const shots = [...state.ends[currentEnd].shots];
     shots[currentShot] = shot;
@@ -135,8 +140,8 @@ const useApplicationData = () => {
   const saveShot = (shot) => {
     // Save forms & shot path history to server here
     axios.post('/api/shots', shot)
-      .then(()=> {
-        dispatch({type: SET_SHOT, value: shot})
+      .then((res)=> {
+        dispatch({type: SET_SHOT, value: res.data})
         nextShot();
       })
       .catch(err => {
