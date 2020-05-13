@@ -70,7 +70,7 @@ const GameView = () => {
       rotation,
       rating,
       shot_type,
-      rock_paths: pathHistory[gameState.currentShot],
+      rock_paths: JSON.stringify(pathHistory[gameState.currentShot]),
       player_id,
     };
 

@@ -134,17 +134,18 @@ const useApplicationData = () => {
 
   const saveShot = (shot) => {
     // Save forms & shot path history to server here
-    // axios.post('/api/shots', shot)
-    //   .then(()=> {
-    //     dispatch({type: SET_SHOT, value: shot})
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
+    axios.post('/api/shots', shot)
+      .then(()=> {
+        dispatch({type: SET_SHOT, value: shot})
+        nextShot();
+      })
+      .catch(err => {
+        console.log(err);
+      });
 
-    dispatch({ type: SET_SHOT, value: shot });
+    // dispatch({ type: SET_SHOT, value: shot });
 
-    nextShot();
+    
   };
 
   const initializeEnd = (team_id) => {
