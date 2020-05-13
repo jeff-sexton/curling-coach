@@ -14,7 +14,7 @@ const useStyles = makeStyles(GamePreviewStyles, (theme) => ({
   },
 }));
 
-const GamePreview = ({onClick}) => {
+const GamePreview = ({ onClick }) => {
   const classes = useStyles();
 
   return (
