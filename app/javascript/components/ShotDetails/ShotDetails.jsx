@@ -28,12 +28,24 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const ShotDetails = () => {
+const ShotDetails = ({shotDetails, setShotDetails}) => {
   const classes = useStyles();
 
-  const [rating, setRating] = useState('');
-  const [shotType, setShotType] = useState('');
-  const [shotRotation, setShotRotation] = useState('');
+  const {rating, shotType, shotRotation} = shotDetails;
+
+  const setRating = (rating) => {
+    setShotDetails(prev => ({...prev, rating}));
+  };
+  const setShotType = (shotType) => {
+    setShotDetails(prev => ({...prev, shotType}));
+  };
+  const setShotRotation = (shotRotation) => {
+    setShotDetails(prev => ({...prev, shotRotation}));
+  };
+
+  // const [rating, setRating] = useState('');
+  // const [shotType, setShotType] = useState('');
+  // const [shotRotation, setShotRotation] = useState('');
 
   return (
     <div className={classes.root}>

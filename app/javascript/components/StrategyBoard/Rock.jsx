@@ -10,6 +10,7 @@ const Rock = ({
   storeHistory,
   pathHistory,
   shot,
+  gameState,
 }) => {
   const [position, setPosition] = useState({ x, y });
   const [selected, setSelected] = useState(false);
@@ -22,7 +23,7 @@ const Rock = ({
       console.log('store initial position');
       storeHistory({ id, x: position.x, y: position.y });
     }
-  }, [shot]);
+  }, [shot, gameState.loaded]);
 
   // Respond to replay position changes
   useEffect(() => {

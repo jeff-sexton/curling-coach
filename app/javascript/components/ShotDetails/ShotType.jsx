@@ -20,17 +20,18 @@ function createData(value, type) {
 }
 
 const shotTypes = [
-  createData('draw', 'Draw'),
-  createData('front', 'Front'),
-  createData('guard', 'Guard'),
-  createData('raise', 'Raise'),
-  createData('wick', 'Wick'),
-  createData('freeze', 'Freeze'),
-  createData('takeOut', 'Take Out'),
-  createData('hitAndRoll', 'Hit And Roll'),
-  createData('clearing', 'Clearing'),
-  createData('doubleTakeOut', 'Double Take Out'),
-  createData('promotionTakeOut', 'Promotion Take Out'),
+  createData('Draw', 'Draw'),
+  createData('Front', 'Front'),
+  createData('Guard', 'Guard'),
+  createData('Raise', 'Raise'),
+  createData('Wick', 'Wick'),
+  createData('Freeze', 'Freeze'),
+  createData('TakeOut', 'Take Out'),
+  createData('HitAndRoll', 'Hit And Roll'),
+  createData('Clearing', 'Clearing'),
+  createData('DoubleTakeOut', 'Double Take Out'),
+  createData('PromotionTakeOut', 'Promotion Take Out'),
+  createData('NotScored', 'Not Scored'),
 ];
 
 const ShotType = ({ shotType, setShotType }) => {

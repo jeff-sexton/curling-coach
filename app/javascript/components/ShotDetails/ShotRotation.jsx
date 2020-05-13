@@ -35,8 +35,8 @@ const ShotRotation = ({ shotRotation, setShotRotation }) => {
         inputProps={{ 'aria-label': 'Without label' }}
         required={true}
       >
-        <MenuItem value={'cw'}>Clock Wise</MenuItem>
-        <MenuItem value={'ccw'}>Counter Clock Wise</MenuItem>
+        <MenuItem value={'clockwise'}>Clock Wise</MenuItem>
+        <MenuItem value={'counterclockwise'}>Counter Clock Wise</MenuItem>
       </Select>
     </FormControl>
   );
