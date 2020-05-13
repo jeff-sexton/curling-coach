@@ -10,6 +10,10 @@ class Api::ShotsController < ApplicationController
     shot = Shot.new(shot_params)
 
     if shot.save
+      
+      # Parse rock paths back to an array of hashes before sending to client
+      shot.rock_paths = JSON.parse(shot.rock_paths)
+
       render json: shot
     else
       render json: shot.errors, status: :unprocessable_entity
@@ -28,7 +32,7 @@ class Api::ShotsController < ApplicationController
       :rotation,
       :rating,
       :shot_type,
-      :rock_paths,
+      :rock_paths.as_json,
       :player_id,
     )
   end
