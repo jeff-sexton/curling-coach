@@ -21,7 +21,7 @@ const Buttons = ({ saveShot, endGame }) => {
       <Button variant="contained" color="secondary" onClick={saveShot} >
         SAVE
       </Button>
-      <Button variant="contained" color="primary"  onClick={endGame}>
+      <Button variant="contained" color="primary" onClick={endGame}>
         GAME END
       </Button>
     </Box>
