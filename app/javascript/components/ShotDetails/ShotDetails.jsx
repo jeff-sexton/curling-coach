@@ -28,19 +28,19 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const ShotDetails = ({shotDetails, setShotDetails}) => {
+const ShotDetails = ({ gameState, storeShotDetails }) => {
   const classes = useStyles();
 
-  const {rating, shotType, shotRotation} = shotDetails;
+  const {rating, shot_type, rotation} = gameState.ends[gameState.currentEnd].shots[gameState.currentShot];
 
   const setRating = (rating) => {
-    setShotDetails(prev => ({...prev, rating}));
+    storeShotDetails({rating});
   };
-  const setShotType = (shotType) => {
-    setShotDetails(prev => ({...prev, shotType}));
+  const setShotType = (shot_type) => {
+    storeShotDetails({shot_type});
   };
-  const setShotRotation = (shotRotation) => {
-    setShotDetails(prev => ({...prev, shotRotation}));
+  const setShotRotation = (rotation) => {
+    storeShotDetails({rotation});
   };
 
   // const [rating, setRating] = useState('');
@@ -56,12 +56,12 @@ const ShotDetails = ({shotDetails, setShotDetails}) => {
         </Grid>
 
         <Grid item xs={12} sm={7} className={classes.spacingTopBottom}>
-          <ShotType shotType={shotType} setShotType={setShotType} />
+          <ShotType shotType={shot_type} setShotType={setShotType} />
         </Grid>
 
         <Grid item sm={12} className={classes.spacing}>
           <ShotRotation
-            shotRotation={shotRotation}
+            shotRotation={rotation}
             setShotRotation={setShotRotation}
           />
         </Grid>
