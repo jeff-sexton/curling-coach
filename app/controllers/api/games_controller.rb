@@ -7,6 +7,9 @@ class Api::GamesController < ApplicationController
     # ends = game.ends.map { |curl_end| { end: curl_end, shots: curl_end.shots }}
     ends = game.ends.map do |curl_end|
 
+      # convert nested json object to an array of objects before sending to the client
+      curl_end.throw_order = JSON.parse(curl_end.throw_order)
+      
       shots = curl_end.shots
 
       # Parse rock paths back to an array of hashes before sending to client
