@@ -38,9 +38,10 @@ const ThrowTurn = ({ gameState }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const [selectedIndex, setSelectedIndex] = useState(currentShot);
+  console.log("selected index", selectedIndex);
   
 
-  let playerText = currentShot > 1 && throwOrderForEnd[selectedIndex].name === throwOrderForEnd[selectedIndex - 2].name ? `It is ${throwOrderForEnd[selectedIndex].name}'s second shot` : `It is ${throwOrderForEnd[selectedIndex].name}'s first shot`;
+  let playerText = currentShot > 1 && throwOrderForEnd[currentShot].name === throwOrderForEnd[currentShot - 2].name ? `It is ${throwOrderForEnd[currentShot].name}'s second shot` : `It is ${throwOrderForEnd[currentShot].name}'s first shot`;
 
 
   const handleClickButton = (event) => {
