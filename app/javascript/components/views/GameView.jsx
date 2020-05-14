@@ -32,8 +32,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const GameView = () => {
+const GameView = ({gameId}) => {
   const classes = useStyles();
+  const game_id = gameId || 1;
 
   const {
     gameState,
@@ -41,56 +42,29 @@ const GameView = () => {
     prevShot,
     saveShot,
     endGame,
-    initializeEnd,
-  } = useApplicationData();
+    startEnd,
+    storeRockHistory,
+    storeShotDetails,
+  } = useApplicationData(game_id);
 
-  // move path history into GameState
-  const [pathHistory, setPathHistory] = useState([]);
-  const [shotDetails, setShotDetails] = useState({
-    rating: '',
-    shotType: '',
-    shotRotation: '',
-  });
+
 
 
   // add useEffect to reset shot details or grab existing details on each shot
-  useEffect(() => {
-    if (gameState.ends[gameState.currentEnd]) {
-      const initialHistory = [];
+  // useEffect(() => {
+  //   if (gameState.ends[gameState.currentEnd]) {
+  //     const initialHistory = [];
 
-      for (const shot of gameState.ends[gameState.currentEnd].shots) {
-        if (shot.rock_paths && shot.rock_paths.length > 0) {
-          initialHistory.push(shot.rock_paths);
-        }
-      }
+  //     for (const shot of gameState.ends[gameState.currentEnd].shots) {
+  //       if (shot.rock_paths && shot.rock_paths.length > 0) {
+  //         initialHistory.push(shot.rock_paths);
+  //       }
+  //     }
 
-      setPathHistory(initialHistory);
-    }
-  }, [gameState.loaded, gameState.currentEnd]);
+  //     setPathHistory(initialHistory);
+  //   }
+  // }, [gameState.loaded, gameState.currentEnd]);
 
-  const onSave = () => {
-    const currentEnd = gameState.currentEnd;
-    const currentShot = gameState.currentShot;
-
-    const end_id = gameState.ends[currentEnd].end.id;
-    const shot_number = currentShot + 1;
-    const player_id =
-      gameState.ends[currentEnd].end.throw_order[currentShot].id;
-
-    const { rating, shotType: shot_type, shotRotation: rotation } = shotDetails;
-
-    const shot = {
-      end_id,
-      shot_number,
-      rotation,
-      rating,
-      shot_type,
-      rock_paths: JSON.stringify(pathHistory[gameState.currentShot]),
-      player_id,
-    };
-
-    saveShot(shot);
-  };
 
   return (
     <>
@@ -106,14 +80,13 @@ const GameView = () => {
               nextShot={nextShot}
               prevShot={prevShot}
               gameState={gameState}
-              pathHistory={pathHistory}
-              setPathHistory={setPathHistory}
+              storeRockHistory={storeRockHistory}
             />
             {gameState.ends[gameState.currentEnd] &&
               !gameState.ends[gameState.currentEnd].end.first_team_id && (
                 <button
                   onClick={() => {
-                    initializeEnd(1);
+                    startEnd(1);
                   }}
                 >
                   Set Order
@@ -134,11 +107,11 @@ const GameView = () => {
               </Paper>
               <Paper elevation={3} className={classes.padding10}>
                 <ShotDetails
-                  shotDetails={shotDetails}
-                  setShotDetails={setShotDetails}
+                  gameState={gameState}
+                  storeShotDetails={storeShotDetails}
                 />
               </Paper>
-              <Buttons saveShot={onSave} endGame={endGame} />
+              <Buttons saveShot={saveShot} endGame={endGame} />
             </Box>
           </Box>
         </div>

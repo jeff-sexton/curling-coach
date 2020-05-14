@@ -1,162 +1,116 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import IceSurface from './IceSurface';
 
-
-
-const usePrevious = (value) => {
-  const ref = useRef();
-  useEffect(() => {
-    ref.current = value;
-  }, [value]);
-  return ref.current;
-};
-
-const StrategyBoard = ({
-  nextShot,
-  prevShot,
-  gameState,
-  pathHistory,
-  setPathHistory,
-}) => {
-  
-  // TODO - Move position change to higher component so it can be triggered by reset function as well
-  const shot = gameState.currentShot;
-  const previousShot = usePrevious(shot);
+const StrategyBoard = ({ nextShot, prevShot, gameState, storeRockHistory }) => {
+  const { currentShot, currentEnd } = gameState;
   const [positionChange, setPositionChange] = useState({});
 
-  // TODO - move replay position function to higher component so it can be triggered by reset function as well
-  useEffect(() => {
-    const stepBack = (previousShot) => {
-      const lastIndex = pathHistory[previousShot].length - 1;
-      let rockStep = lastIndex;
-      console.log('last rockstep', rockStep);
 
-      return () => {
-        rockStep -= 1;
-
-        if (rockStep < 0) {
-          return null;
-        } else {
-          return pathHistory[previousShot][rockStep];
-        }
-      };
-    };
-
-    const stepForward = (shot) => {
-      const lastIndex = pathHistory[shot].length - 1;
-      let rockStep = 0;
-
-      return () => {
-        rockStep += 1;
-
-        if (rockStep > lastIndex) {
-          return null;
-        } else {
-          return pathHistory[shot][rockStep];
-        }
-      };
-    };
-
-    if (previousShot && shot !== previousShot) {
-      console.log('replay?');
-      console.log('previousShot', previousShot);
-
-      if (shot < previousShot && pathHistory[previousShot]) {
-        const getPathStep = stepBack(previousShot);
-        const replayInterval = setInterval(() => {
-          const stepPosition = getPathStep();
-          if (stepPosition) {
-            setPositionChange(stepPosition);
-          } else {
-            clearInterval(replayInterval);
-          }
-
-          console.log('interval');
-        }, 20);
-      } else if (shot > previousShot && pathHistory[shot]) {
-        const getPathStep = stepForward(shot);
-        const replayInterval = setInterval(() => {
-          const stepPosition = getPathStep();
-          if (stepPosition) {
-            setPositionChange(stepPosition);
-          } else {
-            clearInterval(replayInterval);
-          }
-
-          console.log('interval');
-        }, 20);
-      }
-    }
-  }, [pathHistory, shot, previousShot]);
 
   // TODO - generate rocks based on throwing order state and associate
   // initial positions off screen?
 
-  const storeHistory = ({ id, x, y }) => {
-    console.log('update');
-    setPathHistory((prev) => {
-      const updatedHistory = [...prev];
 
-      console.log('prevHistory[shot]', prev[shot]);
+  const FORWARD = 'FORWARD';
+  const BACKWARD = 'BACKWARD';
 
-      if (prev[shot]) {
-        const lastPositionIndex = prev[shot].length - 1;
-        console.log(lastPositionIndex);
-        const prevPosition = prev[shot][lastPositionIndex];
-        console.log('prevPosition', prevPosition);
-        console.log('newPosition', { x, y });
+  const replayRockPath = (direction) => {
+    const arrayStepper = (direction) => {
+      const lastIndex =
+        gameState.ends[currentEnd].shots[currentShot].rock_paths.length - 1;
 
-        if (
-          Math.abs(x - prevPosition.x) > 10 ||
-          Math.abs(y - prevPosition.y) > 10
-        ) {
-          updatedHistory[shot] = [...prev[shot], { id, x, y }];
-        }
-      } else {
-        updatedHistory[shot] = [{ id, x, y }];
+      if (direction === FORWARD) {
+        let historyIndex = 0;
+        return () => {
+          historyIndex += 1;
+
+          if (historyIndex > lastIndex) {
+            return null;
+          } else {
+            return gameState.ends[currentEnd].shots[currentShot].rock_paths[
+              historyIndex
+            ];
+          }
+        };
+      } else if (direction === BACKWARD) {
+        let historyIndex = lastIndex;
+        return () => {
+          historyIndex -= 1;
+
+          if (historyIndex < 0) {
+            return null;
+          } else {
+            return gameState.ends[currentEnd].shots[currentShot].rock_paths[
+              historyIndex
+            ];
+          }
+        };
       }
+    };
 
-      return updatedHistory;
-    });
+    const getPathStep = arrayStepper(direction);
+
+    const replayInterval = setInterval(() => {
+      const stepPosition = getPathStep();
+
+      if (stepPosition) {
+        setPositionChange(stepPosition);
+      } else {
+        clearInterval(replayInterval);
+      }
+    }, 20);
+  };
+
+  const onPrev = () => {
+
+    replayRockPath(BACKWARD);
+
+    prevShot();
+  };
+
+  const onNext = () => {
+
+    replayRockPath(FORWARD);
+    nextShot();
   };
 
   const resetShot = () => {
-
-    const resetHistory = [...pathHistory[shot]]
-
-    while (resetHistory.length > 15) {
-      setPositionChange(resetHistory.pop());
-    }
-    setPathHistory((prev) => {
-      const updatedHistory = [...prev];
-
-      updatedHistory[shot] = resetHistory;
-
-      return updatedHistory;
-    });
+    // const resetHistory = [...pathHistory[currentShot]]
+    // while (resetHistory.length > 15) {
+    //   setPositionChange(resetHistory.pop());
+    // }
+    // setPathHistory((prev) => {
+    //   const updatedHistory = [...prev];
+    //   updatedHistory[shot] = resetHistory;
+    //   return updatedHistory;
+    // });
   };
 
   return (
     <div className="strategy-board">
       <IceSurface
-        gameState={gameState}
-        pathHistory={pathHistory}
-        setPathHistory={setPathHistory}
         positionChange={positionChange}
-        storeHistory={storeHistory}
-        shot={shot}
+        storeHistory={storeRockHistory}
+        gameState={gameState}
       ></IceSurface>
-      <h1>Shot number: {gameState.currentShot}</h1>
-      {gameState.currentShot > 0 && <button onClick={prevShot}>Prev</button>}
+      <h3>
+        Shot number: {currentShot + 1} array: {currentShot}
+      </h3>
+      {currentShot > 0 && <button onClick={onPrev}>Prev</button>}
 
-      {pathHistory[gameState.currentShot + 1] && (
-        <button onClick={nextShot}>Next</button>
-      )}
+      {/* <button onClick={onPrev}>Prev</button> */}
 
-      {pathHistory[gameState.currentShot] &&
+
+
+       {gameState.ends[currentEnd].shots[currentShot + 1] && 
+        <button onClick={onNext}>Next</button>
+        } 
+
+      {/* <button onClick={onNext}>Next</button> */}
+      {/* {pathHistory[gameState.currentShot] &&
         pathHistory[gameState.currentShot].length > 16 && (
           <button onClick={resetShot}>Reset Shot</button>
-        )}
+        )} */}
     </div>
   );
 };
