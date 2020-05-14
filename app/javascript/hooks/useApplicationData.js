@@ -126,18 +126,20 @@ const reducer = (state, action) => {
       return { ...state, ends };
     }
   };
-  const INITIALIZE_END = () => {
-    const currentEnd = state.currentEnd;
-    console.log('test case', state.ends[currentEnd]);
+  const INITIALIZE_END = ({value}) => {
+    const targetEnd = value.end;
+    console.log('\n\n ***** test case *****\n\n');
 
     if (
-      state.ends[currentEnd] &&
-      state.ends[currentEnd].end &&
-      state.ends[currentEnd].end.id
+      state.ends[targetEnd] &&
+      state.ends[targetEnd].end &&
+      state.ends[targetEnd].end.id
     ) {
+      console.log('exisitng end', state.ends[targetEnd].end );
       return { ...state };
       // existing end and end id already loaded
     } else {
+      console.log('initialize end');
       const game_id = state.game.id;
 
       const end = {
@@ -152,7 +154,7 @@ const reducer = (state, action) => {
       };
 
       const ends = [...state.ends];
-      ends[currentEnd] = end;
+      ends[targetEnd] = end;
 
       return { ...state, ends };
     }
@@ -233,7 +235,7 @@ const useApplicationData = (game_id) => {
         dispatch({ type: SET_INITIAL_GAME_STATE, value: res.data });
       })
       .then(() => {
-        dispatch({ type: INITIALIZE_END, value: null });
+        dispatch({ type: INITIALIZE_END, value: { end: gameState.currentEnd }});
         // initializeEnd()
       })
       .then(() => {
@@ -260,6 +262,7 @@ const useApplicationData = (game_id) => {
 
     if (newCurrentShot > 15) {
       const nextEnd = gameState.currentEnd + 1;
+      dispatch({type: INITIALIZE_END, value: {end: nextEnd}})
       dispatch({ type: INITIALIZE_SHOT, value: { shot: 0, end: nextEnd } });
 
       if (gameState.currentEnd < 12) {
@@ -307,13 +310,55 @@ const useApplicationData = (game_id) => {
     // dispatch({ type: SET_SHOT_DETAILS, value: shot });
   };
 
-  const startEnd = (team_id) => {
-    dispatch({ type: SET_FIRST_TEAM, value: team_id });
-    dispatch({ type: SET_THROW_ORDER, value: null });
+  const startEnd = (first_team_id) => {
 
-    // axios.post('/api/ends', end)
-    // .then(res => {
-    //   dispatch({ type: SET_END_DETAILS, value: res.data });
+    const currentEnd = gameState.currentEnd;
+
+
+    const throw_order = [];
+
+    for (const teamObj of gameState.teams_with_players) {
+      let teamOffset;
+      if (
+        teamObj.team.id === first_team_id
+      ) {
+        teamOffset = 0;
+      } else {
+        teamOffset = 1;
+      }
+      for (const player of teamObj.players) {
+        const playerOffset = (player.throw_order - 1) * 4;
+        throw_order[teamOffset + playerOffset] = player;
+        throw_order[teamOffset + playerOffset + 2] = player;
+      }
+    }
+
+    // throw_order: JSON.stringify(throw_order)
+
+    const end = {...gameState.ends[currentEnd].end, first_team_id, throw_order};
+
+    console.log('created end', end);
+
+    axios.post('/api/ends', end)
+    .then(res => {
+      dispatch({ type: SET_END_DETAILS, value: res.data });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+
+
+
+
+    // dispatch({ type: SET_FIRST_TEAM, value: team_id });
+    // dispatch({ type: SET_THROW_ORDER, value: null });
+
+    // const currentEnd = gameState.currentEnd;
+
+    // const end = {...gameState.ends[currentEnd]}
+
+
   };
 
   const storeRockHistory = (positionValue) => {
