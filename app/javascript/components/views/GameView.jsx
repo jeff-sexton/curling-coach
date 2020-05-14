@@ -93,31 +93,6 @@ const GameView = () => {
   };
 
   return (
-<<<<<<< HEAD
-    <div className={classes.root}>
-      <Box display="flex" justifyContent="space-around" height='70vh' >
-        <StrategyBoard nextShot={nextShot} prevShot={prevShot} gameState={gameState} />
-
-        <Box
-          display="flex"
-          flexDirection="column"
-          justifyContent="space-between"
-          width="40%"
-        >
-          <Paper elevation={3} className={classes.padding10}>
-            <GameDetails gameState={gameState}/>
-          </Paper>
-          <Paper elevation={3} className={classes.padding10}>
-            <EndDetails gameState={gameState}/>
-          </Paper>
-          <Paper elevation={3} className={classes.padding10}>
-            <ShotDetails />
-          </Paper>
-          {/* <Buttons saveShot={saveShot} endGame={endGame} /> */}
-        </Box>
-      </Box>
-    </div>
-=======
     <>
       {!gameState.loaded && (
         <div>
@@ -155,7 +130,7 @@ const GameView = () => {
                 <GameDetails gameState={gameState} />
               </Paper>
               <Paper elevation={3} className={classes.padding10}>
-                <div>event here</div>
+                <EndDetails gameState={gameState}/>
               </Paper>
               <Paper elevation={3} className={classes.padding10}>
                 <ShotDetails
@@ -169,7 +144,6 @@ const GameView = () => {
         </div>
       )}
     </>
->>>>>>> master
   );
 };
 
