@@ -52,7 +52,7 @@ const EndMenu = ({ ends }) => {
     return (
       <MenuItem 
         className={classes.listItem}
-        key={value.id} 
+        key={index} 
         selected={index === selectedIndex}
         onClick={(event) => handleClick(event, index)}
       >
