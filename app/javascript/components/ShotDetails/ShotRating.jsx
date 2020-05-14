@@ -26,8 +26,8 @@ const ShotRating = ({ rating, setRating }) => {
   };
 
   return (
-    <FormControl required className={classes.formControl}>
-      <InputLabel id="shot-rating">Rating</InputLabel>
+    <FormControl required className={classes.formControl} error={false}>
+      <InputLabel id="shot-rating">{false && "Rating required" || "Rating"}</InputLabel>
       <Select
         labelId="shot-rating"
         id="rating"
@@ -44,7 +44,6 @@ const ShotRating = ({ rating, setRating }) => {
         <MenuItem value={3}>3</MenuItem>
         <MenuItem value={4}>4</MenuItem>
       </Select>
-      
     </FormControl>
   );
 };

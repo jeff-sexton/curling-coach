@@ -7,6 +7,7 @@ const SET_THROW_ORDER = 'SET_THROW_ORDER';
 const SET_FIRST_TEAM = 'SET_FIRST_TEAM';
 const SET_CURRENT_SHOT = 'SET_CURRENT_SHOT';
 const SET_SHOT_DETAILS = 'SET_SHOT_DETAILS';
+const SET_SHOT_SAVE_ERRORS = 'SET_SHOT_SAVE_ERRORS';
 const SET_END_DETAILS = 'SET_END_DETAILS';
 const SET_CURRENT_END = 'SET_CURRENT_END';
 const INITIALIZE_END = 'INITIALIZE_END';
@@ -86,6 +87,10 @@ const reducer = (state, action) => {
 
     return { ...state, ends };
   };
+
+  const SET_SHOT_SAVE_ERRORS = ({ value }) => {
+    return { ...state, shotSaveErrors: value }
+  }
 
   const SET_END_DETAILS = ({ value }) => {
     const currentEnd = state.currentEnd;
@@ -204,6 +209,7 @@ const reducer = (state, action) => {
     SET_CURRENT_SHOT,
     SET_CURRENT_END,
     SET_SHOT_DETAILS,
+    SET_SHOT_SAVE_ERRORS,
     SET_END_DETAILS,
     INITIALIZE_END,
     INITIALIZE_SHOT,
@@ -223,6 +229,7 @@ const useApplicationData = (game_id) => {
     currentShot: 0,
     currentEnd: 0,
     loaded: false,
+    shotSaveErrors: []
   });
 
   // Get Initial Game details from API
@@ -297,6 +304,11 @@ const useApplicationData = (game_id) => {
     axios
       .post('/api/shots', shot)
       .then((res) => {
+        if (res.data.errors) {
+          dispatch({ type: SET_SHOT_SAVE_ERRORS, value: res.data.errors });
+          return;
+        }
+        dispatch({ type: SET_SHOT_SAVE_ERRORS, value: null });
         dispatch({ type: SET_SHOT_DETAILS, value: res.data });
         nextShot();
       })

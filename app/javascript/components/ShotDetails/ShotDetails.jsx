@@ -32,6 +32,7 @@ const ShotDetails = ({ gameState, storeShotDetails }) => {
   const classes = useStyles();
 
   const {rating, shot_type, rotation} = gameState.ends[gameState.currentEnd].shots[gameState.currentShot];
+  console.log("Gamestate Save Errors ", gameState.shotSaveErrors)
 
   const setRating = (rating) => {
     storeShotDetails({rating});
