@@ -32,7 +32,7 @@ const ShotDetails = ({ gameState, storeShotDetails }) => {
   const classes = useStyles();
 
   const {rating, shot_type, rotation} = gameState.ends[gameState.currentEnd].shots[gameState.currentShot];
-  console.log("Gamestate Save Errors ", gameState.shotSaveErrors)
+
 
   const setRating = (rating) => {
     storeShotDetails({rating});
@@ -53,17 +53,18 @@ const ShotDetails = ({ gameState, storeShotDetails }) => {
       <h3 className={classes.marginTop}>Shot Details</h3>
       <Grid container>
         <Grid item xs={12} sm={5} className={classes.spacingTopBottom}>
-          <ShotRating rating={rating} setRating={setRating} />
+          <ShotRating rating={rating} setRating={setRating}  errors={gameState.shotSaveErrors} />
         </Grid>
 
         <Grid item xs={12} sm={7} className={classes.spacingTopBottom}>
-          <ShotType shotType={shot_type} setShotType={setShotType} />
+          <ShotType shotType={shot_type} setShotType={setShotType} errors={gameState.shotSaveErrors} />
         </Grid>
 
         <Grid item sm={12} className={classes.spacing}>
           <ShotRotation
             shotRotation={rotation}
             setShotRotation={setShotRotation}
+            errors={gameState.shotSaveErrors}
           />
         </Grid>
       </Grid>

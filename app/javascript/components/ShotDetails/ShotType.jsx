@@ -34,16 +34,17 @@ const shotTypes = [
   createData('NotScored', 'Not Scored'),
 ];
 
-const ShotType = ({ shotType, setShotType }) => {
+const ShotType = ({ shotType, setShotType, errors }) => {
   const classes = useStyles();
+  const typeError = errors && errors.shot_type ? true : false;
 
   const handleChange = (event) => {
     setShotType(event.target.value);
   };
 
   return (
-    <FormControl required className={classes.formControl}>
-      <InputLabel id="shot-type">Type</InputLabel>
+    <FormControl required className={classes.formControl} error={typeError}>
+      <InputLabel id="shot-type">{typeError && "Type required" || "Type"}</InputLabel>
       <Select
         labelId="shot-type"
         id="shot_type"

@@ -18,16 +18,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ShotRating = ({ rating, setRating }) => {
+const ShotRating = ({ rating, setRating, errors }) => {
   const classes = useStyles();
+
+  const ratingError = errors && errors.rating ? true : false;
 
   const handleChange = (event) => {
     setRating(event.target.value);
   };
 
   return (
-    <FormControl required className={classes.formControl} error={false}>
-      <InputLabel id="shot-rating">{false && "Rating required" || "Rating"}</InputLabel>
+    <FormControl required className={classes.formControl} error={ratingError}>
+      <InputLabel id="shot-rating">{ratingError && "Rating required" || "Rating"}</InputLabel>
       <Select
         labelId="shot-rating"
         id="rating"

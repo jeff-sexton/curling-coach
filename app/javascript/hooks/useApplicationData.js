@@ -229,7 +229,7 @@ const useApplicationData = (game_id) => {
     currentShot: 0,
     currentEnd: 0,
     loaded: false,
-    shotSaveErrors: []
+    shotSaveErrors: null
   });
 
   // Get Initial Game details from API
@@ -287,6 +287,7 @@ const useApplicationData = (game_id) => {
     const newCurrentShot = gameState.currentShot - 1;
     if (newCurrentShot >= 0) {
       dispatch({ type: SET_CURRENT_SHOT, value: newCurrentShot });
+      dispatch({ type: SET_SHOT_SAVE_ERRORS, value: null });
     }
   };
 

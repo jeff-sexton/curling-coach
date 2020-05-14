@@ -15,16 +15,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ShotRotation = ({ shotRotation, setShotRotation }) => {
+const ShotRotation = ({ shotRotation, setShotRotation, errors }) => {
   const classes = useStyles();
+
+  const rotationError = errors && errors.rotation ? true : false;
+
 
   const handleChange = (event) => {
     setShotRotation(event.target.value);
   };
 
   return (
-    <FormControl required className={classes.formControl}>
-      <InputLabel id="shot-rotation">Rotation</InputLabel>
+    <FormControl required className={classes.formControl} error={rotationError}>
+      <InputLabel id="shot-rotation">{rotationError && "Rotation required" || "Rotation"}</InputLabel>
       <Select
         labelId="shot-rotation"
         id="rotation"
