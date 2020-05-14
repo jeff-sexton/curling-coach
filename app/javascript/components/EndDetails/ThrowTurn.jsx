@@ -63,7 +63,7 @@ const ThrowTurn = ({ gameState }) => {
     return (
       <MenuItem 
         className={classes.listItem}
-        key={value} 
+        key={index} 
         selected={index === selectedIndex}
         onClick={(event) => handleClick(event, index)}
       >
