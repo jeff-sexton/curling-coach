@@ -1,23 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import IceSurface from './IceSurface';
 
-const StrategyBoard = ({ nextShot, prevShot, gameState, storeRockHistory }) => {
+const StrategyBoard = ({ nextShot, prevShot, gameState, storeRockHistory, isEditable }) => {
   const { currentShot, currentEnd } = gameState;
   const [positionChange, setPositionChange] = useState({});
-
-
 
   // TODO - generate rocks based on throwing order state and associate
   // initial positions off screen?
 
-
   const FORWARD = 'FORWARD';
   const BACKWARD = 'BACKWARD';
 
-  const replayRockPath = (direction) => {
-    const arrayStepper = (direction) => {
-      const lastIndex =
-        gameState.ends[currentEnd].shots[currentShot].rock_paths.length - 1;
+  const replayRockPath = (direction, shot, end) => {
+    const arrayStepper = () => {
+      const lastIndex = gameState.ends[end].shots[shot].rock_paths.length - 1;
 
       if (direction === FORWARD) {
         let historyIndex = 0;
@@ -27,9 +23,7 @@ const StrategyBoard = ({ nextShot, prevShot, gameState, storeRockHistory }) => {
           if (historyIndex > lastIndex) {
             return null;
           } else {
-            return gameState.ends[currentEnd].shots[currentShot].rock_paths[
-              historyIndex
-            ];
+            return gameState.ends[end].shots[shot].rock_paths[historyIndex];
           }
         };
       } else if (direction === BACKWARD) {
@@ -40,15 +34,13 @@ const StrategyBoard = ({ nextShot, prevShot, gameState, storeRockHistory }) => {
           if (historyIndex < 0) {
             return null;
           } else {
-            return gameState.ends[currentEnd].shots[currentShot].rock_paths[
-              historyIndex
-            ];
+            return gameState.ends[end].shots[shot].rock_paths[historyIndex];
           }
         };
       }
     };
 
-    const getPathStep = arrayStepper(direction);
+    const getPathStep = arrayStepper();
 
     const replayInterval = setInterval(() => {
       const stepPosition = getPathStep();
@@ -61,16 +53,23 @@ const StrategyBoard = ({ nextShot, prevShot, gameState, storeRockHistory }) => {
     }, 20);
   };
 
-  const onPrev = () => {
+  useEffect(() => {
+    replayRockPath(FORWARD, currentShot, currentEnd);
+  }, []);
 
-    replayRockPath(BACKWARD);
+  const onPrev = () => {
+    replayRockPath(BACKWARD, currentShot, currentEnd);
 
     prevShot();
   };
 
   const onNext = () => {
+    const nextShotState = gameState.ends[currentEnd].shots[currentShot + 1];
 
-    replayRockPath(FORWARD);
+    if (nextShotState && nextShotState.rock_paths.length > 0) {
+      replayRockPath(FORWARD, currentShot + 1, currentEnd);
+    }
+
     nextShot();
   };
 
@@ -92,6 +91,7 @@ const StrategyBoard = ({ nextShot, prevShot, gameState, storeRockHistory }) => {
         positionChange={positionChange}
         storeHistory={storeRockHistory}
         gameState={gameState}
+        isEditable={isEditable}
       ></IceSurface>
       <h3>
         Shot number: {currentShot + 1} array: {currentShot}
@@ -100,11 +100,9 @@ const StrategyBoard = ({ nextShot, prevShot, gameState, storeRockHistory }) => {
 
       {/* <button onClick={onPrev}>Prev</button> */}
 
-
-
-       {gameState.ends[currentEnd].shots[currentShot + 1] && 
+      {!isEditable && (
         <button onClick={onNext}>Next</button>
-        } 
+      )}
 
       {/* <button onClick={onNext}>Next</button> */}
       {/* {pathHistory[gameState.currentShot] &&
