@@ -5,14 +5,7 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import GamePreviewStyles from './GamePreviewStyles';
 
-const useStyles = makeStyles(GamePreviewStyles, (theme) => ({
-  controls: {
-    display: 'flex',
-    alignItems: 'center',
-    paddingLeft: theme.spacing(1),
-    paddingBottom: theme.spacing(1),
-  },
-}));
+const useStyles = makeStyles(GamePreviewStyles);
 
 const GamePreview = ({ onClick }) => {
   const classes = useStyles();
@@ -62,6 +55,7 @@ const GamePreview = ({ onClick }) => {
           variant="contained"
           color="primary"
           width="100%"
+          color="secondary"
         >
           Stats
         </Button>

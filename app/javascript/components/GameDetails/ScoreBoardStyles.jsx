@@ -1,16 +1,14 @@
-const ScoreBoardStyles = {
-  table: {
-  },
+const ScoreBoardStyles = (theme) => ({
   TableRow: {
     width: 90,
     paddingRight: 10,
   },
   teamNameRow: {
     '& tr:nth-child(1) > th': {
-      backgroundColor: 'red',
+      backgroundColor: theme.palette.team1Color.main,
     },
     '& tr:nth-child(2) > th': {
-      backgroundColor: 'yellow',
+      backgroundColor: theme.palette.team2Color.main,
     },
   },
   teamName: {
@@ -63,6 +61,6 @@ const ScoreBoardStyles = {
       textAlign: 'center',
     },
   },
-};
+});
 
 export default ScoreBoardStyles;

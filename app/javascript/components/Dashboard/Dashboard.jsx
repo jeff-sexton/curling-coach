@@ -21,7 +21,7 @@ const Dashboard = ({ onClick }) => {
 
   return(
     <div className={classes.root}>
-      <h1> Status Board </h1>
+      <h1> Dashboard </h1>
       <GamePreview onClick={onClick}/>
       <GamePreview onClick={onClick}/>
       <GamePreview onClick={onClick}/>
