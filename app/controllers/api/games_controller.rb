@@ -1,5 +1,8 @@
 class Api::GamesController < ApplicationController
   def index
+    game = Game.all
+
+    render json: game, include: :teams
   end
 
   def show
