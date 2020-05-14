@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles({
   root: {
     // background: 'linear-gradient(45deg, #3f51b5, #5f94b1 90%)',
-    background: "blue",
+    background: "#f50057",
     border: 0,
     borderRadius: 3,
     color: 'white',
@@ -27,14 +27,22 @@ const useStyles = makeStyles({
   
 });
 
-
-const EndMenu = ({ ends }) => {
-
+const ThrowTurn = ({ gameState }) => {
   const classes = useStyles();
+  const { currentEnd, currentShot, ends } = gameState;
+ 
+  const throwOrderForEnd = ends[currentEnd].end.throw_order; 
+  const currentPlayer = throwOrderForEnd[currentShot]; 
+  console.log(throwOrderForEnd);
 
   const [anchorEl, setAnchorEl] = useState(null);
-  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const [selectedIndex, setSelectedIndex] = useState(currentShot);
   
+
+  let playerText = currentShot > 1 && throwOrderForEnd[selectedIndex].name === throwOrderForEnd[selectedIndex - 2].name ? `It is ${throwOrderForEnd[selectedIndex].name}'s second shot` : `It is ${throwOrderForEnd[selectedIndex].name}'s first shot`;
+
+
   const handleClickButton = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -48,15 +56,17 @@ const EndMenu = ({ ends }) => {
     setAnchorEl(null);
   };
 
-  const EndMenuListItems = ends.map((value, index) => {
+  const ThrowOrderListItems = throwOrderForEnd.map((value, index) => {
+
+    let playerText = index > 1 && value.name === throwOrderForEnd[index - 2].name ? `${value.name}'s second shot` : `${value.name}'s first shot`;
     return (
       <MenuItem 
         className={classes.listItem}
-        key={value.id} 
+        key={value} 
         selected={index === selectedIndex}
         onClick={(event) => handleClick(event, index)}
       >
-        End {index + 1}
+        {playerText}
       </MenuItem>
     )
   })
@@ -71,7 +81,7 @@ const EndMenu = ({ ends }) => {
       color="primary"
       onClick={handleClickButton} 
       textalign="center">
-        {`End ${selectedIndex + 1} Info`}
+        {playerText}
       </Button>
       <Menu
         id="lock-menu"
@@ -80,10 +90,10 @@ const EndMenu = ({ ends }) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-       {EndMenuListItems}
+        {ThrowOrderListItems} 
       </Menu>
     </>
   );
 }
 
-export default EndMenu;
+export default ThrowTurn;
