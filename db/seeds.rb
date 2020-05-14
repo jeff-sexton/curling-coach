@@ -28,16 +28,17 @@ puts "Finding or Creating Games ..."
 
 game1 = Game.find_or_create_by!({
   id: 1, 
-  date_time: '2020/05/05',
+  date_time: 3.days.ago,
   location: 'Vancouver',
   completed: false
 })
 game2 = Game.find_or_create_by!({
   id: 2, 
-  date_time: '2020/05/05',
+  date_time: '2020-05-06T02:00:00.000Z',
   location: 'North Shore',
   completed: false
 })
+
 
 ## ENDS
 
