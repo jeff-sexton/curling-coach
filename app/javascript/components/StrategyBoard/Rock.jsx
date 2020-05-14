@@ -8,22 +8,23 @@ const Rock = ({
   color,
   parentRef,
   storeHistory,
-  pathHistory,
-  shot,
   gameState,
 }) => {
   const [position, setPosition] = useState({ x, y });
   const [selected, setSelected] = useState(false);
 
+  const {currentEnd, currentShot, loaded} = gameState
+  const pathHistory = gameState.ends[currentEnd].shots[currentShot].rock_paths;
+
   // Add current position to pathHistory for every new show
   useEffect(() => {
     // console.log(pathHistory[shot] === undefined || pathHistory[shot].length === 0);
 
-    if (pathHistory[shot] === undefined || pathHistory[shot].length === 0) {
+    if (pathHistory === undefined || pathHistory.length === 0) {
       console.log('store initial position');
       storeHistory({ id, x: position.x, y: position.y });
     }
-  }, [shot, gameState.loaded]);
+  }, [currentShot, loaded]);
 
   // Respond to replay position changes
   useEffect(() => {
