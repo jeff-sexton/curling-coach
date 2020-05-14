@@ -21,7 +21,6 @@ const Rock = ({
     // console.log(pathHistory[shot] === undefined || pathHistory[shot].length === 0);
 
     if (pathHistory === undefined || pathHistory.length === 0) {
-      console.log('store initial position');
       storeHistory({ id, x: position.x, y: position.y });
     }
   }, [currentShot, loaded]);

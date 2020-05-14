@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { useReducer, useEffect } from 'react';
 import axios from 'axios';
 
@@ -158,28 +159,6 @@ const reducer = (state, action) => {
   };
 
   const SET_PATH_HISTORY = ({ value }) => {
-    // const updatedHistory = [...prev];
-
-    // console.log('prevHistory[shot]', prev[shot]);
-
-    // if (prev[shot]) {
-    //   const lastPositionIndex = prev[shot].length - 1;
-    //   console.log(lastPositionIndex);
-    //   const prevPosition = prev[shot][lastPositionIndex];
-    //   console.log('prevPosition', prevPosition);
-    //   console.log('newPosition', { x, y });
-
-    //   if (
-    //     Math.abs(x - prevPosition.x) > 10 ||
-    //     Math.abs(y - prevPosition.y) > 10
-    //   ) {
-    //     updatedHistory[shot] = [...prev[shot], { id, x, y }];
-    //   }
-    // } else {
-    //   updatedHistory[shot] = [{ id, x, y }];
-    // }
-    // return updatedHistory;
-
     const currentEnd = state.currentEnd;
     const currentShot = state.currentShot;
     const rock_paths = [
@@ -206,7 +185,7 @@ const reducer = (state, action) => {
 
       return { ...state, ends };
     } else {
-      //Don't update state
+      // Don't update state
       return { ...state };
     }
   };
