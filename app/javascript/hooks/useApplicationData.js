@@ -14,6 +14,7 @@ const INITIALIZE_END = 'INITIALIZE_END';
 const INITIALIZE_SHOT = 'INITIALIZE_SHOT';
 const SET_PATH_HISTORY = 'SET_PATH_HISTORY';
 const COMPLETE_LOAD = 'COMPLETE_LOAD';
+const SET_COMPLETE_END_PROMPT = 'SET_COMPLETE_END_PROMPT';
 
 const reducer = (state, action) => {
   // Reducers
@@ -201,6 +202,11 @@ const reducer = (state, action) => {
     }
   };
 
+  const SET_COMPLETE_END_PROMPT = ({ value: completeEndPrompt }) => ({
+    ...state,
+    completeEndPrompt,
+  });
+
   const DEFAULT = () => {
     throw new Error(
       `Tried to reduce with unsupported action type: ${action.type}`
@@ -221,6 +227,7 @@ const reducer = (state, action) => {
     INITIALIZE_SHOT,
     SET_PATH_HISTORY,
     COMPLETE_LOAD,
+    SET_COMPLETE_END_PROMPT,
     DEFAULT,
   };
 
@@ -235,7 +242,8 @@ const useApplicationData = (game_id) => {
     currentShot: 0,
     currentEnd: 0,
     loaded: false,
-    shotSaveErrors: null
+    shotSaveErrors: null,
+    completeEndPrompt: false,
   });
 
   // Get Initial Game details from API
