@@ -9,34 +9,28 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     minWidth: 120,
     width: '100%',
-    '& .MuiFormHelperText-root .Mui-required': {
-      display: 'none',
-    },
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
+    height: 'auto'
+  }
 }));
 
-const ShotRating = ({ rating, setRating }) => {
+const ShotRating = ({ rating, storeShotDetails, errors }) => {
   const classes = useStyles();
-
-  const handleChange = (event) => {
-    setRating(event.target.value);
+  const errorsExist = errors && errors.rating;
+  const label = errorsExist ? "Rating required*" : "Rating*";
+  
+  const setRating = (rating) => {
+    storeShotDetails({rating});
   };
-
+  
   return (
-    <FormControl required className={classes.formControl}>
-      <InputLabel id="shot-rating">Rating</InputLabel>
+    <FormControl variant="outlined" className={classes.formControl} error={errorsExist}>
+      <InputLabel id="shot-rating">{label}</InputLabel>
       <Select
         labelId="shot-rating"
         id="rating"
         value={rating}
-        onChange={handleChange}
-        displayEmpty
-        className={classes.selectEmpty}
-        inputProps={{ 'aria-label': 'Without label' }}
-        required={true}
+        onChange={(event) => setRating(event.target.value)}
+        label={label}
       >
         <MenuItem value={0}>0</MenuItem>
         <MenuItem value={1}>1</MenuItem>
@@ -44,9 +38,9 @@ const ShotRating = ({ rating, setRating }) => {
         <MenuItem value={3}>3</MenuItem>
         <MenuItem value={4}>4</MenuItem>
       </Select>
-      
     </FormControl>
   );
 };
 
 export default ShotRating;
+

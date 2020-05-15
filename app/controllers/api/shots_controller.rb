@@ -16,7 +16,7 @@ class Api::ShotsController < ApplicationController
 
       render json: shot
     else
-      render json: shot.errors, status: :unprocessable_entity
+      render json: { errors: shot.errors.messages }
     end
   end
 

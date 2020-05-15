@@ -9,34 +9,32 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     minWidth: 120,
     width: '100%',
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
+    height: 'auto'
+  }
 }));
 
-const ShotRotation = ({ shotRotation, setShotRotation }) => {
+const ShotRotation = ({ rotation, storeShotDetails, errors }) => {
   const classes = useStyles();
 
-  const handleChange = (event) => {
-    setShotRotation(event.target.value);
+  const errorsExist = errors && errors.rotation;
+  const label = errorsExist ? "Rotation required*" : "Rotation*";
+
+  const setShotRotation = (rotation) => {
+    storeShotDetails({rotation});
   };
 
   return (
-    <FormControl required className={classes.formControl}>
-      <InputLabel id="shot-rotation">Rotation</InputLabel>
+    <FormControl variant="outlined" className={classes.formControl} error={errorsExist}>
+      <InputLabel id="shot-rotation">{label}</InputLabel>
       <Select
         labelId="shot-rotation"
         id="rotation"
-        value={shotRotation}
-        onChange={handleChange}
-        displayEmpty
-        className={classes.selectEmpty}
-        inputProps={{ 'aria-label': 'Without label' }}
-        required={true}
+        value={rotation}
+        onChange={(event) => setShotRotation(event.target.value)}
+        label={label}
       >
-        <MenuItem value={'clockwise'}>Clock Wise</MenuItem>
-        <MenuItem value={'counterclockwise'}>Counter Clock Wise</MenuItem>
+        <MenuItem value={'clockwise'}>Clockwise</MenuItem>
+        <MenuItem value={'counterclockwise'}>Counterclockwise</MenuItem>
       </Select>
     </FormControl>
   );
