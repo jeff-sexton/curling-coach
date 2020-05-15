@@ -104,6 +104,27 @@ team2.players.create!({
  throw_order: 4
 })
 
+
+team3.players.create!({
+  name:  'Alice',
+  throw_order: 1
+})
+
+team3.players.create!({
+  name:  'Tin-man',
+ throw_order: 2
+})
+
+team3.players.create!({
+  name:  'Lion',
+ throw_order: 3
+})
+
+team3.players.create!({
+  name:  'Scarecrow',
+ throw_order: 4
+})
+
 ## GAME PARTICIPATIONS
 
 puts "Re-Creating Game Participations ..."
