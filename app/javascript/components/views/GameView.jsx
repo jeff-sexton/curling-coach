@@ -11,7 +11,7 @@ import GameDetails from '../GameDetails';
 import EndDetails from '../EndDetails';
 import ShotDetails from '../ShotDetails';
 import Buttons from '../Buttons';
-import EndModal from '../EndModal';
+import StartEndModal from '../StartEndModal';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -98,7 +98,7 @@ const GameView = ({ gameId }) => {
               <Buttons saveShot={saveShot} endGame={endGame} />
             </Box>
           </Box>
-          <EndModal gameState={gameState} startEnd={startEnd} />
+          <StartEndModal gameState={gameState} startEnd={startEnd} />
         </div>
       )}
     </>

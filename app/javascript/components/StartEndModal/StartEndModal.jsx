@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
+import { useState } from 'react';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -16,9 +17,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const EndModal = ({ gameState, startEnd }) => {
+const StartEndModal = ({ gameState, startEnd }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [selectedTeamId, setSelectedTeamId] = useState('')
 
   const { currentEnd } = gameState;
 
@@ -77,4 +79,4 @@ const EndModal = ({ gameState, startEnd }) => {
   );
 };
 
-export default EndModal;
+export default StartEndModal;
