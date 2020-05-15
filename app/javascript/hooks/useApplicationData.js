@@ -3,8 +3,8 @@ import { useReducer, useEffect } from 'react';
 import axios from 'axios';
 
 const SET_INITIAL_GAME_STATE = 'SET_INITIAL_GAME_STATE';
-const SET_THROW_ORDER = 'SET_THROW_ORDER';
-const SET_FIRST_TEAM = 'SET_FIRST_TEAM';
+const SET_THROW_ORDER = 'SET_THROW_ORDER'; // not currently used
+const SET_FIRST_TEAM = 'SET_FIRST_TEAM'; // not currently used
 const SET_CURRENT_SHOT = 'SET_CURRENT_SHOT';
 const SET_SHOT_DETAILS = 'SET_SHOT_DETAILS';
 const SET_SHOT_SAVE_ERRORS = 'SET_SHOT_SAVE_ERRORS';
@@ -106,9 +106,13 @@ const reducer = (state, action) => {
     const targetEnd = value.end;
     const targetShot = value.shot;
 
+    console.log('\n*** Initialize Shot ***\n', targetEnd, targetShot)
+
     if (state.ends[targetEnd].shots[targetShot]) {
+      console.log('existing shot')
       return { ...state };
     } else {
+      console.log('new shot')
       const end_id = state.ends[targetEnd].end.id;
       const shot_number = targetShot + 1;
 
@@ -133,7 +137,7 @@ const reducer = (state, action) => {
   };
   const INITIALIZE_END = ({ value }) => {
     const targetEnd = value.end;
-    console.log('\n\n ***** test case *****\n\n');
+    console.log('\n\n ***** inialize end *****\n\n');
 
     if (
       state.ends[targetEnd] &&
@@ -144,7 +148,7 @@ const reducer = (state, action) => {
       return { ...state };
       // existing end and end id already loaded
     } else {
-      console.log('initialize end');
+      console.log('initialize new end');
       const game_id = state.game.id;
 
       const end = {
@@ -246,7 +250,6 @@ const useApplicationData = (game_id) => {
           type: INITIALIZE_END,
           value: { end: gameState.currentEnd },
         });
-        // initializeEnd()
       })
       .then(() => {
         dispatch({
@@ -270,16 +273,16 @@ const useApplicationData = (game_id) => {
   const nextShot = () => {
     const newCurrentShot = gameState.currentShot + 1;
 
-    if (newCurrentShot > 15) {
+    if (newCurrentShot > 15 && gameState.currentEnd < 12) {
+      console.log('Moving to next end')
       const nextEnd = gameState.currentEnd + 1;
       dispatch({ type: INITIALIZE_END, value: { end: nextEnd } });
       dispatch({ type: INITIALIZE_SHOT, value: { shot: 0, end: nextEnd } });
-
-      if (gameState.currentEnd < 12) {
-        dispatch({ type: SET_CURRENT_END, value: nextEnd });
-      }
+      dispatch({ type: SET_CURRENT_END, value: nextEnd });
       dispatch({ type: SET_CURRENT_SHOT, value: 0 });
+
     } else {
+      console.log('initializing next shot')
       dispatch({
         type: INITIALIZE_SHOT,
         value: { shot: newCurrentShot, end: gameState.currentEnd },
@@ -303,6 +306,7 @@ const useApplicationData = (game_id) => {
 
     const shot = { ...gameState.ends[currentEnd].shots[currentShot] };
 
+    shot.end_id = gameState.ends[currentEnd].end.id
     shot.player_id = gameState.ends[currentEnd].end.throw_order[currentShot].id;
 
     // Save forms & shot path history to server here

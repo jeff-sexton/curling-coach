@@ -28,7 +28,8 @@ const useStyles = makeStyles({
 });
 
 
-const EndMenu = ({ ends }) => {
+const EndMenu = ({ gameState }) => {
+  const { ends, currentEnd, currentShot } = gameState;
 
   const classes = useStyles();
 
@@ -71,7 +72,7 @@ const EndMenu = ({ ends }) => {
       color="primary"
       onClick={handleClickButton} 
       textalign="center">
-        {`End ${selectedIndex + 1} Info`}
+        {`End ${currentEnd + 1} - Shot ${currentShot + 1} Info`}
       </Button>
       <Menu
         id="lock-menu"

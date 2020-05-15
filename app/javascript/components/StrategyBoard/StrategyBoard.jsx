@@ -1,7 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import IceSurface from './IceSurface';
 
-const StrategyBoard = ({ nextShot, prevShot, gameState, storeRockHistory, isEditable }) => {
+import Box from '@material-ui/core/Box';
+
+import IceSurface from './IceSurface';
+import BoardNav from './BoardNav';
+
+const StrategyBoard = ({
+  nextShot,
+  prevShot,
+  gameState,
+  storeRockHistory,
+  isEditable,
+}) => {
+  
+
   const { currentShot, currentEnd } = gameState;
   const [positionChange, setPositionChange] = useState({});
 
@@ -86,29 +98,20 @@ const StrategyBoard = ({ nextShot, prevShot, gameState, storeRockHistory, isEdit
   };
 
   return (
-    <div className="strategy-board">
-      <IceSurface
-        positionChange={positionChange}
-        storeHistory={storeRockHistory}
-        gameState={gameState}
-        isEditable={isEditable}
-      ></IceSurface>
-      <h3>
+    <div className={'strategy-board'} style={{width: 'max-content'}}>
+      {/* <Box display='flex' flexDirection='column' > */}
+        <IceSurface
+          positionChange={positionChange}
+          storeHistory={storeRockHistory}
+          gameState={gameState}
+          isEditable={isEditable}
+        />
+        <BoardNav onNext={onNext} onPrev={onPrev} isEditable={isEditable} currentShot={currentShot}/>
+      {/* </Box> */}
+      {/* <h3>
         Shot number: {currentShot + 1} array: {currentShot}
-      </h3>
-      {currentShot > 0 && <button onClick={onPrev}>Prev</button>}
+      </h3> */}
 
-      {/* <button onClick={onPrev}>Prev</button> */}
-
-      {!isEditable && (
-        <button onClick={onNext}>Next</button>
-      )}
-
-      {/* <button onClick={onNext}>Next</button> */}
-      {/* {pathHistory[gameState.currentShot] &&
-        pathHistory[gameState.currentShot].length > 16 && (
-          <button onClick={resetShot}>Reset Shot</button>
-        )} */}
     </div>
   );
 };

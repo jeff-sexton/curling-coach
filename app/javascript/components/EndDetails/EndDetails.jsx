@@ -23,7 +23,7 @@ const EndDetails = ({ gameState }) => {
     <div className={classes.root}>
       <Grid container direction="column" spacing={2} alignItems="center" >
         <Grid item xs>
-           <EndMenu ends={gameState.ends} />
+           <EndMenu gameState={gameState} />
         </Grid>
         <Grid item xs style={{width: "100%"}}>
             <LinearProgress variant="determinate" value={(gameState.currentShot / 16) * 100} />

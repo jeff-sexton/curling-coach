@@ -8,9 +8,10 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import StrategyBoard from '../StrategyBoard';
 import GameDetails from '../GameDetails';
-import EndDetails from '../EndDetails'
+import EndDetails from '../EndDetails';
 import ShotDetails from '../ShotDetails';
 import Buttons from '../Buttons';
+import EndModal from '../EndModal';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const GameView = ({gameId}) => {
+const GameView = ({ gameId }) => {
   const classes = useStyles();
   const game_id = gameId || 2;
 
@@ -46,50 +47,28 @@ const GameView = ({gameId}) => {
     storeShotDetails,
   } = useApplicationData(game_id);
 
-
   const [isEditable, setIsEditable] = useState(true);
 
-  const {currentShot, loaded, currentEnd} = gameState
+  const { currentShot, loaded, currentEnd } = gameState;
 
-
-  useEffect(()=> {
+  useEffect(() => {
     if (loaded && gameState.ends[currentEnd].shots[currentShot].id) {
       setIsEditable(false);
     } else {
       setIsEditable(true);
     }
-
-  },[currentShot, loaded])
-
-
-
-
-  // add useEffect to reset shot details or grab existing details on each shot
-  // useEffect(() => {
-  //   if (gameState.ends[gameState.currentEnd]) {
-  //     const initialHistory = [];
-
-  //     for (const shot of gameState.ends[gameState.currentEnd].shots) {
-  //       if (shot.rock_paths && shot.rock_paths.length > 0) {
-  //         initialHistory.push(shot.rock_paths);
-  //       }
-  //     }
-
-  //     setPathHistory(initialHistory);
-  //   }
-  // }, [gameState.loaded, gameState.currentEnd]);
-
+  }, [currentShot, loaded]);
 
   return (
     <>
-      {!gameState.loaded && (
+      {!loaded && (
         <div>
           <h1>LOADING</h1>
         </div>
       )}
-      {gameState.loaded && (
+      {loaded && (
         <div className={classes.root}>
-          <Box display="flex" justifyContent="space-around" height="70vh">
+          <Box display="flex" justifyContent="space-around" height="80vh">
             <StrategyBoard
               nextShot={nextShot}
               prevShot={prevShot}
@@ -97,16 +76,6 @@ const GameView = ({gameId}) => {
               storeRockHistory={storeRockHistory}
               isEditable={isEditable}
             />
-            {gameState.ends[gameState.currentEnd] &&
-              !gameState.ends[gameState.currentEnd].end.first_team_id && (
-                <button
-                  onClick={() => {
-                    startEnd(1);
-                  }}
-                >
-                  Set Order
-                </button>
-              )}
 
             <Box
               display="flex"
@@ -118,7 +87,7 @@ const GameView = ({gameId}) => {
                 <GameDetails gameState={gameState} />
               </Paper>
               <Paper elevation={3} className={classes.padding10}>
-                <EndDetails gameState={gameState}/>
+                <EndDetails gameState={gameState} />
               </Paper>
               <Paper elevation={3} className={classes.padding10}>
                 <ShotDetails
@@ -129,6 +98,7 @@ const GameView = ({gameId}) => {
               <Buttons saveShot={saveShot} endGame={endGame} />
             </Box>
           </Box>
+          <EndModal gameState={gameState} startEnd={startEnd} />
         </div>
       )}
     </>
