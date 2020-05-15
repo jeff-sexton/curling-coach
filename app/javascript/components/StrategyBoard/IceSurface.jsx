@@ -128,7 +128,7 @@ const IceSurface = ({
   });
 
   return (
-    <svg id="ice" ref={iceRef} height="100%" viewBox="0 0 750 1650">
+    <svg id="ice" ref={iceRef} height="100%" viewBox="0 0 750 1650" style={{display: 'block'}}>
       <rect x="0" y="0" width="100%" height="100%" fill="aliceblue" />
       <rect x="0" y="150" width="100%" height="17" fill="red" />
       <rect x="0" y="1485" width="100%" height="15" fill="blue" />
