@@ -6,20 +6,20 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
   root: {
-    // background: 'linear-gradient(45deg, #3f51b5, #5f94b1 90%)',
-    background: "blue",
+    background: "42a5f5",
     border: 0,
     borderRadius: 3,
     color: 'white',
-    height: 40,
-    padding: '0 30px',
+    // height: 40,
+    width: "80%",
+    // padding: '0 30px',
   },
   listItem: {
-    background: 'blue',
+    // background: 'blue',
     '&:hover': {
       background: "#f50057",
     },
-    color: "white",
+    // color: "white",
     fontSize: 20,
     fontWeight: "bolder",
     padding: '20px'
@@ -72,7 +72,7 @@ const EndMenu = ({ gameState }) => {
       color="primary"
       onClick={handleClickButton} 
       textalign="center">
-        {`End ${currentEnd + 1} - Shot ${currentShot + 1} Info`}
+        {`End ${currentEnd + 1}`}
       </Button>
       <Menu
         id="lock-menu"

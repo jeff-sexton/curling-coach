@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles({
   root: {
     // background: 'linear-gradient(45deg, #3f51b5, #5f94b1 90%)',
-    background: "#f50057",
+    background: "#4dd0e1",
     border: 0,
     borderRadius: 3,
     color: 'white',
@@ -15,7 +15,7 @@ const useStyles = makeStyles({
     padding: '0 30px',
   },
   listItem: {
-    background: 'blue',
+    // background: 'blue',
     '&:hover': {
       background: "#f50057",
     },
@@ -33,12 +33,11 @@ const ThrowTurn = ({ gameState }) => {
  
   const throwOrderForEnd = ends[currentEnd].end.throw_order; 
   const currentPlayer = throwOrderForEnd[currentShot]; 
-  console.log(throwOrderForEnd);
+ 
 
   const [anchorEl, setAnchorEl] = useState(null);
 
   const [selectedIndex, setSelectedIndex] = useState(currentShot);
-  console.log("selected index", selectedIndex);
   
 
   let playerText = currentShot > 1 && throwOrderForEnd[currentShot].name === throwOrderForEnd[currentShot - 2].name ? `It is ${throwOrderForEnd[currentShot].name}'s second shot` : `It is ${throwOrderForEnd[currentShot].name}'s first shot`;
