@@ -34,14 +34,49 @@ const ends = [
   createData1(11),
 ];
 
+const endTest = [
+  {
+    id: 11,
+    score_team1: 1,
+    score_team2: 2,
+    game_id: 2,
+  },
+  {
+    id: 12,
+    score_team1: 3,
+    score_team2: 4,
+    game_id: 2,
+  },
+  {
+    id: 13,
+    score_team1: 5,
+    score_team2: 6,
+    game_id: 2,
+  },
+  {
+    id: 14,
+    score_team1: 7,
+    score_team2: 8,
+    game_id: 2,
+  },
+  {
+    id: 15,
+    score_team1: 9,
+    score_team2: 10,
+    game_id: 2,
+  },
+]
+
 const ScoreBoard = ({ gameState }) => {
   const classes = useStyles();
+
   const team1Name = gameState.teams_with_players[0].team.team_name;
   const Team2Name = gameState.teams_with_players[1].team.team_name;
   const rows = [createData(team1Name), createData(Team2Name)];
-  // const [score, setScore] = useState();
-  console.log('gameState: ', gameState);
-  console.log('gameState.ends: ', gameState.ends);
+  
+  console.log('gameState: ', gameState); 
+  // console.log('gameState.ends: ', gameState.ends[0].end.score_team1); 
+  // ^ path to get each end score
   return (
     <TableContainer>
       <form noValidate autoComplete="off">
@@ -58,7 +93,7 @@ const ScoreBoard = ({ gameState }) => {
             </TableRow>
           </TableHead>
           <TableBody className={classes.teamNameRow}>
-            {rows.map((row) => (
+            {rows.map((row, rowIndex) => (
               <TableRow key={row.name}>
                 <TableCell
                   id={row.name}
@@ -68,15 +103,10 @@ const ScoreBoard = ({ gameState }) => {
                 >
                   {row.name}
                 </TableCell>
-                {ends.map((endNumber) => (
+                {ends.map((endNumber, index) => (
                   <TableCell className={classes.tableCell} key={endNumber.end}>
-                    {/* <TextField
-                      end={endNumber.end}
-                      inputProps={{ type: 'number', id: `${endNumber.end}` }}
-                      className={`${classes.root} ${classes.textInput}`}
-                      value={score}
-                      onChange={(event) => setScore(event.target.value)}
-                    /> */}
+                    {endTest[index] && rowIndex === 0 && endTest[index].score_team1}
+                    {endTest[index] && rowIndex === 1 && endTest[index].score_team2}
                   </TableCell>
                 ))}
                 <TableCell className={classes.tableCell}></TableCell>
