@@ -21,11 +21,24 @@ class Api::EndsController < ApplicationController
     else
       render json: new_end.errors, status: :unprocessable_entity
     end
-
-
   end
 
   def update
+    curl_end = End.find(params[:id])
+    curl_end.update(score_team1: params[:score_team1], score_team2: params[:score_team2])
+
+    if curl_end.save
+      # convert nested json object to an array of objects before sending to the client
+      curl_end.throw_order = JSON.parse(curl_end.throw_order)
+
+      puts
+      puts 'saved end'
+      puts curl_end.inspect
+
+      render json: curl_end
+    else
+      render json: new_end.errors, status: :unprocessable_entity
+    end
   end
 
   private
