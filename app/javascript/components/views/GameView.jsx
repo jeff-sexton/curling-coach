@@ -12,6 +12,7 @@ import EndDetails from '../EndDetails';
 import ShotDetails from '../ShotDetails';
 import Buttons from '../Buttons';
 import StartEndModal from '../StartEndModal';
+import FinishEndModal from '../FinishEndModal';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,6 +44,7 @@ const GameView = ({ gameId }) => {
     saveShot,
     endGame,
     startEnd,
+    finishEnd,
     storeRockHistory,
     storeShotDetails,
   } = useApplicationData(game_id);
@@ -99,6 +101,7 @@ const GameView = ({ gameId }) => {
             </Box>
           </Box>
           <StartEndModal gameState={gameState} startEnd={startEnd} />
+          <FinishEndModal gameState={gameState} finishEnd={finishEnd} />
         </div>
       )}
     </>
