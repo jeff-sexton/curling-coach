@@ -26,6 +26,10 @@ class Api::ShotsController < ApplicationController
   private
 
   def shot_params
+
+    # Convert nested array of objects to json before storing in db
+    params[:shot][:rock_paths] = params[:rock_paths].to_json
+
     params.require(:shot).permit(
       :end_id,
       :shot_number,
