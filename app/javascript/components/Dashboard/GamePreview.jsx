@@ -1,14 +1,22 @@
 import React from 'react';
+import moment from 'moment';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+
 import GamePreviewStyles from './GamePreviewStyles';
 
 const useStyles = makeStyles(GamePreviewStyles);
 
 const GamePreview = ({ onClick, game }) => {
   const classes = useStyles();
+
+  const momentDate = moment(game.date_time);
+  const formattedDate = momentDate.format('LL');
+  const formattedDay = momentDate.format('ddd');
+  const formattedTime = momentDate.format('LT');
 
   return (
     <Box display="flex" justifyContent="space-between" mb={3}>
@@ -27,10 +35,10 @@ const GamePreview = ({ onClick, game }) => {
           justifyContent="space-between"
         >
           <Typography component="h5" variant="h5">
-          {game.teams[0].team_name} vs {game.teams[1].team_name}
+            {game.teams[0].team_name} vs {game.teams[1].team_name}
           </Typography>
           <Typography component="h6" variant="h6">
-          {game.location}
+            {game.location}
           </Typography>
         </Box>
         <Box
@@ -42,10 +50,10 @@ const GamePreview = ({ onClick, game }) => {
           textAlign="right"
         >
           <Typography variants="subtitle1" color="textSecondary">
-            Friday, May 1st, 2020
+            {formattedDay}, {formattedDate}
           </Typography>
           <Typography variant="subtitle1" color="textSecondary">
-            7PM
+            {formattedTime}
           </Typography>
         </Box>
       </Box>
@@ -53,7 +61,6 @@ const GamePreview = ({ onClick, game }) => {
         <Button
           className={classes.button}
           variant="contained"
-          color="primary"
           width="100%"
           color="secondary"
         >

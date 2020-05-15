@@ -9,9 +9,7 @@ const DashboardView = ({ setView }) => {
 
   useEffect(() => {
     axios.get(`/api/games`).then((res) => {
-      console.log('res: ', res.data);
       setGameList({ game: res.data });
-      // dispatch({game: res.data})
     });
   }, []);
 
