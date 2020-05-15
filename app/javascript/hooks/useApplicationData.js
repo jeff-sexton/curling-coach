@@ -89,8 +89,8 @@ const reducer = (state, action) => {
   };
 
   const SET_SHOT_SAVE_ERRORS = ({ value }) => {
-    return { ...state, shotSaveErrors: value }
-  }
+    return { ...state, shotSaveErrors: value };
+  };
 
   const SET_END_DETAILS = ({ value }) => {
     const currentEnd = state.currentEnd;
@@ -106,13 +106,13 @@ const reducer = (state, action) => {
     const targetEnd = value.end;
     const targetShot = value.shot;
 
-    console.log('\n*** Initialize Shot ***\n', targetEnd, targetShot)
+    console.log('\n*** Initialize Shot ***\n', targetEnd, targetShot);
 
     if (state.ends[targetEnd].shots[targetShot]) {
-      console.log('existing shot')
+      console.log('existing shot');
       return { ...state };
     } else {
-      console.log('new shot')
+      console.log('new shot');
       const end_id = state.ends[targetEnd].end.id;
       const shot_number = targetShot + 1;
 
@@ -278,10 +278,10 @@ const useApplicationData = (game_id) => {
       const nextEnd = gameState.currentEnd + 1;
       dispatch({ type: INITIALIZE_END, value: { end: nextEnd } });
       dispatch({ type: INITIALIZE_SHOT, value: { shot: 0, end: nextEnd } });
-      dispatch({ type: SET_CURRENT_END, value: nextEnd });
-      dispatch({ type: SET_CURRENT_SHOT, value: 0 });
+        dispatch({ type: SET_CURRENT_END, value: nextEnd });
+        dispatch({ type: SET_CURRENT_SHOT, value: 0 });
 
-    } else {
+      } else {
       console.log('initializing next shot')
       dispatch({
         type: INITIALIZE_SHOT,
@@ -306,7 +306,7 @@ const useApplicationData = (game_id) => {
 
     const shot = { ...gameState.ends[currentEnd].shots[currentShot] };
 
-    shot.end_id = gameState.ends[currentEnd].end.id
+    shot.end_id = gameState.ends[currentEnd].end.id;
     shot.player_id = gameState.ends[currentEnd].end.throw_order[currentShot].id;
 
     // Save forms & shot path history to server here
