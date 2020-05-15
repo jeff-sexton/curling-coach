@@ -3,8 +3,8 @@ import { useReducer, useEffect } from 'react';
 import axios from 'axios';
 
 const SET_INITIAL_GAME_STATE = 'SET_INITIAL_GAME_STATE';
-const SET_THROW_ORDER = 'SET_THROW_ORDER';
-const SET_FIRST_TEAM = 'SET_FIRST_TEAM';
+const SET_THROW_ORDER = 'SET_THROW_ORDER'; // not currently used
+const SET_FIRST_TEAM = 'SET_FIRST_TEAM'; // not currently used
 const SET_CURRENT_SHOT = 'SET_CURRENT_SHOT';
 const SET_SHOT_DETAILS = 'SET_SHOT_DETAILS';
 const SET_END_DETAILS = 'SET_END_DETAILS';
@@ -295,6 +295,7 @@ const useApplicationData = (game_id) => {
 
     const shot = { ...gameState.ends[currentEnd].shots[currentShot] };
 
+    shot.end_id = gameState.ends[currentEnd].end.id
     shot.player_id = gameState.ends[currentEnd].end.throw_order[currentShot].id;
 
     // Save forms & shot path history to server here
