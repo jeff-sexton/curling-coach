@@ -234,7 +234,7 @@ const reducer = (state, action) => {
   return (actions[action.type] || actions.DEFAULT)(action);
 };
 
-const useApplicationData = () => {
+const useGameData = () => {
   const [gameState, dispatch] = useReducer(reducer, {
     game: {},
     ends: [],
@@ -433,4 +433,4 @@ const useApplicationData = () => {
   };
 };
 
-export default useApplicationData;
+export default useGameData;
