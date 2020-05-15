@@ -35,9 +35,6 @@ const useStyles = makeStyles((theme) => ({
 
 const GameView = ({ gameId }) => {
   const classes = useStyles();
-  // const game_id = gameId || 2;
-
-
 
   const {
     gameState,
