@@ -1,29 +1,27 @@
 import React from 'react';
+import moment from 'moment';
+
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
+
 import GameInfoStyles from './GameInfoStyles';
 
 const useStyles = makeStyles(GameInfoStyles);
 
-const GameInfo = () => {
+const GameInfo = ({ gameState }) => {
   const classes = useStyles();
+
+  const momentDate = moment(gameState.date_time);
+  const formattedDateAndDay = momentDate.format('dddd, MMMM Do, YYYY');
+  const formattedTime = momentDate.format('LT');
 
   return (
     <div>
-      <Box textAlign="center" className={classes.gameInfo}>
-        <Box mb={1}>Friday, May 1, 2020 | 7PM</Box>
-        <Box>Vancouver Curling Club</Box>
-      </Box>
-      <Box
-        display="flex"
-        justifyContent="space-around"
-        mt={4}
-        mb={2}
-        className={classes.teamNames}
-      >
-        <div>Lighthouse</div>
-        <div>vs</div>
-        <div>Switzerland</div>
+      <Box textAlign="center" className={classes.gameInfo} mb={1}>
+        <Box mb={1}>
+          {formattedDateAndDay} | {formattedTime}
+        </Box>
+        <Box>{gameState.game.location}</Box>
       </Box>
     </div>
   );
