@@ -279,21 +279,31 @@ const useApplicationData = (game_id) => {
   };
 
   const nextShot = () => {
-    const newCurrentShot = gameState.currentShot + 1;
+
+    const {currentEnd, currentShot} = gameState;
+    const newCurrentShot = currentShot + 1;
 
     if (newCurrentShot > 15 && gameState.currentEnd < 12) {
-      console.log('Moving to next end')
-      const nextEnd = gameState.currentEnd + 1;
+      console.log('Moving to next end');
+
+      const nextEnd = currentEnd + 1;
       dispatch({ type: INITIALIZE_END, value: { end: nextEnd } });
       dispatch({ type: INITIALIZE_SHOT, value: { shot: 0, end: nextEnd } });
+
+      if (
+        gameState.ends[currentEnd].end.score_team1 !== null &&
+        gameState.ends[currentEnd].end.score_team1 !== null
+      ) {
         dispatch({ type: SET_CURRENT_END, value: nextEnd });
         dispatch({ type: SET_CURRENT_SHOT, value: 0 });
-
       } else {
-      console.log('initializing next shot')
+        dispatch({ type: SET_COMPLETE_END_PROMPT, value: true });
+      }
+    } else {
+      console.log('initializing next shot');
       dispatch({
         type: INITIALIZE_SHOT,
-        value: { shot: newCurrentShot, end: gameState.currentEnd },
+        value: { shot: newCurrentShot, end: currentEnd },
       });
 
       dispatch({ type: SET_CURRENT_SHOT, value: newCurrentShot });
