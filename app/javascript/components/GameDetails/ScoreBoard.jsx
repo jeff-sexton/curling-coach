@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -6,7 +6,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import TextField from '@material-ui/core/TextField';
+// import TextField from '@material-ui/core/TextField';
 
 import ScoreBoardStyles from './ScoreBoardStyles';
 
@@ -34,49 +34,15 @@ const ends = [
   createData1(11),
 ];
 
-const endTest = [
-  {
-    id: 11,
-    score_team1: 1,
-    score_team2: 2,
-    game_id: 2,
-  },
-  {
-    id: 12,
-    score_team1: 3,
-    score_team2: 4,
-    game_id: 2,
-  },
-  {
-    id: 13,
-    score_team1: 5,
-    score_team2: 6,
-    game_id: 2,
-  },
-  {
-    id: 14,
-    score_team1: 7,
-    score_team2: 8,
-    game_id: 2,
-  },
-  {
-    id: 15,
-    score_team1: 9,
-    score_team2: 10,
-    game_id: 2,
-  },
-]
-
 const ScoreBoard = ({ gameState }) => {
   const classes = useStyles();
 
   const team1Name = gameState.teams_with_players[0].team.team_name;
   const Team2Name = gameState.teams_with_players[1].team.team_name;
   const rows = [createData(team1Name), createData(Team2Name)];
-  
-  console.log('gameState: ', gameState); 
-  // console.log('gameState.ends: ', gameState.ends[0].end.score_team1); 
-  // ^ path to get each end score
+
+  const endsData = gameState.ends;
+
   return (
     <TableContainer>
       <form noValidate autoComplete="off">
@@ -105,8 +71,12 @@ const ScoreBoard = ({ gameState }) => {
                 </TableCell>
                 {ends.map((endNumber, index) => (
                   <TableCell className={classes.tableCell} key={endNumber.end}>
-                    {endTest[index] && rowIndex === 0 && endTest[index].score_team1}
-                    {endTest[index] && rowIndex === 1 && endTest[index].score_team2}
+                    {endsData[index] &&
+                      rowIndex === 0 &&
+                      endsData[index].end.score_team1}
+                    {endsData[index] &&
+                      rowIndex === 1 &&
+                      endsData[index].end.score_team2}
                   </TableCell>
                 ))}
                 <TableCell className={classes.tableCell}></TableCell>

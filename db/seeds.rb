@@ -46,9 +46,29 @@ puts "Re-Creating Ends ..."
 
 End.destroy_all
 
-10.times do 
-  game1.ends.create!
-end
+# 10.times do 
+#   game1.ends.create!
+# end
+
+  game1.ends.create!({
+    score_team1: 1,
+    score_team2: 2
+  })
+
+  game1.ends.create!({
+    score_team1: 3,
+    score_team2: 4
+  })
+
+  game1.ends.create!({
+    score_team1: 5,
+    score_team2: 6
+  })
+
+  game1.ends.create!({
+    score_team1: 7,
+    score_team2: 0
+  })
 
 ## TEAMS
 
