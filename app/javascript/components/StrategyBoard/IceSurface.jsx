@@ -1,8 +1,131 @@
 import React, { useRef } from 'react';
 import Rock from './Rock';
 
-const IceSurface = ({ positionChange, storeHistory, gameState }) => {
+const IceSurface = ({
+  positionChange,
+  storeHistory,
+  gameState,
+  isEditable,
+}) => {
   const iceRef = useRef();
+
+  const initialPositions = [
+    {
+      label: 1,
+      x: 50,
+      y: 50,
+      color: 'red',
+    },
+    {
+      label: 2,
+      x: 100,
+      y: 50,
+      color: 'red',
+    },
+    {
+      label: 3,
+      x: 150,
+      y: 50,
+      color: 'red',
+    },
+    {
+      label: 4,
+      x: 200,
+      y: 50,
+      color: 'red',
+    },
+    {
+      label: 5,
+      x: 50,
+      y: 100,
+      color: 'red',
+    },
+    {
+      label: 6,
+      x: 100,
+      y: 100,
+      color: 'red',
+    },
+    {
+      label: 7,
+      x: 150,
+      y: 100,
+      color: 'red',
+    },
+    {
+      label: 8,
+      x: 200,
+      y: 100,
+      color: 'red',
+    },
+    {
+      label: 9,
+      x: 550,
+      y: 50,
+      color: 'yellow',
+    },
+    {
+      label: 10,
+      x: 600,
+      y: 50,
+      color: 'yellow',
+    },
+    {
+      label: 11,
+      x: 650,
+      y: 50,
+      color: 'yellow',
+    },
+    {
+      label: 12,
+      x: 700,
+      y: 50,
+      color: 'yellow',
+    },
+    {
+      label: 13,
+      x: 550,
+      y: 100,
+      color: 'yellow',
+    },
+    {
+      label: 14,
+      x: 600,
+      y: 100,
+      color: 'yellow',
+    },
+    {
+      label: 15,
+      x: 650,
+      y: 100,
+      color: 'yellow',
+    },
+    {
+      label: 16,
+      x: 700,
+      y: 100,
+      color: 'yellow',
+    },
+  ];
+
+  const rocks = initialPositions.map((initialPositon, index) => {
+    const { x, y, color, label } = initialPositon;
+
+    return (
+      <Rock
+        key={index}
+        id={label}
+        positionChange={positionChange}
+        x={x}
+        y={y}
+        color={color}
+        parentRef={iceRef}
+        storeHistory={storeHistory}
+        gameState={gameState}
+        isEditable={isEditable}
+      />
+    );
+  });
 
   return (
     <svg id="ice" ref={iceRef} height="100%" viewBox="0 0 750 1650">
@@ -50,167 +173,8 @@ const IceSurface = ({ positionChange, storeHistory, gameState }) => {
         stroke="black"
         strokeWidth="5"
       />
-      <Rock
-        id={1}
-        positionChange={positionChange}
-        x={50}
-        y={50}
-        color="red"
-        parentRef={iceRef}
-        storeHistory={storeHistory}
-        gameState={gameState}
-      />
-      <Rock
-        id={2}
-        positionChange={positionChange}
-        x={100}
-        y={50}
-        color="red"
-        parentRef={iceRef}
-        storeHistory={storeHistory}
-        gameState={gameState}
-      />
-      <Rock
-        id={3}
-        positionChange={positionChange}
-        x={150}
-        y={50}
-        color="red"
-        parentRef={iceRef}
-        storeHistory={storeHistory}
-        gameState={gameState}
-      />
-      <Rock
-        id={4}
-        positionChange={positionChange}
-        x={200}
-        y={50}
-        color="red"
-        parentRef={iceRef}
-        storeHistory={storeHistory}
-        gameState={gameState}
-      />
-      <Rock
-        id={5}
-        positionChange={positionChange}
-        x={50}
-        y={100}
-        color="red"
-        parentRef={iceRef}
-        storeHistory={storeHistory}
-        gameState={gameState}
-      />
-      <Rock
-        id={6}
-        positionChange={positionChange}
-        x={100}
-        y={100}
-        color="red"
-        parentRef={iceRef}
-        storeHistory={storeHistory}
-        gameState={gameState}
-      />
-      <Rock
-        id={7}
-        positionChange={positionChange}
-        x={150}
-        y={100}
-        color="red"
-        parentRef={iceRef}
-        storeHistory={storeHistory}
-        gameState={gameState}
-      />
-      <Rock
-        id={8}
-        positionChange={positionChange}
-        x={200}
-        y={100}
-        color="red"
-        parentRef={iceRef}
-        storeHistory={storeHistory}
-        gameState={gameState}
-      />
 
-      <Rock
-        id={9}
-        positionChange={positionChange}
-        x={500}
-        y={50}
-        color="yellow"
-        parentRef={iceRef}
-        storeHistory={storeHistory}
-        gameState={gameState}
-      />
-      <Rock
-        id={10}
-        positionChange={positionChange}
-        x={550}
-        y={50}
-        color="yellow"
-        parentRef={iceRef}
-        storeHistory={storeHistory}
-        gameState={gameState}
-      />
-      <Rock
-        id={11}
-        positionChange={positionChange}
-        x={600}
-        y={50}
-        color="yellow"
-        parentRef={iceRef}
-        storeHistory={storeHistory}
-        gameState={gameState}
-      />
-      <Rock
-        id={12}
-        positionChange={positionChange}
-        x={650}
-        y={50}
-        color="yellow"
-        parentRef={iceRef}
-        storeHistory={storeHistory}
-        gameState={gameState}
-      />
-      <Rock
-        id={13}
-        positionChange={positionChange}
-        x={500}
-        y={100}
-        color="yellow"
-        parentRef={iceRef}
-        storeHistory={storeHistory}
-        gameState={gameState}
-      />
-      <Rock
-        id={14}
-        positionChange={positionChange}
-        x={550}
-        y={100}
-        color="yellow"
-        parentRef={iceRef}
-        storeHistory={storeHistory}
-        gameState={gameState}
-      />
-      <Rock
-        id={15}
-        positionChange={positionChange}
-        x={600}
-        y={100}
-        color="yellow"
-        parentRef={iceRef}
-        storeHistory={storeHistory}
-        gameState={gameState}
-      />
-      <Rock
-        id={16}
-        positionChange={positionChange}
-        x={650}
-        y={100}
-        color="yellow"
-        parentRef={iceRef}
-        storeHistory={storeHistory}
-        gameState={gameState}
-      />
+      {rocks}
     </svg>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import useApplicationData from '../../hooks/useApplicationData';
 
@@ -11,7 +11,6 @@ import GameDetails from '../GameDetails';
 import EndDetails from '../EndDetails'
 import ShotDetails from '../ShotDetails';
 import Buttons from '../Buttons';
-import { useEffect } from 'react';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,6 +47,21 @@ const GameView = ({gameId}) => {
   } = useApplicationData(game_id);
 
 
+  const [isEditable, setIsEditable] = useState(true);
+
+  const {currentShot, loaded, currentEnd} = gameState
+
+
+  useEffect(()=> {
+    if (loaded && gameState.ends[currentEnd].shots[currentShot].id) {
+      setIsEditable(false);
+    } else {
+      setIsEditable(true);
+    }
+
+  },[currentShot, loaded])
+
+
 
 
   // add useEffect to reset shot details or grab existing details on each shot
@@ -81,6 +95,7 @@ const GameView = ({gameId}) => {
               prevShot={prevShot}
               gameState={gameState}
               storeRockHistory={storeRockHistory}
+              isEditable={isEditable}
             />
             {gameState.ends[gameState.currentEnd] &&
               !gameState.ends[gameState.currentEnd].end.first_team_id && (

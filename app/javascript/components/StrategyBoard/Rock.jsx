@@ -9,6 +9,7 @@ const Rock = ({
   parentRef,
   storeHistory,
   gameState,
+  isEditable,
 }) => {
   const [position, setPosition] = useState({ x, y });
   const [selected, setSelected] = useState(false);
@@ -88,9 +89,13 @@ const Rock = ({
   }, [selected, parentRef]);
 
   const move = (event) => {
-    setSelected(true);
+    if (isEditable) {
+      setSelected(true);
+      console.log('move');
+    } else {
+      console.log('no move')
+    }
 
-    console.log('move');
   };
 
   const endMove = () => {
