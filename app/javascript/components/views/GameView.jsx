@@ -35,7 +35,9 @@ const useStyles = makeStyles((theme) => ({
 
 const GameView = ({ gameId }) => {
   const classes = useStyles();
-  const game_id = gameId || 2;
+  // const game_id = gameId || 2;
+
+
 
   const {
     gameState,
@@ -47,7 +49,15 @@ const GameView = ({ gameId }) => {
     finishEnd,
     storeRockHistory,
     storeShotDetails,
-  } = useApplicationData(game_id);
+    loadGameData,
+  } = useApplicationData();
+
+  useEffect(()=>{
+    console.log('game id', gameId)
+    if (gameId) {
+      loadGameData(gameId);
+    }
+  }, [gameId])
 
   const [isEditable, setIsEditable] = useState(true);
 

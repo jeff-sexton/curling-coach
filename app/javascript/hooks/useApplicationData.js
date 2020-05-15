@@ -234,7 +234,7 @@ const reducer = (state, action) => {
   return (actions[action.type] || actions.DEFAULT)(action);
 };
 
-const useApplicationData = (game_id) => {
+const useApplicationData = () => {
   const [gameState, dispatch] = useReducer(reducer, {
     game: {},
     ends: [],
@@ -247,7 +247,10 @@ const useApplicationData = (game_id) => {
   });
 
   // Get Initial Game details from API
-  useEffect(() => {
+  const loadGameData = (game_id) => {
+
+    dispatch({ type: COMPLETE_LOAD, value: false });
+
     axios
       .get(`/api/games/${game_id}`)
       .then((res) => {
@@ -271,7 +274,7 @@ const useApplicationData = (game_id) => {
       .catch((err) => {
         console.log('err = ', err);
       });
-  }, []);
+  };
 
   // TODO: Set Throw order from user input -- implement later
   const setThrowOrder = (throw_order) => {
@@ -279,8 +282,7 @@ const useApplicationData = (game_id) => {
   };
 
   const nextShot = () => {
-
-    const {currentEnd, currentShot} = gameState;
+    const { currentEnd, currentShot } = gameState;
     const newCurrentShot = currentShot + 1;
 
     if (newCurrentShot > 15 && gameState.currentEnd < 12) {
@@ -427,6 +429,7 @@ const useApplicationData = (game_id) => {
     storeRockHistory,
     storeShotDetails,
     finishEnd,
+    loadGameData,
   };
 };
 
