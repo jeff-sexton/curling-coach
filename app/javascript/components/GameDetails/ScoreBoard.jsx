@@ -20,8 +20,6 @@ function createData1(end) {
   return { end };
 }
 
-const rows = [createData('Canada'), createData('Switzerland')];
-
 const ends = [
   createData1(1),
   createData1(2),
@@ -36,10 +34,14 @@ const ends = [
   createData1(11),
 ];
 
-const ScoreBoard = () => {
+const ScoreBoard = ({ gameState }) => {
   const classes = useStyles();
-  const [score, setScore] = useState();
-
+  const team1Name = gameState.teams_with_players[0].team.team_name;
+  const Team2Name = gameState.teams_with_players[1].team.team_name;
+  const rows = [createData(team1Name), createData(Team2Name)];
+  // const [score, setScore] = useState();
+  console.log('gameState: ', gameState);
+  console.log('gameState.ends: ', gameState.ends);
   return (
     <TableContainer>
       <form noValidate autoComplete="off">
@@ -68,13 +70,13 @@ const ScoreBoard = () => {
                 </TableCell>
                 {ends.map((endNumber) => (
                   <TableCell className={classes.tableCell} key={endNumber.end}>
-                    <TextField
+                    {/* <TextField
                       end={endNumber.end}
                       inputProps={{ type: 'number', id: `${endNumber.end}` }}
                       className={`${classes.root} ${classes.textInput}`}
                       value={score}
                       onChange={(event) => setScore(event.target.value)}
-                    />
+                    /> */}
                   </TableCell>
                 ))}
                 <TableCell className={classes.tableCell}></TableCell>

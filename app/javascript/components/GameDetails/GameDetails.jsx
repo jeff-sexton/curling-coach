@@ -6,7 +6,7 @@ const GameDetails = ({ gameState }) => {
   return (
     <div>
       <GameInfo gameState={gameState} />
-      <ScoreBoard />
+      <ScoreBoard gameState={gameState} />
     </div>
   );
 }
