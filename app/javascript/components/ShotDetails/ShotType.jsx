@@ -9,13 +9,11 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     minWidth: 120,
     width: '100%',
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
+    height: 'auto'
+   }
 }));
 
-function createData(value, type) {
+const createData = (value, type)  => {
   return { value, type };
 }
 
@@ -34,26 +32,24 @@ const shotTypes = [
   createData('NotScored', 'Not Scored'),
 ];
 
-const ShotType = ({ shotType, setShotType, errors }) => {
+const ShotType = ({ shot_type, storeShotDetails, errors }) => {
   const classes = useStyles();
-  const typeError = errors && errors.shot_type ? true : false;
+  const errorsExist = errors && errors.shot_type;
+  const label = errorsExist ? "Type required*" : "Type*";
 
-  const handleChange = (event) => {
-    setShotType(event.target.value);
+  const setShotType = (shot_type) => {
+    storeShotDetails({shot_type});
   };
 
   return (
-    <FormControl required className={classes.formControl} error={typeError}>
-      <InputLabel id="shot-type">{typeError && "Type required" || "Type"}</InputLabel>
+    <FormControl variant="outlined"  className={classes.formControl} error={errorsExist}>
+      <InputLabel id="shot-type">{label}</InputLabel>
       <Select
         labelId="shot-type"
         id="shot_type"
-        value={shotType}
-        onChange={handleChange}
-        displayEmpty
-        className={classes.selectEmpty}
-        inputProps={{ 'aria-label': 'Without label' }}
-        required={true}
+        value={shot_type}
+        onChange={(event) => setShotType(event.target.value)}
+        label={label}
       >
         {shotTypes.map((shotType, i) => (
           <MenuItem key={i} value={shotType.value}>{shotType.type}</MenuItem>
