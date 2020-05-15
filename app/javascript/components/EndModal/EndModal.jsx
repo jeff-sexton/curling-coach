@@ -1,22 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import { useEffect } from 'react';
-
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
-
-function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -26,27 +10,27 @@ const useStyles = makeStyles((theme) => ({
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+    top: '56%',
+    left: '59%',
+    transform: 'translate(-56%, -59%)', 
   },
 }));
 
-export default function SimpleModal({ gameState, startEnd }) {
+const EndModal = ({ gameState, startEnd }) => {
   const classes = useStyles();
-  // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
 
-  // const { currentEnd } = gameState;
+  const { currentEnd } = gameState;
 
-  // useEffect(() => {
-  //   // console.log(gameState);
-  //   // if (
-  //   //   gameState.ends[gameState.currentEnd] &&
-  //   //   !gameState.ends[gameState.currentEnd].end.first_team_id
-  //   // ) {
-  //   //   handleOpen();
-  //   // }
-  //   handleOpen();
-  // }, [currentEnd]);
+  useEffect(() => {
+    // console.log(gameState);
+    if (
+      gameState.ends[gameState.currentEnd] &&
+      !gameState.ends[gameState.currentEnd].end.first_team_id
+    ) {
+      handleOpen();
+    }
+  }, [currentEnd]);
 
   const handleOpen = () => {
     setOpen(true);
@@ -56,37 +40,41 @@ export default function SimpleModal({ gameState, startEnd }) {
     setOpen(false);
   };
 
+  const onSave = () => {
+    startEnd(1);
+    
+    handleClose()
+
+  };
+
   const body = (
-    <div style={modalStyle} className={classes.paper}>
-      <h2 id="simple-modal-title">Text in a modal</h2>
-      <p id="simple-modal-description">
+    <div className={classes.paper}>
+      <h2 id="setup-end">Select First Team for end: {currentEnd + 1}</h2>
+      <p id="setup-end-description">
         Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
       </p>
       <button
         onClick={() => {
-          startEnd(1);
+          onSave()
         }}
       >
         Set Order
       </button>
-
-      <SimpleModal />
     </div>
   );
 
   return (
     <div>
-      <button type="button" onClick={handleOpen}>
-        Open Modal
-      </button>
       <Modal
         open={open}
         onClose={handleClose}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
+        aria-labelledby="setup-end"
+        aria-describedby="setup-end-description"
       >
         {body}
       </Modal>
     </div>
   );
-}
+};
+
+export default EndModal;

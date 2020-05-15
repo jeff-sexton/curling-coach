@@ -11,7 +11,7 @@ import GameDetails from '../GameDetails';
 import EndDetails from '../EndDetails';
 import ShotDetails from '../ShotDetails';
 import Buttons from '../Buttons';
-import EndModal from '../EndModal'
+import EndModal from '../EndModal';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,23 +69,13 @@ const GameView = ({ gameId }) => {
       {loaded && (
         <div className={classes.root}>
           <Box display="flex" justifyContent="space-around" height="80vh">
-              <StrategyBoard
-                nextShot={nextShot}
-                prevShot={prevShot}
-                gameState={gameState}
-                storeRockHistory={storeRockHistory}
-                isEditable={isEditable}
-              />
-              {gameState.ends[gameState.currentEnd] &&
-                !gameState.ends[gameState.currentEnd].end.first_team_id && (
-                  <button
-                    onClick={() => {
-                      startEnd(1);
-                    }}
-                  >
-                    Set Order
-                  </button>
-                )}
+            <StrategyBoard
+              nextShot={nextShot}
+              prevShot={prevShot}
+              gameState={gameState}
+              storeRockHistory={storeRockHistory}
+              isEditable={isEditable}
+            />
 
             <Box
               display="flex"
@@ -108,7 +98,7 @@ const GameView = ({ gameId }) => {
               <Buttons saveShot={saveShot} endGame={endGame} />
             </Box>
           </Box>
-          <EndModal gameState={gameState} startEnd={startEnd}/>
+          <EndModal gameState={gameState} startEnd={startEnd} />
         </div>
       )}
     </>
