@@ -7,7 +7,7 @@ import GamePreviewStyles from './GamePreviewStyles';
 
 const useStyles = makeStyles(GamePreviewStyles);
 
-const GamePreview = ({ onClick }) => {
+const GamePreview = ({ onClick, game }) => {
   const classes = useStyles();
 
   return (
@@ -27,10 +27,10 @@ const GamePreview = ({ onClick }) => {
           justifyContent="space-between"
         >
           <Typography component="h5" variant="h5">
-            Team 1 vs Team 2
+          {game.teams[0].team_name} vs {game.teams[1].team_name}
           </Typography>
           <Typography component="h6" variant="h6">
-            Vancouver Curling Club
+          {game.location}
           </Typography>
         </Box>
         <Box

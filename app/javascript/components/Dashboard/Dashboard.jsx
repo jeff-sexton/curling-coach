@@ -8,25 +8,25 @@ const useStyles = makeStyles(() => ({
     '& > *': {
       // margin: theme.spacing(1),
     },
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-around",
-    margin: "auto",
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    margin: 'auto',
     maxWidth: 800,
   },
 }));
 
-const Dashboard = ({ onClick }) => {
+const Dashboard = ({ onClick, gameList }) => {
   const classes = useStyles();
 
-  return(
+  return (
     <div className={classes.root}>
       <h1> Dashboard </h1>
-      <GamePreview onClick={onClick}/>
-      <GamePreview onClick={onClick}/>
-      <GamePreview onClick={onClick}/>
+      {gameList.map((game) => (
+        <GamePreview key={game.id} game={game} onClick={onClick} />
+      ))}
     </div>
-  )
-}
+  );
+};
 
 export default Dashboard;

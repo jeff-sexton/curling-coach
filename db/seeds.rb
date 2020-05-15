@@ -55,6 +55,7 @@ puts "Finding or Creating Teams ..."
 
 team1 = Team.find_or_create_by! team_name: "Jeff's Team"
 team2 = Team.find_or_create_by! team_name: "Yasu's Team"
+team3 = Team.find_or_create_by! team_name: "Alan's Team"
 
 ## PLAYERS
 
@@ -121,7 +122,7 @@ game2.game_participations.create!({
 })
 
 game2.game_participations.create!({
-  team_id: 2
+  team_id: 3
 })
 
 puts "DONE!"
