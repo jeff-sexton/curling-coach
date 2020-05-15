@@ -377,6 +377,37 @@ const useApplicationData = (game_id) => {
     dispatch({ type: SET_SHOT_DETAILS, value: detail });
   };
 
+  const finishEnd = (scores) => {
+    console.log(
+      '\n****finsih end****\n',
+      scores.score_team1,
+      scores.score_team2
+    );
+
+    dispatch({ type: SET_COMPLETE_END_PROMPT, value: false });
+
+    const { currentEnd } = gameState;
+
+    const endId = gameState.ends[currentEnd].end.id;
+
+    // end =
+
+    axios
+      .patch(`api/ends/${endId}`, scores)
+      .then((res) => {
+        console.log('this is the patch response', res.data);
+        dispatch({ type: SET_END_DETAILS, value: res.data });
+
+        if (gameState.currentEnd < 12) {
+          dispatch({ type: SET_CURRENT_SHOT, value: 0 });
+          dispatch({ type: SET_CURRENT_END, value: gameState.currentEnd + 1 });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return {
     gameState,
     nextShot,
@@ -385,6 +416,7 @@ const useApplicationData = (game_id) => {
     startEnd,
     storeRockHistory,
     storeShotDetails,
+    finishEnd,
   };
 };
 
