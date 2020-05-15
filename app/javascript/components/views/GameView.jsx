@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import useApplicationData from '../../hooks/useApplicationData';
+import useGameData from '../../hooks/useGameData';
 
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
@@ -47,10 +47,9 @@ const GameView = ({ gameId }) => {
     storeRockHistory,
     storeShotDetails,
     loadGameData,
-  } = useApplicationData();
+  } = useGameData();
 
   useEffect(()=>{
-    console.log('game id', gameId)
     if (gameId) {
       loadGameData(gameId);
     }
