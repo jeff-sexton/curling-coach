@@ -19,8 +19,8 @@ const BoardNav = ({ onNext, onPrev, currentShot, isEditable }) => {
   const classes = useStyles();
 
   return (
-    <Box display="flex" justifyContent='space-between' width="100%">
-      <Box alignSelf="flex-start">
+    <Box display="flex" justifyContent='center' width="100%">
+      <Box>
         <Button
           variant="contained"
           onClick={onPrev}
@@ -33,7 +33,7 @@ const BoardNav = ({ onNext, onPrev, currentShot, isEditable }) => {
         </Button>
       </Box>
 
-      <Box alignSelf="flex-end">
+      <Box>
         <Button
           variant="contained"
           onClick={onNext}
