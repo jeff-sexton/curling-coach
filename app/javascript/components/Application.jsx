@@ -58,11 +58,23 @@ const App = () => {
   const classes = useStyles();
 
   const [view, setView] = useState(GAME);
+  const [selectedGame, setSelectedGame] = useState();
+
+  const handleGameSelection = (game_id) = {
+    setSelectedGame(game_id);
+    setView(GAME);
+
+  };
+
+  const handleHome = () => {
+    setView(DASHBOARD);
+
+  };
 
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.root}>
-        <NavBar setView={setView} color="primary" />
+        <NavBar handleHome={handleHome} color="primary" />
         {view === DASHBOARD && (
           <DashboardView setView={setView} color="primary" />
         )}
