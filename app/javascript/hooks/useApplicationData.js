@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { useReducer, useEffect } from 'react';
+import { useReducer } from 'react';
 import axios from 'axios';
 
 const SET_INITIAL_GAME_STATE = 'SET_INITIAL_GAME_STATE';
@@ -13,7 +13,7 @@ const SET_CURRENT_END = 'SET_CURRENT_END';
 const INITIALIZE_END = 'INITIALIZE_END';
 const INITIALIZE_SHOT = 'INITIALIZE_SHOT';
 const SET_PATH_HISTORY = 'SET_PATH_HISTORY';
-const COMPLETE_LOAD = 'COMPLETE_LOAD';
+const SET_LOADED = 'SET_LOADED';
 const SET_COMPLETE_END_PROMPT = 'SET_COMPLETE_END_PROMPT';
 
 const reducer = (state, action) => {
@@ -24,7 +24,7 @@ const reducer = (state, action) => {
     ...value,
   });
 
-  const COMPLETE_LOAD = () => ({ ...state, loaded: true });
+  const SET_LOADED = ({value}) => ({ ...state, loaded: value });
 
   const SET_THROW_ORDER = ({ value: throw_order }) => {
     if (!throw_order) {
@@ -226,7 +226,7 @@ const reducer = (state, action) => {
     INITIALIZE_END,
     INITIALIZE_SHOT,
     SET_PATH_HISTORY,
-    COMPLETE_LOAD,
+    SET_LOADED,
     SET_COMPLETE_END_PROMPT,
     DEFAULT,
   };
@@ -249,7 +249,7 @@ const useApplicationData = () => {
   // Get Initial Game details from API
   const loadGameData = (game_id) => {
 
-    dispatch({ type: COMPLETE_LOAD, value: false });
+    dispatch({ type: SET_LOADED, value: false });
 
     axios
       .get(`/api/games/${game_id}`)
@@ -269,7 +269,7 @@ const useApplicationData = () => {
         });
       })
       .then(() => {
-        dispatch({ type: COMPLETE_LOAD, value: null });
+        dispatch({ type: SET_LOADED, value: true });
       })
       .catch((err) => {
         console.log('err = ', err);
