@@ -326,6 +326,10 @@ const useApplicationData = (game_id) => {
       });
   };
 
+  const setShot = (shot) => {
+    dispatch({ type: SET_CURRENT_SHOT, value: shot });
+  };
+  
   const startEnd = (first_team_id) => {
     const currentEnd = gameState.currentEnd;
 
@@ -374,6 +378,7 @@ const useApplicationData = (game_id) => {
     nextShot,
     prevShot,
     saveShot,
+    setShot,
     startEnd,
     storeRockHistory,
     storeShotDetails,

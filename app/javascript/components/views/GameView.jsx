@@ -41,6 +41,7 @@ const GameView = ({ gameId }) => {
     nextShot,
     prevShot,
     saveShot,
+    setShot,
     endGame,
     startEnd,
     storeRockHistory,
@@ -87,7 +88,7 @@ const GameView = ({ gameId }) => {
                 <GameDetails gameState={gameState} />
               </Paper>
               <Paper elevation={3} className={classes.padding10}>
-                <EndDetails gameState={gameState} />
+                <EndDetails gameState={gameState} setShot={setShot} />
               </Paper>
               <Paper elevation={3} className={classes.padding10}>
                 <ShotDetails

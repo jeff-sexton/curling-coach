@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     width: "80%",
   },
   paper: {
-    width: "auto",
+    width: "fit-content",
     height: "auto",
     backgroundColor: theme.palette.background.paper,
     border: '4px solid #FF0000',
@@ -35,34 +35,38 @@ const useStyles = makeStyles((theme) => ({
     },
     color: "white",
     fontSize: "20",
-    fontWeight: "bolder"
+    fontWeight: "bolder",
+    width: "fit-content"
   },  
 }));
 
 
-const ShotMenu = ({ gameState }) => {
+const ShotMenu = ({ gameState, setShot }) => {
   const { ends, currentEnd, currentShot } = gameState;
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
 
   const shotItemSpacing = () => {
-    if (ends[currentEnd].shots.length === 1) {
-      return 12;
-    } else if (ends[currentEnd].shots.length === 2) {
-      return 6;
+    if (ends[currentEnd].shots.length <= 2) {
+      return 12 / ends[currentEnd].shots.length;
     }
     return 4;
   }
 
+  const shotItemClick = (index) => {
+    setShot(index);
+    setOpen(false);
+  }
+  
   const shotItems = ends[currentEnd].shots.map((value, index) => {
     return (
-      <Grid  item xs={shotItemSpacing()} key={index}  >
+      <Grid container item xs={shotItemSpacing()} key={index} justify="center" >
         <MenuItem 
           className={classes.listItem}
           key={index} 
           selected={index === currentShot}
-          // onClick={(event) => handleClick(event, index)}
+          onClick={() => shotItemClick(index)}
         >
           Shot {index + 1}
         </MenuItem>
@@ -73,7 +77,7 @@ const ShotMenu = ({ gameState }) => {
 
   const modalContent = (
     <Paper className={classes.paper}>
-      <Grid container spacing={2} justify="flex-start" alignItems="center" alignText="center" >
+      <Grid container spacing={2} justify="flex-start" alignItems="center" alignText="center"  >
           {shotItems}
       </Grid>
     </Paper>

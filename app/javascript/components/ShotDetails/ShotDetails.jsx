@@ -15,7 +15,9 @@ const useStyles = makeStyles((theme) => ({
 
 const ShotDetails = ({ gameState, storeShotDetails }) => {
   const classes = useStyles();
-  const {rating, shot_type, rotation} = gameState.ends[gameState.currentEnd].shots[gameState.currentShot];
+  const {rating, shot_type, rotation } = gameState.ends[gameState.currentEnd].shots[gameState.currentShot];
+
+  const disable = gameState.ends[gameState.currentEnd].shots[gameState.currentShot].id;
 
   return (
     <div className={classes.root}>
@@ -24,13 +26,13 @@ const ShotDetails = ({ gameState, storeShotDetails }) => {
 
     <Grid container item justify={"center"} spacing={2}>
       <Grid item xs={12}>
-        <ShotType shot_type={shot_type} storeShotDetails={storeShotDetails} errors={gameState.shotSaveErrors} />
+        <ShotType shot_type={shot_type} storeShotDetails={storeShotDetails} disable={disable} errors={gameState.shotSaveErrors} />
       </Grid>
       <Grid item xs={6}>  
-        <ShotRating rating={rating} storeShotDetails={storeShotDetails}  errors={gameState.shotSaveErrors} />
+        <ShotRating rating={rating} storeShotDetails={storeShotDetails} disable={disable} errors={gameState.shotSaveErrors} />
       </Grid>
       <Grid item xs={6}>
-        <ShotRotation rotation={rotation} storeShotDetails={storeShotDetails} errors={gameState.shotSaveErrors} />
+        <ShotRotation rotation={rotation} storeShotDetails={storeShotDetails} disable={disable} errors={gameState.shotSaveErrors} />
       </Grid>
     </Grid>
     </div>
