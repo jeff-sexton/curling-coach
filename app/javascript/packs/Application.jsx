@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { makeStyles, createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
-import GameView from '../views/GameView';
-import DashboardView from '../views/DashboardView';
 import NavBar from '../components/NavBar';
+import DashboardView from '../views/DashboardView';
+import GameView from '../views/GameView';
+import StatsView from '../views/StatsView';
 
 const theme = createMuiTheme({
   palette: {
@@ -60,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
 
 const DASHBOARD = 'DASHBOARD';
 const GAME = 'GAME';
+const STATS = 'STATS';
 
 const App = () => {
   const classes = useStyles();
@@ -70,6 +72,10 @@ const App = () => {
   const handleGameSelection = (gameId) => {
     setSelectedGameId(gameId);
     setView(GAME);
+  };
+  const handleStatsSelection = (gameId) => {
+    setSelectedGameId(gameId);
+    setView(STATS);
   };
 
   const handleHome = () => {
@@ -83,11 +89,12 @@ const App = () => {
         {view === DASHBOARD && (
           <DashboardView
             handleGameSelection={handleGameSelection}
+            handleStatsSelection={handleStatsSelection}
             color="primary"
           />
         )}
         {view === GAME && <GameView gameId={selectedGameId} color="primary" />}
-        {/* <TestView /> */}
+        {view === STATS && <StatsView gameId={selectedGameId}/>}
       </div>
     </ThemeProvider>
   );

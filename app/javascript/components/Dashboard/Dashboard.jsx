@@ -16,14 +16,14 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Dashboard = ({ handleGameSelection, gameList }) => {
+const Dashboard = ({ handleGameSelection, handleStatsSelection, gameList }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <h1> Dashboard </h1>
       {gameList.map((game) => (
-        <GamePreview key={game.id} handleGameSelection={handleGameSelection} game={game} />
+        <GamePreview key={game.id} handleGameSelection={handleGameSelection} handleStatsSelection={handleStatsSelection} game={game} />
       ))}
     </div>
   );

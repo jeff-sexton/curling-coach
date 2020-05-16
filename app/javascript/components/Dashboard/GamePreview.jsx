@@ -10,7 +10,7 @@ import GamePreviewStyles from './GamePreviewStyles';
 
 const useStyles = makeStyles(GamePreviewStyles);
 
-const GamePreview = ({ handleGameSelection, game }) => {
+const GamePreview = ({ handleGameSelection, handleStatsSelection, game }) => {
   const classes = useStyles();
 
   const momentDate = moment(game.date_time);
@@ -18,9 +18,13 @@ const GamePreview = ({ handleGameSelection, game }) => {
   const formattedDay = momentDate.format('ddd');
   const formattedTime = momentDate.format('LT');
 
-  const handleClick = () => {
+  const handleGameClick = () => {
     handleGameSelection(game.id);
   };
+
+  const handleStatsClick = () => {
+    handleStatsSelection(game.id);
+  }
 
   return (
     <Box display="flex" justifyContent="space-between" mb={3}>
@@ -29,7 +33,7 @@ const GamePreview = ({ handleGameSelection, game }) => {
         flexGrow={2}
         display="flex"
         justifyContent="space-between"
-        onClick={handleClick}
+        onClick={handleGameClick}
       >
         <Box
           className={classes.details}
@@ -67,6 +71,7 @@ const GamePreview = ({ handleGameSelection, game }) => {
           variant="contained"
           width="100%"
           color="secondary"
+          onClick={handleStatsClick}
         >
           Stats
         </Button>
