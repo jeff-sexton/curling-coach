@@ -7,13 +7,20 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import FormatPaintIcon from '@material-ui/icons/FormatPaint';
 
 import ScoreBoardStyles from './ScoreBoardStyles';
 
 const useStyles = makeStyles(ScoreBoardStyles);
 
-function createTeamRow(name, score) {
-  return { name, score };
+// const useStyles2 = {
+//   bg: {
+//     background: "black",
+//   }
+// }
+
+function createTeamRow(name, score, teamId) {
+  return { name, score, teamId };
 }
 
 function createEndCell(end) {
@@ -36,8 +43,10 @@ const ends = [
 
 const ScoreBoard = ({ gameState }) => {
   const classes = useStyles();
-
   const endsData = gameState.ends;
+
+  const teamOneId = gameState.teams_with_players[0].team.id;
+  const teamTwoId = gameState.teams_with_players[1].team.id;
 
   const sum = (arr) => arr.reduce((a, b) => a + b, 0);
 
@@ -55,9 +64,11 @@ const ScoreBoard = ({ gameState }) => {
   const teamTwoName = gameState.teams_with_players[1].team.team_name;
 
   const rows = [
-    createTeamRow(teamOneName, sum(teamOneTotal)),
-    createTeamRow(teamTwoName, sum(teamTwoTotal)),
+    createTeamRow(teamOneName, sum(teamOneTotal), teamOneId),
+    createTeamRow(teamTwoName, sum(teamTwoTotal), teamTwoId),
   ];
+  const { currentEnd } = gameState;
+  const first_team_id = gameState.ends[currentEnd].end.first_team_id;
 
   return (
     <TableContainer>
@@ -93,6 +104,18 @@ const ScoreBoard = ({ gameState }) => {
                     {endsData[index] &&
                       rowIndex === 1 &&
                       endsData[index].end.score_team2}
+                    {endsData[index] &&
+                      rowIndex === 0 &&
+                      first_team_id === row.teamId &&
+                      endsData[index].end.score_team1 === null && (
+                        <FormatPaintIcon fontSize="small" />
+                      )}
+                    {endsData[index] &&
+                      rowIndex === 1 &&
+                      first_team_id === row.teamId &&
+                      endsData[index].end.score_team2 === null && (
+                        <FormatPaintIcon fontSize="small" />
+                      )}
                   </TableCell>
                 ))}
                 <TableCell className={classes.tableCell}>{row.score}</TableCell>
