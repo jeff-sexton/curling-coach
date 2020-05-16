@@ -10,7 +10,7 @@ import TableRow from '@material-ui/core/TableRow';
 import CardMedia from '@material-ui/core/CardMedia';
 
 import ScoreBoardStyles from './ScoreBoardStyles';
-import HammerIcon from '../../assets/Hammer.svg';
+import HammerIcon from '../../assets/hammer.svg';
 
 const useStyles = makeStyles(ScoreBoardStyles);
 
