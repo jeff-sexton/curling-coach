@@ -11,7 +11,7 @@ const useStyles = makeStyles(GameInfoStyles);
 const GameInfo = ({ gameState }) => {
   const classes = useStyles();
 
-  const momentDate = moment(gameState.date_time);
+  const momentDate = moment(gameState.game.date_time);
   const formattedDateAndDay = momentDate.format('dddd, MMMM Do, YYYY');
   const formattedTime = momentDate.format('LT');
 
