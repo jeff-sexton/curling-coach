@@ -67,7 +67,7 @@ const GameView = ({ gameId }) => {
     } else {
       setIsEditable(true);
     }
-  }, [currentShot, loaded]);
+  }, [currentShot, loaded, currentEnd]);
 
   const handleEdit = () => {
     setIsEditable(true);
