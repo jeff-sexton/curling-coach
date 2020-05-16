@@ -54,11 +54,11 @@ const ScoreBoardStyles = (theme) => ({
       borderBottom: 'none',
     },
   },
-  textInput: {
-    '& .MuiInputBase-input': {
-      textAlign: 'center',
+  hammerIcon: {
+    '&.MuiCardMedia-media': {
+      width: 'auto',
     },
-  },
+  }
 });
 
 export default ScoreBoardStyles;

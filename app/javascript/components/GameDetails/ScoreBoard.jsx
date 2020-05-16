@@ -7,9 +7,10 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import FormatPaintIcon from '@material-ui/icons/FormatPaint';
+import CardMedia from '@material-ui/core/CardMedia';
 
 import ScoreBoardStyles from './ScoreBoardStyles';
+import HammerIcon from '../../assets/Hammer.svg';
 
 const useStyles = makeStyles(ScoreBoardStyles);
 
@@ -102,13 +103,23 @@ const ScoreBoard = ({ gameState }) => {
                       rowIndex === 0 &&
                       first_team_id === row.teamId &&
                       endsData[index].end.score_team1 === null && (
-                        <FormatPaintIcon fontSize="small" />
+                        // <HammerIcon fontSize="small" />
+                        <CardMedia
+              image={HammerIcon}
+              className={classes.hammerIcon}
+              component="img"
+            />
                       )}
                     {endsData[index] &&
                       rowIndex === 1 &&
                       first_team_id === row.teamId &&
                       endsData[index].end.score_team2 === null && (
-                        <FormatPaintIcon fontSize="small" />
+                        // <HammerIcon fontSize="small" />
+                        <CardMedia
+              image={HammerIcon}
+              component="img"
+              className={classes.hammerIcon}
+            />
                       )}
                   </TableCell>
                 ))}
