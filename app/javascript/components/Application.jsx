@@ -40,7 +40,15 @@ const theme = createMuiTheme({
       //   backgroundColor: "#6586c0",
       // }
     },
+    MuiTableCell: {
+      head: {
+        background: "#1a5d99",
+        border: '1px solid #d0d0d0',
+        color: '#ffffff',
+      }
+    },
   },
+  
 });
 
 const useStyles = makeStyles((theme) => ({
