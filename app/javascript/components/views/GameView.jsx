@@ -67,6 +67,10 @@ const GameView = ({ gameId }) => {
     }
   }, [currentShot, loaded]);
 
+  const handleEdit = () => {
+    setIsEditable(true);
+  }
+
   return (
     <>
       {!loaded && (
@@ -101,9 +105,10 @@ const GameView = ({ gameId }) => {
                 <ShotDetails
                   gameState={gameState}
                   storeShotDetails={storeShotDetails}
+                  isEditable={isEditable}
                 />
               </Paper>
-              <Buttons saveShot={saveShot} endGame={endGame} />
+              <Buttons saveShot={saveShot} handleEdit={handleEdit} endGame={endGame} isEditable={isEditable} />
             </Box>
           </Box>
           <StartEndModal gameState={gameState} startEnd={startEnd} />

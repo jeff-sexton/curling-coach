@@ -13,14 +13,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Buttons = ({ saveShot, endGame }) => {
+const Buttons = ({ saveShot, handleEdit, endGame, isEditable }) => {
   const classes = useStyles();
 
   return (
     <Box className={classes.root} mt={1}>
+      {isEditable &&
       <Button variant="contained" color="secondary" onClick={saveShot} >
         SAVE
       </Button>
+      }
+      {!isEditable && 
+      <Button variant="contained" color="secondary" onClick={handleEdit} >
+        Edit
+      </Button>
+      }
       <Button variant="contained" color="primary" onClick={endGame}>
         GAME END
       </Button>
