@@ -30,18 +30,26 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    cursor: 'pointer',
   },
   logo: {
     width: 'auto',
     padding: 2,
     maxWidth: 65,
     marginRight: 10,
+    cursor: 'pointer',
   },
   list: {
     width: 250,
   },
   fullList: {
     width: 'auto',
+  },
+  navBar: {
+    color: theme.palette.text.secondary,
+  },
+  listItemText: {
+    cursor: 'pointer',
   },
 }));
 
@@ -74,15 +82,27 @@ const NavBar = ({ handleHome }) => {
       <List>
         <ListItem>
           <ListItemIcon onClick={handleHome}>
-            <HomeIcon />
+            <HomeIcon cursor="pointer" />
           </ListItemIcon>
-          <ListItemText onClick={handleHome}>Home</ListItemText>
+          <ListItemText
+            onClick={handleHome}
+            classes={{ root: classes.listItemText }}
+            variant="body1"
+          >
+            Home
+          </ListItemText>
         </ListItem>
         <ListItem>
           <ListItemIcon onClick={handleHome}>
-            <CreateNewFolderIcon />
+            <CreateNewFolderIcon cursor="pointer" />
           </ListItemIcon>
-          <ListItemText onClick={handleHome}>New Game</ListItemText>
+          <ListItemText
+            onClick={handleHome}
+            classes={{ root: classes.listItemText }}
+            variant="body1"
+          >
+            New Game
+          </ListItemText>
         </ListItem>
       </List>
     </div>
@@ -91,13 +111,13 @@ const NavBar = ({ handleHome }) => {
   return (
     <div className={classes.root}>
       <React.Fragment key={'right'}>
-        <AppBar position="static">
+        <AppBar position="static" classes={{ root: classes.navBar }}>
           <Toolbar>
             <CardMedia
               edge="start"
               image={Logo}
               component="img"
-              className={classes.logo}
+              classes={{ img: classes.logo }}
               onClick={handleHome}
             />
             <Typography
