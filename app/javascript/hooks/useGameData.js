@@ -326,21 +326,41 @@ const useGameData = () => {
     shot.end_id = gameState.ends[currentEnd].end.id;
     shot.player_id = gameState.ends[currentEnd].end.throw_order[currentShot].id;
 
-    // Save forms & shot path history to server here
-    axios
-      .post('/api/shots', shot)
-      .then((res) => {
-        if (res.data.errors) {
-          dispatch({ type: SET_SHOT_SAVE_ERRORS, value: res.data.errors });
-          return;
-        }
-        dispatch({ type: SET_SHOT_SAVE_ERRORS, value: null });
-        dispatch({ type: SET_SHOT_DETAILS, value: res.data });
-        nextShot();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (shot.id) {
+      // the shot already exists in the database so update instead of creating
+      const shotId = shot.id;
+
+      axios
+        .patch(`api/shots/${shotId}`, shot)
+        .then((res) => {
+          if (res.data.errors) {
+            dispatch({ type: SET_SHOT_SAVE_ERRORS, value: res.data.errors });
+            return;
+          }
+          dispatch({ type: SET_SHOT_SAVE_ERRORS, value: null });
+          dispatch({ type: SET_SHOT_DETAILS, value: res.data });
+          nextShot();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      // create new shot
+      axios
+        .post('/api/shots', shot)
+        .then((res) => {
+          if (res.data.errors) {
+            dispatch({ type: SET_SHOT_SAVE_ERRORS, value: res.data.errors });
+            return;
+          }
+          dispatch({ type: SET_SHOT_SAVE_ERRORS, value: null });
+          dispatch({ type: SET_SHOT_DETAILS, value: res.data });
+          nextShot();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   const startEnd = (first_team_id) => {
@@ -368,14 +388,29 @@ const useGameData = () => {
       throw_order,
     };
 
-    axios
-      .post('/api/ends', end)
-      .then((res) => {
-        dispatch({ type: SET_END_DETAILS, value: res.data });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (end.id) {
+      // the end already exists in the database so update instead of creating
+      const endId = end.id;
+
+      axios
+        .patch(`api/ends/${endId}`, end)
+        .then((res) => {
+          dispatch({ type: SET_END_DETAILS, value: res.data });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      // create new end
+      axios
+        .post('/api/ends', end)
+        .then((res) => {
+          dispatch({ type: SET_END_DETAILS, value: res.data });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   const storeRockHistory = (positionValue) => {
@@ -386,7 +421,7 @@ const useGameData = () => {
     dispatch({ type: SET_SHOT_DETAILS, value: detail });
   };
 
-  const finishEnd = (scores) => {
+  const finishEnd = ({ score_team1, score_team2 }) => {
     console.log(
       '\n****finsih end****\n',
       scores.score_team1,
@@ -399,10 +434,10 @@ const useGameData = () => {
 
     const endId = gameState.ends[currentEnd].end.id;
 
-    // end =
+    const end = { ...gameState.ends[currentEnd].end, score_team1, score_team2 };
 
     axios
-      .patch(`api/ends/${endId}`, scores)
+      .patch(`api/ends/${endId}`, end)
       .then((res) => {
         console.log('this is the patch response', res.data);
         dispatch({ type: SET_END_DETAILS, value: res.data });

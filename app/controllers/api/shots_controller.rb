@@ -21,6 +21,18 @@ class Api::ShotsController < ApplicationController
   end
 
   def update
+    shot = Shot.find(params[:id])
+    shot.update(shot_params)
+
+    if shot.save
+      
+      # Parse rock paths back to an array of hashes before sending to client
+      shot.rock_paths = JSON.parse(shot.rock_paths)
+
+      render json: shot
+    else
+      render json: { errors: shot.errors.messages }
+    end
   end
 
   private
