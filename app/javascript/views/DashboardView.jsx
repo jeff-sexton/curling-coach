@@ -6,7 +6,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 
-import LoadingIcon from '../assets/icon.svg';
+import LoadingIcon from '../assets/Loading_icon.svg';
 
 const DashboardView = ({ handleGameSelection }) => {
   const [gameList, setGameList] = useState([]);
@@ -23,22 +23,25 @@ const DashboardView = ({ handleGameSelection }) => {
     card: {
       maxWidth: '20%',
     },
-    test: {
-      width: 250,
-      position: 'relative',
-      animation: '$animation 5s infinite',
+    loadingBox: {
+      width: '40%',
+      margin: 'auto',
+      textAlign: 'center',
     },
     root: {
-      width: 150,
+      width: '100%',
+      position: 'relative',
+      animation: '$animation 3s infinite',
+      animationTimingFunction: 'linear',
     },
     '@keyframes animation': {
-      from: { left: -10 },
-      to: { left: '70%' },
+      from: { transform: 'rotate(0deg)' },
+      to: { transform: 'rotate(360deg)' },
     },
   });
-  
+
   const classes = useStyles();
-  
+
   return (
     <div>
       {dashboardLoaded && (
@@ -50,13 +53,12 @@ const DashboardView = ({ handleGameSelection }) => {
 
       {!dashboardLoaded && (
         <Box
-          className={classes.test}
+          className={classes.loadingBox}
           display="flex"
-          justifyContent="start"
-          alignItems="center"
+          flexDirection="column"
         >
           <Box>
-            <h2>LOADING</h2>
+            <h1>LOADING</h1>
           </Box>
           <Box>
             <CardMedia
