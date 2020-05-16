@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { makeStyles, createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
-import GameView from './views/GameView';
-import DashboardView from './views/DashboardView';
-import NavBar from './NavBar';
+import GameView from '../views/GameView';
+import DashboardView from '../views/DashboardView';
+import NavBar from '../components/NavBar';
 
 const theme = createMuiTheme({
   palette: {

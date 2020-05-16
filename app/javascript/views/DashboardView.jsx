@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import Dashboard from '../Dashboard';
+import Dashboard from '../components/Dashboard';
 import axios from 'axios';
 
 import CardMedia from '@material-ui/core/CardMedia';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 
-import LoadingIcon from '../Assets/icon.svg';
+import LoadingIcon from '../assets/icon.svg';
 
 const DashboardView = ({ handleGameSelection }) => {
   const [gameList, setGameList] = useState([]);

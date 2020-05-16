@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 
-import useGameData from '../../hooks/useGameData';
+import useGameData from '../hooks/useGameData';
 
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 
-import StrategyBoard from '../StrategyBoard';
-import GameDetails from '../GameDetails';
-import EndDetails from '../EndDetails';
-import ShotDetails from '../ShotDetails';
-import Buttons from '../Buttons';
-import StartEndModal from '../StartEndModal';
-import FinishEndModal from '../FinishEndModal';
+import StrategyBoard from '../components/StrategyBoard';
+import GameDetails from '../components/GameDetails';
+import EndDetails from '../components/EndDetails';
+import ShotDetails from '../components/ShotDetails';
+import Buttons from '../components/Buttons';
+import StartEndModal from '../components/StartEndModal';
+import FinishEndModal from '../components/FinishEndModal';
 
 const useStyles = makeStyles((theme) => ({
   root: {
