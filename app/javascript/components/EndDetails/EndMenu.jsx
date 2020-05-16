@@ -1,89 +1,104 @@
 import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
+import Modal from '@material-ui/core/Modal';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+// import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     background: "42a5f5",
     border: 0,
     borderRadius: 3,
     color: 'white',
-    // height: 40,
     width: "80%",
-    // padding: '0 30px',
+  },
+  paper: {
+    width: "fit-content",
+    height: "auto",
+    backgroundColor: theme.palette.background.paper,
+    border: '4px solid #FF0000',
+    padding: "1%",
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)"
   },
   listItem: {
-    // background: 'blue',
-    '&:hover': {
-      background: "#f50057",
+    background: '#42a5f5',
+    textAlign: "center",
+    borderRadius: 5,
+    '&.Mui-selected, &:hover' : {
+      background: "red"
     },
-    // color: "white",
-    fontSize: 20,
+    color: "white",
+    fontSize: "20",
     fontWeight: "bolder",
-    padding: '20px'
-  },
-  
-});
+    width: "fit-content"
+  },  
+}));
 
 
-const EndMenu = ({ gameState }) => {
+const EndMenu = ({ gameState, setEnd }) => {
   const { ends, currentEnd, currentShot } = gameState;
-
   const classes = useStyles();
 
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  
-  const handleClickButton = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
- 
-  const handleClick = (event, index) => {
-    setSelectedIndex(index);
-    setAnchorEl(null);
-  };
+  const [open, setOpen] = useState(false);
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const endItemSpacing = () => {
+    if (ends.length <= 2) {
+      return 12 / ends.length;
+    }
+    return 4;
+  }
 
-  const EndMenuListItems = ends.map((value, index) => {
+
+  const endItemClick = (index) => {
+    setEnd(index);
+    setOpen(false);
+  }
+  const endItems = ends.map((value, index) => {
     return (
-      <MenuItem 
-        className={classes.listItem}
-        key={index} 
-        selected={index === selectedIndex}
-        onClick={(event) => handleClick(event, index)}
-      >
-        End {index + 1}
-      </MenuItem>
-    )
+      <Grid container item xs={endItemSpacing()} key={index} justify="center" >
+        <MenuItem 
+          className={classes.listItem}
+          key={index} 
+          selected={index === currentEnd}
+          onClick={() => endItemClick(index)}
+        >
+          End {index + 1}
+        </MenuItem>
+      </Grid>   
+    );
   })
+
+  const modalContent = (
+    <Paper className={classes.paper}>
+      <Grid container spacing={2} justify="flex-start" alignItems="center" alignText="center"  >
+          {endItems}
+      </Grid>
+    </Paper>
+  );
 
   return (
     <>
-      <Button 
+    <Button 
       className={classes.root}
-      aria-controls="simple-menu" 
-      aria-haspopup="true" 
       variant="contained"
       color="primary"
-      onClick={handleClickButton} 
-      textalign="center">
-        {`End ${currentEnd + 1}`}
-      </Button>
-      <Menu
-        id="lock-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-       {EndMenuListItems}
-      </Menu>
-    </>
+      onClick={() => setOpen(true)} 
+    >
+      {`End ${currentEnd + 1}`}
+    </Button>
+    <Modal
+      open={open}
+      onClose={() => setOpen(false)}
+    >
+      {modalContent}
+    </Modal>
+</>
   );
 }
 

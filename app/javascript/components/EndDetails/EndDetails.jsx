@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const EndDetails = ({ gameState, setShot }) => {
+const EndDetails = ({ gameState, setShot, setEnd }) => {
   const classes = useStyles();
 
   console.log("Game State: ", gameState)
@@ -30,7 +30,7 @@ const EndDetails = ({ gameState, setShot }) => {
             <ShotMenu gameState={gameState} setShot={setShot} />
           </Grid>
           <Grid container item xs justify="center">
-            <EndMenu gameState={gameState} />
+            <EndMenu gameState={gameState} setEnd={setEnd} />
           </Grid>
         </Grid>
         
@@ -38,7 +38,7 @@ const EndDetails = ({ gameState, setShot }) => {
             <LinearProgress variant="determinate" value={(gameState.currentShot / 16) * 100} />
         </Grid>
         <Grid item xs>
-          {gameState.ends[gameState.currentEnd].end.throw_order && <ThrowTurn gameState={gameState} />}
+          {gameState.ends[gameState.currentEnd].end.throw_order && <ThrowTurn gameState={gameState} setShot={setShot} />}
         </Grid>
       </Grid>
     </div>
