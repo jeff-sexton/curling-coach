@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import useApplicationData from '../../hooks/useApplicationData';
+import useGameData from '../../hooks/useGameData';
 
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
@@ -12,6 +12,7 @@ import EndDetails from '../EndDetails';
 import ShotDetails from '../ShotDetails';
 import Buttons from '../Buttons';
 import StartEndModal from '../StartEndModal';
+import FinishEndModal from '../FinishEndModal';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
 
 const GameView = ({ gameId }) => {
   const classes = useStyles();
-  const game_id = gameId || 2;
 
   const {
     gameState,
@@ -45,9 +45,17 @@ const GameView = ({ gameId }) => {
     setEnd,
     endGame,
     startEnd,
+    finishEnd,
     storeRockHistory,
     storeShotDetails,
-  } = useApplicationData(game_id);
+    loadGameData,
+  } = useGameData();
+
+  useEffect(()=>{
+    if (gameId) {
+      loadGameData(gameId);
+    }
+  }, [gameId])
 
   const [isEditable, setIsEditable] = useState(true);
 
@@ -60,6 +68,10 @@ const GameView = ({ gameId }) => {
       setIsEditable(true);
     }
   }, [currentShot, loaded]);
+
+  const handleEdit = () => {
+    setIsEditable(true);
+  }
 
   return (
     <>
@@ -92,13 +104,17 @@ const GameView = ({ gameId }) => {
                 <EndDetails gameState={gameState} setShot={setShot} setEnd={setEnd}/>
               </Paper>
               <Paper elevation={3} className={classes.padding10}>
-                <ShotDetails gameState={gameState} storeShotDetails={storeShotDetails}
+                <ShotDetails
+                  gameState={gameState}
+                  storeShotDetails={storeShotDetails}
+                  isEditable={isEditable}
                 />
               </Paper>
-              <Buttons saveShot={saveShot} endGame={endGame} />
+              <Buttons saveShot={saveShot} handleEdit={handleEdit} endGame={endGame} isEditable={isEditable} />
             </Box>
           </Box>
           <StartEndModal gameState={gameState} startEnd={startEnd} />
+          <FinishEndModal gameState={gameState} finishEnd={finishEnd} />
         </div>
       )}
     </>

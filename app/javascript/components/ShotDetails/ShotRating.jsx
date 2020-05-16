@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const ShotRating = ({ rating, storeShotDetails, errors }) => {
+const ShotRating = ({ rating, storeShotDetails, errors, isEditable }) => {
   const classes = useStyles();
   const errorsExist = errors && errors.rating;
   const label = errorsExist ? "Rating required*" : "Rating*";
@@ -31,6 +31,7 @@ const ShotRating = ({ rating, storeShotDetails, errors }) => {
         value={rating}
         onChange={(event) => setRating(event.target.value)}
         label={label}
+        disabled={!isEditable}
       >
         <MenuItem value={0}>0</MenuItem>
         <MenuItem value={1}>1</MenuItem>

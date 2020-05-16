@@ -2,11 +2,11 @@ import React from 'react';
 import ScoreBoard from './ScoreBoard';
 import GameInfo from './GameInfo';
 
-const GameDetails = () => {
+const GameDetails = ({ gameState }) => {
   return (
     <div>
-      <GameInfo />
-      <ScoreBoard />
+      <GameInfo gameState={gameState} />
+      <ScoreBoard gameState={gameState} />
     </div>
   );
 }

@@ -1,7 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import { useState } from 'react';
+import Button from '@material-ui/core/Button';
+
+
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -14,16 +21,27 @@ const useStyles = makeStyles((theme) => ({
     top: '56%',
     left: '59%',
     transform: 'translate(-56%, -59%)', 
-  },
+  }, 
+  formControl: {
+    minWidth: 120,
+    width: '100%',
+    height: 'auto'
+  }
 }));
 
-const StartEndModal = ({ gameState, startEnd }) => {
+const StartEndModal = ({ gameState, startEnd, errors }) => {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const [selectedTeamId, setSelectedTeamId] = useState('')
 
   const { currentEnd } = gameState;
+  const first_team_id = gameState.ends[currentEnd].end.first_team_id;
+  
+  const [selectedTeamId, setSelectedTeamId] = useState(first_team_id || '');
 
+  const [open, setOpen] = React.useState(false);
+
+  const errorsExist = errors && errors.throw_order;
+  const label = errorsExist ? "First Team required*" : "First Team*";
+  
   useEffect(() => {
     // console.log(gameState);
     if (
@@ -34,6 +52,15 @@ const StartEndModal = ({ gameState, startEnd }) => {
     }
   }, [currentEnd]);
 
+  const teams = gameState.teams_with_players.map(
+    (team, index) => {
+
+      return (
+        <MenuItem key={index} value={team.team.id}>{team.team.team_name}</MenuItem>
+      );
+    }
+  );
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -43,7 +70,7 @@ const StartEndModal = ({ gameState, startEnd }) => {
   };
 
   const onSave = () => {
-    startEnd(1);
+    startEnd(selectedTeamId);
     
     handleClose()
 
@@ -51,17 +78,31 @@ const StartEndModal = ({ gameState, startEnd }) => {
 
   const body = (
     <div className={classes.paper}>
-      <h2 id="setup-end">Select First Team for end: {currentEnd + 1}</h2>
+      <h2 id="setup-end">Setup End: {currentEnd + 1}</h2>
       <p id="setup-end-description">
-        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+        Select the team that is throwing first:
       </p>
-      <button
-        onClick={() => {
-          onSave()
-        }}
+      <FormControl variant="outlined" className={classes.formControl} error={errorsExist}>
+      <InputLabel id="first-team">{label}</InputLabel>
+      <Select
+        labelId="first-team"
+        id="first-team-select"
+        value={selectedTeamId}
+        onChange={(event) => setSelectedTeamId(event.target.value)}
+        label={label}
       >
-        Set Order
-      </button>
+        {teams}
+      </Select>
+    </FormControl>
+    <Button
+          variant="contained"
+          onClick={onSave}
+          color="secondary"
+          className={classes.button}
+          aria-label="Move to Previous Shot"
+        >
+          Start End!
+    </Button>
     </div>
   );
 

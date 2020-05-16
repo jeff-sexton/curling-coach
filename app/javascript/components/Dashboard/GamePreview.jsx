@@ -10,13 +10,17 @@ import GamePreviewStyles from './GamePreviewStyles';
 
 const useStyles = makeStyles(GamePreviewStyles);
 
-const GamePreview = ({ onClick, game }) => {
+const GamePreview = ({ handleGameSelection, game }) => {
   const classes = useStyles();
 
   const momentDate = moment(game.date_time);
   const formattedDate = momentDate.format('LL');
   const formattedDay = momentDate.format('ddd');
   const formattedTime = momentDate.format('LT');
+
+  const handleClick = () => {
+    handleGameSelection(game.id);
+  };
 
   return (
     <Box display="flex" justifyContent="space-between" mb={3}>
@@ -25,7 +29,7 @@ const GamePreview = ({ onClick, game }) => {
         flexGrow={2}
         display="flex"
         justifyContent="space-between"
-        onClick={onClick}
+        onClick={handleClick}
       >
         <Box
           className={classes.details}

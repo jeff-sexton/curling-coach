@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { useReducer, useEffect } from 'react';
+import { useReducer } from 'react';
 import axios from 'axios';
 
 const SET_INITIAL_GAME_STATE = 'SET_INITIAL_GAME_STATE';
@@ -13,7 +13,8 @@ const SET_CURRENT_END = 'SET_CURRENT_END';
 const INITIALIZE_END = 'INITIALIZE_END';
 const INITIALIZE_SHOT = 'INITIALIZE_SHOT';
 const SET_PATH_HISTORY = 'SET_PATH_HISTORY';
-const COMPLETE_LOAD = 'COMPLETE_LOAD';
+const SET_LOADED = 'SET_LOADED';
+const SET_COMPLETE_END_PROMPT = 'SET_COMPLETE_END_PROMPT';
 
 const reducer = (state, action) => {
   // Reducers
@@ -23,7 +24,7 @@ const reducer = (state, action) => {
     ...value,
   });
 
-  const COMPLETE_LOAD = () => ({ ...state, loaded: true });
+  const SET_LOADED = ({ value }) => ({ ...state, loaded: value });
 
   const SET_THROW_ORDER = ({ value: throw_order }) => {
     if (!throw_order) {
@@ -89,8 +90,8 @@ const reducer = (state, action) => {
   };
 
   const SET_SHOT_SAVE_ERRORS = ({ value }) => {
-    return { ...state, shotSaveErrors: value }
-  }
+    return { ...state, shotSaveErrors: value };
+  };
 
   const SET_END_DETAILS = ({ value }) => {
     const currentEnd = state.currentEnd;
@@ -106,13 +107,13 @@ const reducer = (state, action) => {
     const targetEnd = value.end;
     const targetShot = value.shot;
 
-    console.log('\n*** Initialize Shot ***\n', targetEnd, targetShot)
+    console.log('\n*** Initialize Shot ***\n', targetEnd, targetShot);
 
     if (state.ends[targetEnd].shots[targetShot]) {
-      console.log('existing shot')
+      console.log('existing shot');
       return { ...state };
     } else {
-      console.log('new shot')
+      console.log('new shot');
       const end_id = state.ends[targetEnd].end.id;
       const shot_number = targetShot + 1;
 
@@ -201,6 +202,11 @@ const reducer = (state, action) => {
     }
   };
 
+  const SET_COMPLETE_END_PROMPT = ({ value: completeEndPrompt }) => ({
+    ...state,
+    completeEndPrompt,
+  });
+
   const DEFAULT = () => {
     throw new Error(
       `Tried to reduce with unsupported action type: ${action.type}`
@@ -220,14 +226,15 @@ const reducer = (state, action) => {
     INITIALIZE_END,
     INITIALIZE_SHOT,
     SET_PATH_HISTORY,
-    COMPLETE_LOAD,
+    SET_LOADED,
+    SET_COMPLETE_END_PROMPT,
     DEFAULT,
   };
 
   return (actions[action.type] || actions.DEFAULT)(action);
 };
 
-const useApplicationData = (game_id) => {
+const useGameData = () => {
   const [gameState, dispatch] = useReducer(reducer, {
     game: {},
     ends: [],
@@ -235,11 +242,12 @@ const useApplicationData = (game_id) => {
     currentShot: 0,
     currentEnd: 0,
     loaded: false,
-    shotSaveErrors: null
+    shotSaveErrors: null,
+    completeEndPrompt: false,
   });
 
   // Get Initial Game details from API
-  useEffect(() => {
+  const loadGameData = (game_id) => {
     axios
       .get(`/api/games/${game_id}`)
       .then((res) => {
@@ -258,12 +266,12 @@ const useApplicationData = (game_id) => {
         });
       })
       .then(() => {
-        dispatch({ type: COMPLETE_LOAD, value: null });
+        dispatch({ type: SET_LOADED, value: true });
       })
       .catch((err) => {
         console.log('err = ', err);
       });
-  }, []);
+  };
 
   // TODO: Set Throw order from user input -- implement later
   const setThrowOrder = (throw_order) => {
@@ -271,21 +279,30 @@ const useApplicationData = (game_id) => {
   };
 
   const nextShot = () => {
-    const newCurrentShot = gameState.currentShot + 1;
+    const { currentEnd, currentShot } = gameState;
+    const newCurrentShot = currentShot + 1;
 
     if (newCurrentShot > 15 && gameState.currentEnd < 12) {
-      console.log('Moving to next end')
-      const nextEnd = gameState.currentEnd + 1;
+      console.log('Moving to next end');
+
+      const nextEnd = currentEnd + 1;
       dispatch({ type: INITIALIZE_END, value: { end: nextEnd } });
       dispatch({ type: INITIALIZE_SHOT, value: { shot: 0, end: nextEnd } });
-      dispatch({ type: SET_CURRENT_END, value: nextEnd });
-      dispatch({ type: SET_CURRENT_SHOT, value: 0 });
 
+      if (
+        gameState.ends[currentEnd].end.score_team1 !== null &&
+        gameState.ends[currentEnd].end.score_team1 !== null
+      ) {
+        dispatch({ type: SET_CURRENT_END, value: nextEnd });
+        dispatch({ type: SET_CURRENT_SHOT, value: 0 });
+      } else {
+        dispatch({ type: SET_COMPLETE_END_PROMPT, value: true });
+      }
     } else {
-      console.log('initializing next shot')
+      console.log('initializing next shot');
       dispatch({
         type: INITIALIZE_SHOT,
-        value: { shot: newCurrentShot, end: gameState.currentEnd },
+        value: { shot: newCurrentShot, end: currentEnd },
       });
 
       dispatch({ type: SET_CURRENT_SHOT, value: newCurrentShot });
@@ -306,24 +323,44 @@ const useApplicationData = (game_id) => {
 
     const shot = { ...gameState.ends[currentEnd].shots[currentShot] };
 
-    shot.end_id = gameState.ends[currentEnd].end.id
+    shot.end_id = gameState.ends[currentEnd].end.id;
     shot.player_id = gameState.ends[currentEnd].end.throw_order[currentShot].id;
 
-    // Save forms & shot path history to server here
-    axios
-      .post('/api/shots', shot)
-      .then((res) => {
-        if (res.data.errors) {
-          dispatch({ type: SET_SHOT_SAVE_ERRORS, value: res.data.errors });
-          return;
-        }
-        dispatch({ type: SET_SHOT_SAVE_ERRORS, value: null });
-        dispatch({ type: SET_SHOT_DETAILS, value: res.data });
-        nextShot();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (shot.id) {
+      // the shot already exists in the database so update instead of creating
+      const shotId = shot.id;
+
+      axios
+        .patch(`api/shots/${shotId}`, shot)
+        .then((res) => {
+          if (res.data.errors) {
+            dispatch({ type: SET_SHOT_SAVE_ERRORS, value: res.data.errors });
+            return;
+          }
+          dispatch({ type: SET_SHOT_SAVE_ERRORS, value: null });
+          dispatch({ type: SET_SHOT_DETAILS, value: res.data });
+          nextShot();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      // create new shot
+      axios
+        .post('/api/shots', shot)
+        .then((res) => {
+          if (res.data.errors) {
+            dispatch({ type: SET_SHOT_SAVE_ERRORS, value: res.data.errors });
+            return;
+          }
+          dispatch({ type: SET_SHOT_SAVE_ERRORS, value: null });
+          dispatch({ type: SET_SHOT_DETAILS, value: res.data });
+          nextShot();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   const setShot = (shot) => {
@@ -359,14 +396,29 @@ const useApplicationData = (game_id) => {
       throw_order,
     };
 
-    axios
-      .post('/api/ends', end)
-      .then((res) => {
-        dispatch({ type: SET_END_DETAILS, value: res.data });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (end.id) {
+      // the end already exists in the database so update instead of creating
+      const endId = end.id;
+
+      axios
+        .patch(`api/ends/${endId}`, end)
+        .then((res) => {
+          dispatch({ type: SET_END_DETAILS, value: res.data });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      // create new end
+      axios
+        .post('/api/ends', end)
+        .then((res) => {
+          dispatch({ type: SET_END_DETAILS, value: res.data });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   const storeRockHistory = (positionValue) => {
@@ -375,6 +427,37 @@ const useApplicationData = (game_id) => {
 
   const storeShotDetails = (detail) => {
     dispatch({ type: SET_SHOT_DETAILS, value: detail });
+  };
+
+  const finishEnd = ({ score_team1, score_team2 }) => {
+    console.log(
+      '\n****finsih end****\n',
+      scores.score_team1,
+      scores.score_team2
+    );
+
+    dispatch({ type: SET_COMPLETE_END_PROMPT, value: false });
+
+    const { currentEnd } = gameState;
+
+    const endId = gameState.ends[currentEnd].end.id;
+
+    const end = { ...gameState.ends[currentEnd].end, score_team1, score_team2 };
+
+    axios
+      .patch(`api/ends/${endId}`, end)
+      .then((res) => {
+        console.log('this is the patch response', res.data);
+        dispatch({ type: SET_END_DETAILS, value: res.data });
+
+        if (gameState.currentEnd < 12) {
+          dispatch({ type: SET_CURRENT_SHOT, value: 0 });
+          dispatch({ type: SET_CURRENT_END, value: gameState.currentEnd + 1 });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return {
@@ -387,7 +470,9 @@ const useApplicationData = (game_id) => {
     startEnd,
     storeRockHistory,
     storeShotDetails,
+    finishEnd,
+    loadGameData,
   };
 };
 
-export default useApplicationData;
+export default useGameData;

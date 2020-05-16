@@ -19,20 +19,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NavBar = ({setView}) => {
+const NavBar = ({handleHome}) => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton onClick={()=> setView('GAME')} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+          <IconButton onClick={handleHome} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <MenuIcon  />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
             Curling Coach
           </Typography>
-          <Button onClick={()=> setView('DASHBOARD')}color="inherit">Login</Button>
+          <Button onClick={handleHome}color="inherit">Home</Button>
         </Toolbar>
       </AppBar>
     </div>

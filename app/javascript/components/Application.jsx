@@ -3,7 +3,6 @@ import { makeStyles, createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
 import GameView from './views/GameView';
-import TestView from './views/TestView';
 import DashboardView from './views/DashboardView';
 import NavBar from './NavBar';
 
@@ -41,7 +40,15 @@ const theme = createMuiTheme({
       //   backgroundColor: "#6586c0",
       // }
     },
+    MuiTableCell: {
+      head: {
+        background: "#1a5d99",
+        border: '1px solid #d0d0d0',
+        color: '#ffffff',
+      }
+    },
   },
+  
 });
 
 const useStyles = makeStyles((theme) => ({
@@ -57,16 +64,29 @@ const GAME = 'GAME';
 const App = () => {
   const classes = useStyles();
 
-  const [view, setView] = useState(GAME);
+  const [view, setView] = useState(DASHBOARD);
+  const [selectedGameId, setSelectedGameId] = useState();
+
+  const handleGameSelection = (gameId) => {
+    setSelectedGameId(gameId);
+    setView(GAME);
+  };
+
+  const handleHome = () => {
+    setView(DASHBOARD);
+  };
 
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.root}>
-        <NavBar setView={setView} color="primary" />
+        <NavBar handleHome={handleHome} color="primary" />
         {view === DASHBOARD && (
-          <DashboardView setView={setView} color="primary" />
+          <DashboardView
+            handleGameSelection={handleGameSelection}
+            color="primary"
+          />
         )}
-        {view === GAME && <GameView color="primary" />}
+        {view === GAME && <GameView gameId={selectedGameId} color="primary" />}
         {/* <TestView /> */}
       </div>
     </ThemeProvider>

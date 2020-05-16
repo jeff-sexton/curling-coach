@@ -11,7 +11,9 @@ class Api::GamesController < ApplicationController
     ends = game.ends.map do |curl_end|
 
       # convert nested json object to an array of objects before sending to the client
-      curl_end.throw_order = JSON.parse(curl_end.throw_order)
+      if curl_end.throw_order
+        curl_end.throw_order = JSON.parse(curl_end.throw_order)
+      end
       
       shots = curl_end.shots
 
