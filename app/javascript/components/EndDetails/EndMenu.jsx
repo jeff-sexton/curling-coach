@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     width: "80%",
   },
   paper: {
-    width: "fit-content",
+    width: "auto",
     height: "auto",
     backgroundColor: theme.palette.background.paper,
     border: '4px solid #FF0000',

@@ -38,7 +38,7 @@ const EndDetails = ({ gameState, setShot, setEnd }) => {
             <LinearProgress variant="determinate" value={(gameState.currentShot / 16) * 100} />
         </Grid>
         <Grid item xs>
-          {gameState.ends[gameState.currentEnd].end.throw_order && <ThrowTurn gameState={gameState} setShot={setShot} />}
+          {gameState.ends[gameState.currentEnd].end.throw_order && <ThrowTurn gameState={gameState}/>}
         </Grid>
       </Grid>
     </div>

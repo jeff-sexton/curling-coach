@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const ShotRotation = ({ rotation, storeShotDetails, disable, errors }) => {
+const ShotRotation = ({ rotation, storeShotDetails, errors }) => {
   const classes = useStyles();
 
   const errorsExist = errors && errors.rotation;
@@ -24,7 +24,7 @@ const ShotRotation = ({ rotation, storeShotDetails, disable, errors }) => {
   };
 
   return (
-    <FormControl variant="outlined" className={classes.formControl} error={errorsExist} disabled={disable}>
+    <FormControl variant="outlined" className={classes.formControl} error={errorsExist}>
       <InputLabel id="shot-rotation">{label}</InputLabel>
       <Select
         labelId="shot-rotation"

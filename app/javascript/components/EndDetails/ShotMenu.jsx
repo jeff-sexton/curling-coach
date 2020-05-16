@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     width: "80%",
   },
   paper: {
-    width: "fit-content",
+    width: "auto",
     height: "auto",
     backgroundColor: theme.palette.background.paper,
     border: '4px solid #FF0000',
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
     fontSize: "20",
     fontWeight: "bolder",
-    width: "fit-content"
+    width: "100%"
   },  
 }));
 
@@ -61,7 +61,7 @@ const ShotMenu = ({ gameState, setShot }) => {
   
   const shotItems = ends[currentEnd].shots.map((value, index) => {
     return (
-      <Grid container item xs={shotItemSpacing()} key={index} justify="center" >
+      <Grid container item xs={shotItemSpacing()} key={index} justify="center">
         <MenuItem 
           className={classes.listItem}
           key={index} 

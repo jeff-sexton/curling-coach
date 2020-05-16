@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const ShotRating = ({ rating, storeShotDetails, disable, errors }) => {
+const ShotRating = ({ rating, storeShotDetails, errors }) => {
   const classes = useStyles();
   const errorsExist = errors && errors.rating;
   const label = errorsExist ? "Rating required*" : "Rating*";
@@ -23,7 +23,7 @@ const ShotRating = ({ rating, storeShotDetails, disable, errors }) => {
   };
   
   return (
-    <FormControl variant="outlined" className={classes.formControl} error={errorsExist} disabled={disable}>
+    <FormControl variant="outlined" className={classes.formControl} error={errorsExist}>
       <InputLabel id="shot-rating">{label}</InputLabel>
       <Select
         labelId="shot-rating"

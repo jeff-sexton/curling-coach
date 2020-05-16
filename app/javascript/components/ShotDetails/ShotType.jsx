@@ -32,7 +32,7 @@ const shotTypes = [
   createData('NotScored', 'Not Scored'),
 ];
 
-const ShotType = ({ shot_type, storeShotDetails, disable, errors }) => {
+const ShotType = ({ shot_type, storeShotDetails, errors }) => {
   const classes = useStyles();
   const errorsExist = errors && errors.shot_type;
   const label = errorsExist ? "Type required*" : "Type*";
@@ -42,7 +42,7 @@ const ShotType = ({ shot_type, storeShotDetails, disable, errors }) => {
   };
 
   return (
-    <FormControl variant="outlined" className={classes.formControl} error={errorsExist} disabled={disable}>
+    <FormControl variant="outlined" className={classes.formControl} error={errorsExist}>
       <InputLabel id="shot-type">{label}</InputLabel>
       <Select
         labelId="shot-type"
