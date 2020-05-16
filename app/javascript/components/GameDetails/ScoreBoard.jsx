@@ -13,12 +13,6 @@ import ScoreBoardStyles from './ScoreBoardStyles';
 
 const useStyles = makeStyles(ScoreBoardStyles);
 
-// const useStyles2 = {
-//   bg: {
-//     background: "black",
-//   }
-// }
-
 function createTeamRow(name, score, teamId) {
   return { name, score, teamId };
 }
