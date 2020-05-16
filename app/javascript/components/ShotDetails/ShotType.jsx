@@ -42,7 +42,7 @@ const ShotType = ({ shot_type, storeShotDetails, errors, isEditable }) => {
   };
 
   return (
-    <FormControl variant="outlined"  className={classes.formControl} error={errorsExist}>
+    <FormControl variant="outlined" className={classes.formControl} error={errorsExist}>
       <InputLabel id="shot-type">{label}</InputLabel>
       <Select
         labelId="shot-type"

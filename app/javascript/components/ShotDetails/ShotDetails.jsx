@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ShotDetails = ({ gameState, storeShotDetails, isEditable }) => {
   const classes = useStyles();
-  const {rating, shot_type, rotation} = gameState.ends[gameState.currentEnd].shots[gameState.currentShot];
+  const {rating, shot_type, rotation } = gameState.ends[gameState.currentEnd].shots[gameState.currentShot];
 
   return (
     <div className={classes.root}>

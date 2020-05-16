@@ -36,70 +36,71 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
     fontSize: "20",
     fontWeight: "bolder",
-    width: "fit-content"
+    width: "100%"
   },  
 }));
 
 
-const EndMenu = ({ gameState, setEnd }) => {
+const ShotMenu = ({ gameState, setShot }) => {
   const { ends, currentEnd, currentShot } = gameState;
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
 
-  const endItemSpacing = () => {
-    if (ends.length <= 2) {
-      return 12 / ends.length;
+  const shotItemSpacing = () => {
+    if (ends[currentEnd].shots.length <= 2) {
+      return 12 / ends[currentEnd].shots.length;
     }
     return 4;
   }
 
-
-  const endItemClick = (index) => {
-    setEnd(index);
+  const shotItemClick = (index) => {
+    setShot(index);
     setOpen(false);
   }
-  const endItems = ends.map((value, index) => {
+  
+  const shotItems = ends[currentEnd].shots.map((value, index) => {
     return (
-      <Grid container item xs={endItemSpacing()} key={index} justify="center" >
+      <Grid container item xs={shotItemSpacing()} key={index} justify="center">
         <MenuItem 
           className={classes.listItem}
           key={index} 
-          selected={index === currentEnd}
-          onClick={() => endItemClick(index)}
+          selected={index === currentShot}
+          onClick={() => shotItemClick(index)}
         >
-          End {index + 1}
+          Shot {index + 1}
         </MenuItem>
       </Grid>   
     );
   })
 
+
   const modalContent = (
     <Paper className={classes.paper}>
       <Grid container spacing={2} justify="flex-start" alignItems="center" alignText="center"  >
-          {endItems}
+          {shotItems}
       </Grid>
     </Paper>
   );
 
   return (
     <>
-    <Button 
-      className={classes.root}
-      variant="contained"
-      color="primary"
-      onClick={() => setOpen(true)} 
-    >
-      {`End ${currentEnd + 1}`}
-    </Button>
-    <Modal
-      open={open}
-      onClose={() => setOpen(false)}
-    >
-      {modalContent}
-    </Modal>
-</>
-  );
-}
+      <Button 
+        className={classes.root}
+        variant="contained"
+        color="primary"
+        onClick={() => setOpen(true)} 
+      >
+        {`Shot ${currentShot + 1}`}
+      </Button>
+      <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+      >
+        {modalContent}
+      </Modal>
+  </>
+    );
+  }
 
-export default EndMenu;
+export default ShotMenu;
