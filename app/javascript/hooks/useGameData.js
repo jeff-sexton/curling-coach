@@ -24,7 +24,7 @@ const reducer = (state, action) => {
     ...value,
   });
 
-  const SET_LOADED = ({value}) => ({ ...state, loaded: value });
+  const SET_LOADED = ({ value }) => ({ ...state, loaded: value });
 
   const SET_THROW_ORDER = ({ value: throw_order }) => {
     if (!throw_order) {
@@ -248,9 +248,6 @@ const useGameData = () => {
 
   // Get Initial Game details from API
   const loadGameData = (game_id) => {
-
-    dispatch({ type: SET_LOADED, value: false });
-
     axios
       .get(`/api/games/${game_id}`)
       .then((res) => {
