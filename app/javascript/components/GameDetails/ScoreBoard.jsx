@@ -62,8 +62,9 @@ const ScoreBoard = ({ gameState }) => {
     createTeamRow(teamOneName, sum(teamOneTotal), teamOneId),
     createTeamRow(teamTwoName, sum(teamTwoTotal), teamTwoId),
   ];
+  
   const { currentEnd } = gameState;
-  const first_team_id = gameState.ends[currentEnd].end.first_team_id;
+  const firstThrowTeamId = gameState.ends[currentEnd].end.first_team_id;
 
   return (
     <TableContainer>
@@ -101,25 +102,23 @@ const ScoreBoard = ({ gameState }) => {
                       endsData[index].end.score_team2}
                     {endsData[index] &&
                       rowIndex === 0 &&
-                      first_team_id === row.teamId &&
+                      firstThrowTeamId !== row.teamId &&
                       endsData[index].end.score_team1 === null && (
-                        // <HammerIcon fontSize="small" />
                         <CardMedia
-              image={HammerIcon}
-              className={classes.hammerIcon}
-              component="img"
-            />
+                          image={HammerIcon}
+                          className={classes.hammerIcon}
+                          component="img"
+                        />
                       )}
                     {endsData[index] &&
                       rowIndex === 1 &&
-                      first_team_id === row.teamId &&
+                      firstThrowTeamId !== row.teamId &&
                       endsData[index].end.score_team2 === null && (
-                        // <HammerIcon fontSize="small" />
                         <CardMedia
-              image={HammerIcon}
-              component="img"
-              className={classes.hammerIcon}
-            />
+                          image={HammerIcon}
+                          component="img"
+                          className={classes.hammerIcon}
+                        />
                       )}
                   </TableCell>
                 ))}
