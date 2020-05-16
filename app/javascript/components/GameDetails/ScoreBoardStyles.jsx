@@ -35,6 +35,7 @@ const ScoreBoardStyles = (theme) => ({
     padding: '8px 1px',
     textAlign: 'center',
     border: '1px solid #aaaaaa',
+    minWidth: 17,
   },
   letterSpace: {
     '& th:nth-child(11)': {

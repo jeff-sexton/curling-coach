@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -6,39 +7,57 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import TextField from '@material-ui/core/TextField';
 
 import ScoreBoardStyles from './ScoreBoardStyles';
 
 const useStyles = makeStyles(ScoreBoardStyles);
 
-function createData(name) {
-  return { name };
+function createTeamRow(name, score) {
+  return { name, score };
 }
 
-function createData1(end) {
+function createEndCell(end) {
   return { end };
 }
 
-const rows = [createData('Canada'), createData('Switzerland')];
-
 const ends = [
-  createData1(1),
-  createData1(2),
-  createData1(3),
-  createData1(4),
-  createData1(5),
-  createData1(6),
-  createData1(7),
-  createData1(8),
-  createData1(9),
-  createData1(10),
-  createData1(11),
+  createEndCell(1),
+  createEndCell(2),
+  createEndCell(3),
+  createEndCell(4),
+  createEndCell(5),
+  createEndCell(6),
+  createEndCell(7),
+  createEndCell(8),
+  createEndCell(9),
+  createEndCell(10),
+  createEndCell(11),
 ];
 
-const ScoreBoard = () => {
+const ScoreBoard = ({ gameState }) => {
   const classes = useStyles();
-  const [score, setScore] = useState();
+
+  const endsData = gameState.ends;
+
+  const sum = (arr) => arr.reduce((a, b) => a + b, 0);
+
+  const teamOneTotal = endsData.map((score) => {
+    const total = score.end.score_team1;
+    return total;
+  });
+
+  const teamTwoTotal = endsData.map((score) => {
+    const total = score.end.score_team2;
+    return total;
+  });
+
+  const teamOneName = gameState.teams_with_players[0].team.team_name;
+  const teamTwoName = gameState.teams_with_players[1].team.team_name;
+
+  const rows = [
+    createTeamRow(teamOneName, sum(teamOneTotal)),
+    createTeamRow(teamTwoName, sum(teamTwoTotal)),
+  ];
 
   return (
     <TableContainer>
@@ -56,7 +75,7 @@ const ScoreBoard = () => {
             </TableRow>
           </TableHead>
           <TableBody className={classes.teamNameRow}>
-            {rows.map((row) => (
+            {rows.map((row, rowIndex) => (
               <TableRow key={row.name}>
                 <TableCell
                   id={row.name}
@@ -66,18 +85,17 @@ const ScoreBoard = () => {
                 >
                   {row.name}
                 </TableCell>
-                {ends.map((endNumber) => (
+                {ends.map((endNumber, index) => (
                   <TableCell className={classes.tableCell} key={endNumber.end}>
-                    <TextField
-                      end={endNumber.end}
-                      inputProps={{ type: 'number', id: `${endNumber.end}` }}
-                      className={`${classes.root} ${classes.textInput}`}
-                      value={score}
-                      onChange={(event) => setScore(event.target.value)}
-                    />
+                    {endsData[index] &&
+                      rowIndex === 0 &&
+                      endsData[index].end.score_team1}
+                    {endsData[index] &&
+                      rowIndex === 1 &&
+                      endsData[index].end.score_team2}
                   </TableCell>
                 ))}
-                <TableCell className={classes.tableCell}></TableCell>
+                <TableCell className={classes.tableCell}>{row.score}</TableCell>
               </TableRow>
             ))}
           </TableBody>
