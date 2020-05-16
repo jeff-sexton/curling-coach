@@ -369,6 +369,7 @@ const useGameData = () => {
 
   const setEnd = (end) => {
     dispatch({ type: SET_CURRENT_END, value: end });
+    setShot(0);
   }
 
   const startEnd = (first_team_id) => {
@@ -432,8 +433,8 @@ const useGameData = () => {
   const finishEnd = ({ score_team1, score_team2 }) => {
     console.log(
       '\n****finsih end****\n',
-      scores.score_team1,
-      scores.score_team2
+      score_team1,
+      score_team2
     );
 
     dispatch({ type: SET_COMPLETE_END_PROMPT, value: false });
