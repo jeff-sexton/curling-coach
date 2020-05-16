@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const ShotRotation = ({ rotation, storeShotDetails, errors }) => {
+const ShotRotation = ({ rotation, storeShotDetails, errors, isEditable }) => {
   const classes = useStyles();
 
   const errorsExist = errors && errors.rotation;
@@ -32,6 +32,7 @@ const ShotRotation = ({ rotation, storeShotDetails, errors }) => {
         value={rotation}
         onChange={(event) => setShotRotation(event.target.value)}
         label={label}
+        disabled={!isEditable}
       >
         <MenuItem value={'clockwise'}>Clockwise</MenuItem>
         <MenuItem value={'counterclockwise'}>Counterclockwise</MenuItem>

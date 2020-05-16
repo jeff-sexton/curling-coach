@@ -32,7 +32,7 @@ const shotTypes = [
   createData('NotScored', 'Not Scored'),
 ];
 
-const ShotType = ({ shot_type, storeShotDetails, errors }) => {
+const ShotType = ({ shot_type, storeShotDetails, errors, isEditable }) => {
   const classes = useStyles();
   const errorsExist = errors && errors.shot_type;
   const label = errorsExist ? "Type required*" : "Type*";
@@ -50,6 +50,7 @@ const ShotType = ({ shot_type, storeShotDetails, errors }) => {
         value={shot_type}
         onChange={(event) => setShotType(event.target.value)}
         label={label}
+        disabled={!isEditable}
       >
         {shotTypes.map((shotType, i) => (
           <MenuItem key={i} value={shotType.value}>{shotType.type}</MenuItem>
