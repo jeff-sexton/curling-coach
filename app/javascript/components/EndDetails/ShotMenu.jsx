@@ -18,10 +18,9 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     width: "auto",
     height: "auto",
-
     backgroundColor: theme.palette.background.paper,
     border: '4px solid #FF0000',
-    padding: "2%",
+    padding: "1%",
     position: "absolute",
     top: "50%",
     left: "50%",
@@ -29,16 +28,15 @@ const useStyles = makeStyles((theme) => ({
   },
   listItem: {
     background: '#42a5f5',
-    border: 0,
+    textAlign: "center",
     borderRadius: 5,
     '&.Mui-selected, &:hover' : {
       background: "red"
     },
     color: "white",
-    fontSize: 20,
-    fontWeight: "bolder",
-    padding: '20px'
-  },
+    fontSize: "20",
+    fontWeight: "bolder"
+  },  
 }));
 
 
@@ -48,10 +46,18 @@ const ShotMenu = ({ gameState }) => {
 
   const [open, setOpen] = useState(false);
 
+  const shotItemSpacing = () => {
+    if (ends[currentEnd].shots.length === 1) {
+      return 12;
+    } else if (ends[currentEnd].shots.length === 2) {
+      return 6;
+    }
+    return 4;
+  }
 
   const shotItems = ends[currentEnd].shots.map((value, index) => {
     return (
-      <Grid item xs={4} key={index}>
+      <Grid  item xs={shotItemSpacing()} key={index}  >
         <MenuItem 
           className={classes.listItem}
           key={index} 
@@ -60,14 +66,14 @@ const ShotMenu = ({ gameState }) => {
         >
           Shot {index + 1}
         </MenuItem>
-      </Grid>
+      </Grid>   
     );
   })
 
 
   const modalContent = (
     <Paper className={classes.paper}>
-      <Grid container spacing={2} justify="flex-start" alignItems="center" alignText="center">
+      <Grid container spacing={2} justify="flex-start" alignItems="center" alignText="center" >
           {shotItems}
       </Grid>
     </Paper>
@@ -92,7 +98,5 @@ const ShotMenu = ({ gameState }) => {
   </>
     );
   }
-
-
 
 export default ShotMenu;
