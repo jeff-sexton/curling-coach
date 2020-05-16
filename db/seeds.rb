@@ -56,17 +56,17 @@ End.destroy_all
   })
 
   game1.ends.create!({
-    score_team1: 3,
-    score_team2: 4
+    score_team1: 2,
+    score_team2: 0
   })
 
   game1.ends.create!({
-    score_team1: 5,
-    score_team2: 6
+    score_team1: 0,
+    score_team2: 1
   })
 
   game1.ends.create!({
-    score_team1: 7,
+    score_team1: 2,
     score_team2: 0
   })
 
