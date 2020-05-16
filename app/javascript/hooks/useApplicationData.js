@@ -14,6 +14,7 @@ const INITIALIZE_END = 'INITIALIZE_END';
 const INITIALIZE_SHOT = 'INITIALIZE_SHOT';
 const SET_PATH_HISTORY = 'SET_PATH_HISTORY';
 const COMPLETE_LOAD = 'COMPLETE_LOAD';
+const SET_COMPLETE_END_PROMPT = 'SET_COMPLETE_END_PROMPT';
 
 const reducer = (state, action) => {
   // Reducers
@@ -89,8 +90,8 @@ const reducer = (state, action) => {
   };
 
   const SET_SHOT_SAVE_ERRORS = ({ value }) => {
-    return { ...state, shotSaveErrors: value }
-  }
+    return { ...state, shotSaveErrors: value };
+  };
 
   const SET_END_DETAILS = ({ value }) => {
     const currentEnd = state.currentEnd;
@@ -106,13 +107,13 @@ const reducer = (state, action) => {
     const targetEnd = value.end;
     const targetShot = value.shot;
 
-    console.log('\n*** Initialize Shot ***\n', targetEnd, targetShot)
+    console.log('\n*** Initialize Shot ***\n', targetEnd, targetShot);
 
     if (state.ends[targetEnd].shots[targetShot]) {
-      console.log('existing shot')
+      console.log('existing shot');
       return { ...state };
     } else {
-      console.log('new shot')
+      console.log('new shot');
       const end_id = state.ends[targetEnd].end.id;
       const shot_number = targetShot + 1;
 
@@ -201,6 +202,11 @@ const reducer = (state, action) => {
     }
   };
 
+  const SET_COMPLETE_END_PROMPT = ({ value: completeEndPrompt }) => ({
+    ...state,
+    completeEndPrompt,
+  });
+
   const DEFAULT = () => {
     throw new Error(
       `Tried to reduce with unsupported action type: ${action.type}`
@@ -221,6 +227,7 @@ const reducer = (state, action) => {
     INITIALIZE_SHOT,
     SET_PATH_HISTORY,
     COMPLETE_LOAD,
+    SET_COMPLETE_END_PROMPT,
     DEFAULT,
   };
 
@@ -235,7 +242,8 @@ const useApplicationData = (game_id) => {
     currentShot: 0,
     currentEnd: 0,
     loaded: false,
-    shotSaveErrors: null
+    shotSaveErrors: null,
+    completeEndPrompt: false,
   });
 
   // Get Initial Game details from API
@@ -271,21 +279,31 @@ const useApplicationData = (game_id) => {
   };
 
   const nextShot = () => {
-    const newCurrentShot = gameState.currentShot + 1;
+
+    const {currentEnd, currentShot} = gameState;
+    const newCurrentShot = currentShot + 1;
 
     if (newCurrentShot > 15 && gameState.currentEnd < 12) {
-      console.log('Moving to next end')
-      const nextEnd = gameState.currentEnd + 1;
+      console.log('Moving to next end');
+
+      const nextEnd = currentEnd + 1;
       dispatch({ type: INITIALIZE_END, value: { end: nextEnd } });
       dispatch({ type: INITIALIZE_SHOT, value: { shot: 0, end: nextEnd } });
-      dispatch({ type: SET_CURRENT_END, value: nextEnd });
-      dispatch({ type: SET_CURRENT_SHOT, value: 0 });
 
+      if (
+        gameState.ends[currentEnd].end.score_team1 !== null &&
+        gameState.ends[currentEnd].end.score_team1 !== null
+      ) {
+        dispatch({ type: SET_CURRENT_END, value: nextEnd });
+        dispatch({ type: SET_CURRENT_SHOT, value: 0 });
+      } else {
+        dispatch({ type: SET_COMPLETE_END_PROMPT, value: true });
+      }
     } else {
-      console.log('initializing next shot')
+      console.log('initializing next shot');
       dispatch({
         type: INITIALIZE_SHOT,
-        value: { shot: newCurrentShot, end: gameState.currentEnd },
+        value: { shot: newCurrentShot, end: currentEnd },
       });
 
       dispatch({ type: SET_CURRENT_SHOT, value: newCurrentShot });
@@ -306,7 +324,7 @@ const useApplicationData = (game_id) => {
 
     const shot = { ...gameState.ends[currentEnd].shots[currentShot] };
 
-    shot.end_id = gameState.ends[currentEnd].end.id
+    shot.end_id = gameState.ends[currentEnd].end.id;
     shot.player_id = gameState.ends[currentEnd].end.throw_order[currentShot].id;
 
     // Save forms & shot path history to server here
@@ -369,6 +387,37 @@ const useApplicationData = (game_id) => {
     dispatch({ type: SET_SHOT_DETAILS, value: detail });
   };
 
+  const finishEnd = (scores) => {
+    console.log(
+      '\n****finsih end****\n',
+      scores.score_team1,
+      scores.score_team2
+    );
+
+    dispatch({ type: SET_COMPLETE_END_PROMPT, value: false });
+
+    const { currentEnd } = gameState;
+
+    const endId = gameState.ends[currentEnd].end.id;
+
+    // end =
+
+    axios
+      .patch(`api/ends/${endId}`, scores)
+      .then((res) => {
+        console.log('this is the patch response', res.data);
+        dispatch({ type: SET_END_DETAILS, value: res.data });
+
+        if (gameState.currentEnd < 12) {
+          dispatch({ type: SET_CURRENT_SHOT, value: 0 });
+          dispatch({ type: SET_CURRENT_END, value: gameState.currentEnd + 1 });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return {
     gameState,
     nextShot,
@@ -377,6 +426,7 @@ const useApplicationData = (game_id) => {
     startEnd,
     storeRockHistory,
     storeShotDetails,
+    finishEnd,
   };
 };
 
