@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { useReducer, useEffect } from 'react';
+import { useReducer } from 'react';
 import axios from 'axios';
 
 const SET_INITIAL_GAME_STATE = 'SET_INITIAL_GAME_STATE';
@@ -13,7 +13,7 @@ const SET_CURRENT_END = 'SET_CURRENT_END';
 const INITIALIZE_END = 'INITIALIZE_END';
 const INITIALIZE_SHOT = 'INITIALIZE_SHOT';
 const SET_PATH_HISTORY = 'SET_PATH_HISTORY';
-const COMPLETE_LOAD = 'COMPLETE_LOAD';
+const SET_LOADED = 'SET_LOADED';
 const SET_COMPLETE_END_PROMPT = 'SET_COMPLETE_END_PROMPT';
 
 const reducer = (state, action) => {
@@ -24,7 +24,7 @@ const reducer = (state, action) => {
     ...value,
   });
 
-  const COMPLETE_LOAD = () => ({ ...state, loaded: true });
+  const SET_LOADED = ({ value }) => ({ ...state, loaded: value });
 
   const SET_THROW_ORDER = ({ value: throw_order }) => {
     if (!throw_order) {
@@ -226,7 +226,7 @@ const reducer = (state, action) => {
     INITIALIZE_END,
     INITIALIZE_SHOT,
     SET_PATH_HISTORY,
-    COMPLETE_LOAD,
+    SET_LOADED,
     SET_COMPLETE_END_PROMPT,
     DEFAULT,
   };
@@ -234,7 +234,7 @@ const reducer = (state, action) => {
   return (actions[action.type] || actions.DEFAULT)(action);
 };
 
-const useApplicationData = (game_id) => {
+const useGameData = () => {
   const [gameState, dispatch] = useReducer(reducer, {
     game: {},
     ends: [],
@@ -247,7 +247,7 @@ const useApplicationData = (game_id) => {
   });
 
   // Get Initial Game details from API
-  useEffect(() => {
+  const loadGameData = (game_id) => {
     axios
       .get(`/api/games/${game_id}`)
       .then((res) => {
@@ -266,12 +266,12 @@ const useApplicationData = (game_id) => {
         });
       })
       .then(() => {
-        dispatch({ type: COMPLETE_LOAD, value: null });
+        dispatch({ type: SET_LOADED, value: true });
       })
       .catch((err) => {
         console.log('err = ', err);
       });
-  }, []);
+  };
 
   // TODO: Set Throw order from user input -- implement later
   const setThrowOrder = (throw_order) => {
@@ -279,8 +279,7 @@ const useApplicationData = (game_id) => {
   };
 
   const nextShot = () => {
-
-    const {currentEnd, currentShot} = gameState;
+    const { currentEnd, currentShot } = gameState;
     const newCurrentShot = currentShot + 1;
 
     if (newCurrentShot > 15 && gameState.currentEnd < 12) {
@@ -427,7 +426,8 @@ const useApplicationData = (game_id) => {
     storeRockHistory,
     storeShotDetails,
     finishEnd,
+    loadGameData,
   };
 };
 
-export default useApplicationData;
+export default useGameData;

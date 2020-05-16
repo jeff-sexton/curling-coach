@@ -16,14 +16,14 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Dashboard = ({ onClick, gameList }) => {
+const Dashboard = ({ handleGameSelection, gameList }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <h1> Dashboard </h1>
       {gameList.map((game) => (
-        <GamePreview key={game.id} game={game} onClick={onClick} />
+        <GamePreview key={game.id} handleGameSelection={handleGameSelection} game={game} />
       ))}
     </div>
   );

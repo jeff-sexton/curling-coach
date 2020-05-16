@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import useApplicationData from '../../hooks/useApplicationData';
+import useGameData from '../../hooks/useGameData';
 
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
@@ -35,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
 
 const GameView = ({ gameId }) => {
   const classes = useStyles();
-  const game_id = gameId || 1;
 
   const {
     gameState,
@@ -47,7 +46,14 @@ const GameView = ({ gameId }) => {
     finishEnd,
     storeRockHistory,
     storeShotDetails,
-  } = useApplicationData(game_id);
+    loadGameData,
+  } = useGameData();
+
+  useEffect(()=>{
+    if (gameId) {
+      loadGameData(gameId);
+    }
+  }, [gameId])
 
   const [isEditable, setIsEditable] = useState(true);
 
