@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -9,21 +9,35 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     minWidth: 120,
     width: '100%',
-    height: 'auto'
-  }
+    height: 'auto',
+  },
 }));
 
 const ShotRating = ({ rating, storeShotDetails, errors, isEditable }) => {
   const classes = useStyles();
-  const errorsExist = errors && errors.rating;
-  const label = errorsExist ? "Rating required*" : "Rating*";
-  
+
+  const [errorsExist, setErrorsExist] = useState(false);
+  const [label, setLabel] = useState('Rating*');
+
+  useEffect(() => {
+    if (errors && errors.rating) {
+      setErrorsExist(true);
+      setLabel('Rating required*');
+    } else {
+      setErrorsExist(false);
+    }
+  }, [errors]);
+
   const setRating = (rating) => {
-    storeShotDetails({rating});
+    storeShotDetails({ rating });
   };
-  
+
   return (
-    <FormControl variant="outlined" className={classes.formControl} error={errorsExist}>
+    <FormControl
+      variant="outlined"
+      className={classes.formControl}
+      error={errorsExist}
+    >
       <InputLabel id="shot-rating">{label}</InputLabel>
       <Select
         labelId="shot-rating"
@@ -44,4 +58,3 @@ const ShotRating = ({ rating, storeShotDetails, errors, isEditable }) => {
 };
 
 export default ShotRating;
-
