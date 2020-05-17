@@ -38,6 +38,12 @@ game2 = Game.find_or_create_by!({
   location: 'North Shore',
   completed: false
 })
+game3 = Game.find_or_create_by!({
+  id: 3, 
+  date_time: '2020-05-06T02:00:00.000Z',
+  location: 'Stats Test',
+  completed: false
+})
 
 
 ## ENDS
@@ -164,6 +170,14 @@ game2.game_participations.create!({
 })
 
 game2.game_participations.create!({
+  team_id: 3
+})
+
+game3.game_participations.create!({
+  team_id: 1
+})
+
+game3.game_participations.create!({
   team_id: 3
 })
 
