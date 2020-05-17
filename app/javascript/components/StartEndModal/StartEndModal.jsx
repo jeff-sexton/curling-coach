@@ -37,13 +37,13 @@ const StartEndModal = ({ gameState, startEnd, errors }) => {
   
   const [selectedTeamId, setSelectedTeamId] = useState(first_team_id || '');
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const errorsExist = errors && errors.throw_order;
   const label = errorsExist ? "First Team required*" : "First Team*";
   
   useEffect(() => {
-    // console.log(gameState);
+    console.log("gameState in StartEndModal!: ", gameState);
     if (
       gameState.ends[gameState.currentEnd] &&
       !gameState.ends[gameState.currentEnd].end.first_team_id
