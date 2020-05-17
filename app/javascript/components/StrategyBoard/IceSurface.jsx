@@ -6,115 +6,25 @@ const IceSurface = ({
   storeHistory,
   gameState,
   isEditable,
+  initialPositions,
 }) => {
   const iceRef = useRef();
 
-  const initialPositions = [
-    {
-      label: 1,
-      x: 50,
-      y: 50,
-      color: 'red',
-    },
-    {
-      label: 2,
-      x: 100,
-      y: 50,
-      color: 'red',
-    },
-    {
-      label: 3,
-      x: 150,
-      y: 50,
-      color: 'red',
-    },
-    {
-      label: 4,
-      x: 200,
-      y: 50,
-      color: 'red',
-    },
-    {
-      label: 5,
-      x: 50,
-      y: 100,
-      color: 'red',
-    },
-    {
-      label: 6,
-      x: 100,
-      y: 100,
-      color: 'red',
-    },
-    {
-      label: 7,
-      x: 150,
-      y: 100,
-      color: 'red',
-    },
-    {
-      label: 8,
-      x: 200,
-      y: 100,
-      color: 'red',
-    },
-    {
-      label: 9,
-      x: 550,
-      y: 50,
-      color: 'yellow',
-    },
-    {
-      label: 10,
-      x: 600,
-      y: 50,
-      color: 'yellow',
-    },
-    {
-      label: 11,
-      x: 650,
-      y: 50,
-      color: 'yellow',
-    },
-    {
-      label: 12,
-      x: 700,
-      y: 50,
-      color: 'yellow',
-    },
-    {
-      label: 13,
-      x: 550,
-      y: 100,
-      color: 'yellow',
-    },
-    {
-      label: 14,
-      x: 600,
-      y: 100,
-      color: 'yellow',
-    },
-    {
-      label: 15,
-      x: 650,
-      y: 100,
-      color: 'yellow',
-    },
-    {
-      label: 16,
-      x: 700,
-      y: 100,
-      color: 'yellow',
-    },
-  ];
+
 
   const rocks = initialPositions.map((initialPositon, index) => {
-    const { x, y, color, label } = initialPositon;
+    const { x, y, id } = initialPositon;
+    let color = '';
+    if (index < 8 ) {
+      color = 'red';
+    } else {
+      color = 'yellow';
+    }
 
     return (
       <Rock
         key={index}
-        id={label}
+        id={id}
         positionChange={positionChange}
         x={x}
         y={y}
@@ -128,7 +38,13 @@ const IceSurface = ({
   });
 
   return (
-    <svg id="ice" ref={iceRef} height="100%" viewBox="0 0 750 1650" style={{display: 'block', width: 'fit-content'}}>
+    <svg
+      id="ice"
+      ref={iceRef}
+      height="100%"
+      viewBox="0 0 750 1650"
+      style={{ display: 'block' }}
+    >
       <rect x="0" y="0" width="100%" height="100%" fill="aliceblue" />
       <rect x="0" y="150" width="100%" height="17" fill="red" />
       <rect x="0" y="1485" width="100%" height="15" fill="blue" />

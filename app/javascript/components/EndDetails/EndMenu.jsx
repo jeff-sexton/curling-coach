@@ -76,7 +76,7 @@ const EndMenu = ({ gameState, setEnd }) => {
 
   const modalContent = (
     <Paper className={classes.paper}>
-      <Grid container spacing={2} justify="flex-start" alignItems="center" alignText="center"  >
+      <Grid container spacing={2} justify="flex-start" alignItems="center"  >
           {endItems}
       </Grid>
     </Paper>

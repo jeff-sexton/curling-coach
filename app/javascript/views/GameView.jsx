@@ -120,6 +120,7 @@ const GameView = ({ gameId }) => {
             <StrategyBoard
               nextShot={nextShot}
               prevShot={prevShot}
+              setShot={setShot}
               gameState={gameState}
               storeRockHistory={storeRockHistory}
               isEditable={isEditable}
