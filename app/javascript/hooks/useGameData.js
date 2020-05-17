@@ -373,17 +373,12 @@ const useGameData = () => {
   }
 
   const startEnd = (first_team_id) => {
-    const currentEnd = gameState.currentEnd;
+    const { currentEnd, teams_with_players, ends } = gameState;
 
     const throw_order = [];
+    for (const teamObj of teams_with_players) {
+      let teamOffset = teamObj.team.id === first_team_id ? 0 : 1;
 
-    for (const teamObj of gameState.teams_with_players) {
-      let teamOffset;
-      if (teamObj.team.id === first_team_id) {
-        teamOffset = 0;
-      } else {
-        teamOffset = 1;
-      }
       for (const player of teamObj.players) {
         const playerOffset = (player.throw_order - 1) * 4;
         throw_order[teamOffset + playerOffset] = player;
@@ -392,7 +387,7 @@ const useGameData = () => {
     }
 
     const end = {
-      ...gameState.ends[currentEnd].end,
+      ...ends[currentEnd].end,
       first_team_id,
       throw_order,
     };

@@ -32,8 +32,8 @@ const useStyles = makeStyles((theme) => ({
 const StartEndModal = ({ gameState, startEnd, errors }) => {
   const classes = useStyles();
 
-  const { currentEnd } = gameState;
-  const first_team_id = gameState.ends[currentEnd].end.first_team_id;
+  const { currentEnd, ends, teams_with_players } = gameState;
+  const first_team_id = ends[currentEnd].end.first_team_id;
   
   const [selectedTeamId, setSelectedTeamId] = useState(first_team_id || '');
 
@@ -43,27 +43,24 @@ const StartEndModal = ({ gameState, startEnd, errors }) => {
   const label = errorsExist ? "First Team required*" : "First Team*";
   
   useEffect(() => {
-    console.log("gameState in StartEndModal!: ", gameState);
-    if (
-      gameState.ends[gameState.currentEnd] &&
-      !gameState.ends[gameState.currentEnd].end.first_team_id
-    ) {
-      handleOpen();
-    }
+    if (currentEnd > 0 && ends[currentEnd - 1].end.score_team1) {
+      if (ends[currentEnd - 1].end.score_team1 > 0) {
+        startEnd(teams_with_players[1].team.id);
+      } else {
+        startEnd(teams_with_players[0].team.id);
+      }
+    } else if ( ends[currentEnd] && !first_team_id) {
+        setOpen(true);
+      }
   }, [currentEnd]);
 
-  const teams = gameState.teams_with_players.map(
+  const teams = teams_with_players.map(
     (team, index) => {
-
       return (
         <MenuItem key={index} value={team.team.id}>{team.team.team_name}</MenuItem>
       );
     }
   );
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
 
   const handleClose = () => {
     setOpen(false);
@@ -73,7 +70,6 @@ const StartEndModal = ({ gameState, startEnd, errors }) => {
     startEnd(selectedTeamId);
     
     handleClose()
-
   };
 
   const body = (
@@ -82,7 +78,7 @@ const StartEndModal = ({ gameState, startEnd, errors }) => {
       <p id="setup-end-description">
         Select the team that is throwing first:
       </p>
-      <FormControl variant="outlined" className={classes.formControl} error={errorsExist}>
+      <FormControl variant="outlined" className={classes.formControl} error={errorsExist} >
       <InputLabel id="first-team">{label}</InputLabel>
       <Select
         labelId="first-team"

@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 const FinishEndModal = ({ gameState, finishEnd, startEnd, errors }) => {
   const classes = useStyles();
 
-  const { currentEnd, completeEndPrompt, ends, teams_with_players } = gameState;
+  const { completeEndPrompt, currentEnd } = gameState;
 
   const [teamScores, setTeamScores] = useState(['', '']);
 
@@ -71,7 +71,6 @@ const FinishEndModal = ({ gameState, finishEnd, startEnd, errors }) => {
         InputLabelProps={{
           shrink: true,
         }}
-        
         variant="outlined"
       />
     );
@@ -80,31 +79,7 @@ const FinishEndModal = ({ gameState, finishEnd, startEnd, errors }) => {
   const onSave = () => {
     const score_team1 = teamScores[0];
     const score_team2 = teamScores[1];
-
-    let currentFirstTeam;
-    let currentSecondTeam;
-
-    for (const team of teams_with_players) {
-      if (team.team.id === ends[currentEnd].end.first_team_id) {
-        currentFirstTeam = team.team.id;
-      } else {
-        currentSecondTeam = team.team.id;
-      }
-    };
-
     finishEnd({ score_team1, score_team2 });
-
-    let nextFirstTeamId;
-    if (typeof score_team1 === 'number') {
-      if (score_team1 > 0) {
-        nextFirstTeamId = currentSecondTeam;
-      } else {
-        nextFirstTeamId = currentFirstTeam;
-      }
-      startEnd(nextFirstTeamId);
-    };
-
-
     handleClose();
   };
 
