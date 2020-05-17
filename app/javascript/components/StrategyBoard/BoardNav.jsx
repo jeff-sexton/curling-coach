@@ -15,11 +15,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const BoardNav = ({ onNext, onPrev, currentShot, isEditable }) => {
+const BoardNav = ({ onNext, onPrev, onLastShot, onFirstShot, currentShot, isEditable }) => {
   const classes = useStyles();
 
   return (
     <Box display="flex" justifyContent='center' width="100%">
+      <Box>
+        <Button
+          variant="contained"
+          onClick={onFirstShot}
+          color="secondary"
+          className={classes.button}
+          aria-label="Move to Previous Shot"
+          disabled={currentShot <= 1}
+        >
+          <FirstPageIcon />
+        </Button>
+      </Box>
       <Box>
         <Button
           variant="contained"
@@ -43,6 +55,18 @@ const BoardNav = ({ onNext, onPrev, currentShot, isEditable }) => {
           disabled={isEditable}
         >
           <NavigateNextIcon />
+        </Button>
+      </Box>
+      <Box>
+        <Button
+          variant="contained"
+          onClick={onLastShot}
+          color="secondary"
+          className={classes.button}
+          aria-label="Move to Next Shot"
+          disabled={isEditable || currentShot > 14}
+        >
+          <LastPageIcon />
         </Button>
       </Box>
     </Box>

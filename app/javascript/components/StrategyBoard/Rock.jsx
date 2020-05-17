@@ -21,13 +21,14 @@ const Rock = ({
     const pathHistory = gameState.ends[currentEnd].shots[currentShot].rock_paths;
     // console.log(pathHistory[shot] === undefined || pathHistory[shot].length === 0);
 
-    if (pathHistory === undefined || pathHistory.length === 0) {
+    if (pathHistory === undefined || pathHistory.length === 0 && currentShot > 0) {
       storeHistory({ id, x: position.x, y: position.y });
     }
   }, [currentShot, loaded]);
 
   // Respond to replay position changes
   useEffect(() => {
+    // console.log(positionChange)
     const { id: changeId, x: changeX, y: changeY } = positionChange;
     if (changeId === id) {
       setPosition({ x: changeX, y: changeY });
@@ -38,20 +39,21 @@ const Rock = ({
   useEffect(() => {
     const trackMouse = (event) => {
       const parentLocation = parentRef.current.getBoundingClientRect();
-      //   // console.log('parent-location', parentLocation)
-      //   // console.log('parent ref', parentRef)
+        // console.log('parent-location-width', parentLocation.width)
+        // console.log('parent-location-height', parentLocation.height)
+        // console.log('parent ref', parentRef)
 
-      //   // DOMRect {x: 644.65625, y: 0, width: 500, height: 500, top: 0, …}
-      //   // bottom: 500
-      //   // height: 500
-      //   // left: 644.65625
-      //   // right: 1144.65625
-      //   // top: 0
-      //   // width: 500
-      //   // x: 644.65625
-      //   // y: 0
+        // DOMRect {x: 644.65625, y: 0, width: 500, height: 500, top: 0, …}
+        // bottom: 500
+        // height: 500
+        // left: 644.65625
+        // right: 1144.65625
+        // top: 0
+        // width: 500
+        // x: 644.65625
+        // y: 0
 
-      //   // limits?
+        // limits?
 
       const svgWidth = parentLocation.width;
       const viewWidth = 750;
@@ -65,8 +67,7 @@ const Rock = ({
 
       const y = (relativeY / svgHeight) * viewHeight;
 
-      setPosition({ x, y });
-      storeHistory({ id, x, y });
+  
 
       // Stop rock selection if mouse leaves ice surface
       if (
@@ -76,6 +77,10 @@ const Rock = ({
         event.clientY < parentLocation.top + 5
       ) {
         setSelected(false);
+      } else {
+        setPosition({ x, y });
+        storeHistory({ id, x, y });
+
       }
     };
 
