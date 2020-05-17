@@ -15,10 +15,10 @@ const Rock = ({
   const [selected, setSelected] = useState(false);
 
   const {currentEnd, currentShot, loaded} = gameState
-  const pathHistory = gameState.ends[currentEnd].shots[currentShot].rock_paths;
-
+  
   // Add current position to pathHistory for every new show
   useEffect(() => {
+    const pathHistory = gameState.ends[currentEnd].shots[currentShot].rock_paths;
     // console.log(pathHistory[shot] === undefined || pathHistory[shot].length === 0);
 
     if (pathHistory === undefined || pathHistory.length === 0) {
