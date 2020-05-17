@@ -2,6 +2,8 @@ import React from 'react';
 import ShotRating from './ShotRating';
 import ShotType from './ShotType';
 import ShotRotation from './ShotRotation';
+import Button from '@material-ui/core/Button';
+import EqualizerIcon from '@material-ui/icons/Equalizer';
 
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,10 +12,13 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     textAlign: "center"
-  }
+  },
+  button: {
+    marginTop: theme.spacing(1.5),
+  },
 }));
 
-const ShotDetails = ({ gameState, storeShotDetails, isEditable }) => {
+const ShotDetails = ({ gameState, storeShotDetails, isEditable, handleStatsClick, }) => {
   const classes = useStyles();
   const {rating, shot_type, rotation } = gameState.ends[gameState.currentEnd].shots[gameState.currentShot];
 
@@ -21,6 +26,17 @@ const ShotDetails = ({ gameState, storeShotDetails, isEditable }) => {
     <div className={classes.root}>
 
       <h3>Shot Details</h3>
+
+      <Button
+          variant="contained"
+          onClick={handleStatsClick}
+          color="secondary"
+          className={classes.button}
+          aria-label="Go to game statistics"
+          // disabled={currentShot <= 1}
+        >
+          Stats<EqualizerIcon />
+        </Button>
 
     <Grid container item justify={"center"} spacing={2}>
       <Grid item xs={12}>

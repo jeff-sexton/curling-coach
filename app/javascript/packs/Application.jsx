@@ -44,13 +44,12 @@ const theme = createMuiTheme({
     },
     MuiTableCell: {
       head: {
-        background: "#1a5d99",
+        background: '#1a5d99',
         border: '1px solid #d0d0d0',
         color: '#ffffff',
-      }
+      },
     },
   },
-  
 });
 
 const useStyles = makeStyles((theme) => ({
@@ -94,8 +93,14 @@ const App = () => {
             color="primary"
           />
         )}
-        {view === GAME && <GameView gameId={selectedGameId} color="primary" />}
-        {view === STATS && <StatsView gameId={selectedGameId}/>}
+        {view === GAME && (
+          <GameView
+            gameId={selectedGameId}
+            handleStatsSelection={handleStatsSelection}
+            color="primary"
+          />
+        )}
+        {view === STATS && <StatsView gameId={selectedGameId} />}
       </div>
     </ThemeProvider>
   );
