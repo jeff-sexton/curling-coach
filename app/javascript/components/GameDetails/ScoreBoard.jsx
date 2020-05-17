@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -10,24 +10,28 @@ import CardMedia from '@material-ui/core/CardMedia';
 import ScoreBoardStyles from './ScoreBoardStyles';
 import HammerIcon from '../../assets/hammer.svg';
 
+
 const useStyles = makeStyles(ScoreBoardStyles);
 
 const ScoreBoard = ({ gameState }) => {
   const classes = useStyles();
-
   const { ends, currentEnd, teams_with_players } = gameState;
 
-  const endNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  const [endNumbers] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+  const [rows, setRows] = useState([]);
 
   const sum = (arr) => arr.reduce((a, b) => a + b, 0);
 
-  const rows = teams_with_players.map((teams, index) => {
+  useEffect(() => {
+    setRows(teams_with_players.map((teams, index) => {
       return { 
         name: teams.team.team_name, 
         score: sum(ends.map(score => score.end[`score_team${index + 1}`])), 
         teamId: teams.team.id };    
-  });
-console.log("This is the gameState: ", gameState)
+      }
+    ))
+  }, [currentEnd])
+
   return (
     <TableContainer>
       <form noValidate autoComplete="off">

@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const StartEndModal = ({ gameState, startEnd, errors }) => {
+
   const classes = useStyles();
 
   const { currentEnd, ends, teams_with_players } = gameState;
@@ -38,29 +39,26 @@ const StartEndModal = ({ gameState, startEnd, errors }) => {
   const [selectedTeamId, setSelectedTeamId] = useState(first_team_id || '');
 
   const [open, setOpen] = useState(false);
+  const [teams] = useState(teams_with_players.map((team, index) => {
+      return ( <MenuItem key={index} value={team.team.id}>{team.team.team_name}</MenuItem> );
+    })
+  );
 
   const errorsExist = errors && errors.throw_order;
   const label = errorsExist ? "First Team required*" : "First Team*";
   
   useEffect(() => {
-    if (currentEnd > 0 && ends[currentEnd - 1].end.score_team1) {
+   
+    if (currentEnd > 0 && ends[currentEnd - 1].end.score_team1 >= 0) {
       if (ends[currentEnd - 1].end.score_team1 > 0) {
         startEnd(teams_with_players[0].team.id);
       } else {
         startEnd(teams_with_players[1].team.id);
       }
-    } else if ( ends[currentEnd] && !first_team_id) {
+    } else if (ends[currentEnd] && !first_team_id) {
         setOpen(true);
       }
   }, [currentEnd]);
-
-  const teams = teams_with_players.map(
-    (team, index) => {
-      return (
-        <MenuItem key={index} value={team.team.id}>{team.team.team_name}</MenuItem>
-      );
-    }
-  );
 
   const handleClose = () => {
     setOpen(false);
@@ -68,7 +66,6 @@ const StartEndModal = ({ gameState, startEnd, errors }) => {
 
   const onSave = () => {
     startEnd(selectedTeamId);
-    
     handleClose()
   };
 

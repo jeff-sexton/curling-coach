@@ -1,3 +1,5 @@
+import { red } from "@material-ui/core/colors";
+
 const ScoreBoardStyles = (theme) => ({
   TableRow: {
     width: 90,
@@ -5,15 +7,18 @@ const ScoreBoardStyles = (theme) => ({
   },
   teamNameRow: {
     '& tr:nth-child(1) > th': {
-      backgroundColor: theme.palette.team1Color.main,
+      // backgroundColor: theme.palette.team1Color.main,
+      backgroundColor: "red",
+      color: "white"
     },
     '& tr:nth-child(2) > th': {
-      backgroundColor: theme.palette.team2Color.main,
+      // backgroundColor: theme.palette.team2Color.main,
+      backgroundColor: "yellow",
     },
   },
   teamName: {
     padding: '10px 3px',
-    textAlign: 'left',
+    textAlign: 'center',
     border: '1px solid #aaaaaa',
   },
   tableCell: {
