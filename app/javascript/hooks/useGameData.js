@@ -368,8 +368,9 @@ const useGameData = () => {
   };
 
   const setEnd = (end) => {
+    dispatch({ type: INITIALIZE_SHOT, value: { shot: 0, end: end } });
+    dispatch({ type: SET_CURRENT_SHOT, value: 0 });
     dispatch({ type: SET_CURRENT_END, value: end });
-    setShot(0);
   }
 
   const startEnd = (first_team_id) => {
