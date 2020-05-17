@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -25,41 +25,39 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const FinishEndModal = ({ gameState, finishEnd, errors }) => {
+const FinishEndModal = ({ gameState, finishEnd, startEnd, errors }) => {
   const classes = useStyles();
 
-  const { currentEnd, completeEndPrompt } = gameState;
+  const { completeEndPrompt, currentEnd } = gameState;
 
   const [teamScores, setTeamScores] = useState(['', '']);
 
-  const [open, setOpen] = React.useState(false);
-
-  const errorsExist = errors && errors.throw_order;
-  const label = errorsExist ? 'First Team required*' : 'First Team*';
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (completeEndPrompt) {
-      handleOpen();
+      setOpen(true);
     }
   }, [completeEndPrompt]);
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const handleChange = (event) => {
-    console.log('key', event.target.id);
-    console.log('value', event.target.value);
+    const teamScores = [];
 
     const teamIndex = Number(event.target.id);
-
-    const teamScores = [];
     teamScores[teamIndex] = Number(event.target.value);
 
-    let otherTeamIndex = teamIndex + 1;
-    if (otherTeamIndex > 1) {
-      otherTeamIndex = 0;
-    }
-
+    const otherTeamIndex = teamIndex === 0 ? 1 : 0;
     teamScores[otherTeamIndex] = 0;
+
     setTeamScores(teamScores);
   };
+  
+  const errorsExist = errors && errors.throw_order;
+  const label = errorsExist ? 'First Team required*' : 'First Team*';
 
   const teams = gameState.teams_with_players.map((team, index) => {
     return (
@@ -78,19 +76,10 @@ const FinishEndModal = ({ gameState, finishEnd, errors }) => {
     );
   });
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   const onSave = () => {
     const score_team1 = teamScores[0];
     const score_team2 = teamScores[1];
     finishEnd({ score_team1, score_team2 });
-
     handleClose();
   };
 

@@ -67,7 +67,7 @@ const StrategyBoard = ({
 
   useEffect(() => {
     replayRockPath(FORWARD, currentShot, currentEnd);
-  }, []);
+  }, [currentShot, currentEnd]);
 
   const onPrev = () => {
     replayRockPath(BACKWARD, currentShot, currentEnd);

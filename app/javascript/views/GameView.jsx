@@ -157,7 +157,7 @@ const GameView = ({ gameId }) => {
             </Box>
           </Box>
           <StartEndModal gameState={gameState} startEnd={startEnd} />
-          <FinishEndModal gameState={gameState} finishEnd={finishEnd} />
+          <FinishEndModal gameState={gameState} finishEnd={finishEnd} startEnd={startEnd} />
         </div>
       )}
     </>

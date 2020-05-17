@@ -33,7 +33,7 @@ class Api::EndsController < ApplicationController
 
       render json: curl_end
     else
-      render json: new_end.errors, status: :unprocessable_entity
+      render json: curl_end.errors, status: :unprocessable_entity
     end
   end
 
