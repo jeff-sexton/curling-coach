@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Dashboard from '../components/Dashboard';
 import axios from 'axios';
 
-import CardMedia from '@material-ui/core/CardMedia';
-import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
-
-import LoadingIcon from '../assets/Loading_icon.svg';
+import Dashboard from '../components/Dashboard';
+import Loading from '../components/Loading';
 
 const DashboardView = ({ handleGameSelection, handleStatsSelection }) => {
   const [gameList, setGameList] = useState([]);
@@ -19,29 +15,6 @@ const DashboardView = ({ handleGameSelection, handleStatsSelection }) => {
     });
   }, []);
 
-  const useStyles = makeStyles({
-    card: {
-      maxWidth: '20%',
-    },
-    loadingBox: {
-      width: '40%',
-      margin: 'auto',
-      textAlign: 'center',
-    },
-    root: {
-      width: '100%',
-      position: 'relative',
-      animation: '$animation 3s infinite',
-      animationTimingFunction: 'linear',
-    },
-    '@keyframes animation': {
-      from: { transform: 'rotate(0deg)' },
-      to: { transform: 'rotate(360deg)' },
-    },
-  });
-
-  const classes = useStyles();
-
   return (
     <div>
       {dashboardLoaded && (
@@ -52,24 +25,7 @@ const DashboardView = ({ handleGameSelection, handleStatsSelection }) => {
         />
       )}
 
-      {!dashboardLoaded && (
-        <Box
-          className={classes.loadingBox}
-          display="flex"
-          flexDirection="column"
-        >
-          <Box>
-            <h1>LOADING</h1>
-          </Box>
-          <Box>
-            <CardMedia
-              image={LoadingIcon}
-              component="img"
-              classes={{ root: classes.root }}
-            />
-          </Box>
-        </Box>
-      )}
+      {!dashboardLoaded && <Loading />}
     </div>
   );
 };
