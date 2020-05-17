@@ -227,10 +227,18 @@ const StrategyBoard = ({
   const onLastShot = () => {
     const lastShotIndex = gameState.ends[currentEnd].shots.length - 1;
 
-    setShot(lastShotIndex);
+    if (lastShotIndex - currentShot > 1) {
+      setShot(lastShotIndex);
+    } else {
+      onNext()
+    }
   };
   const onFirstShot = () => {
-    setShot(0);
+    if (currentShot > 1) {
+      setShot(0);
+    } else {
+      onPrev();
+    }
   };
 
   const resetShot = () => {

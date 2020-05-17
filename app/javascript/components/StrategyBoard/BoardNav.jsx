@@ -64,7 +64,7 @@ const BoardNav = ({ onNext, onPrev, onLastShot, onFirstShot, currentShot, isEdit
           color="secondary"
           className={classes.button}
           aria-label="Move to Next Shot"
-          disabled={isEditable || currentShot > 14}
+          disabled={isEditable}
         >
           <LastPageIcon />
         </Button>
