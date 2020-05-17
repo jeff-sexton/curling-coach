@@ -14,11 +14,11 @@ import HammerIcon from '../../assets/hammer.svg';
 
 const useStyles = makeStyles(ScoreBoardStyles);
 
-function createTeamRow(name, score, teamId) {
+const createTeamRow = (name, score, teamId) => {
   return { name, score, teamId };
 }
 
-function createEndCell(end) {
+const createEndCell = (end) => {
   return { end };
 }
 

@@ -24,13 +24,28 @@ const ShotDetails = ({ gameState, storeShotDetails, isEditable }) => {
 
     <Grid container item justify={"center"} spacing={2}>
       <Grid item xs={12}>
-        <ShotType shot_type={shot_type} storeShotDetails={storeShotDetails} errors={gameState.shotSaveErrors} isEditable={isEditable} />
+        <ShotType 
+          shot_type={shot_type} 
+          storeShotDetails={storeShotDetails} 
+          errors={gameState.shotSaveErrors} 
+          isEditable={isEditable} 
+        />
       </Grid>
       <Grid item xs={6}>  
-        <ShotRating rating={rating} storeShotDetails={storeShotDetails}  errors={gameState.shotSaveErrors} isEditable={isEditable}/>
+        <ShotRating 
+          rating={rating} 
+          storeShotDetails={storeShotDetails}  
+          errors={gameState.shotSaveErrors} 
+          isEditable={isEditable}
+        />
       </Grid>
       <Grid item xs={6}>
-        <ShotRotation rotation={rotation} storeShotDetails={storeShotDetails} errors={gameState.shotSaveErrors} isEditable={isEditable}/>
+        <ShotRotation 
+          rotation={rotation} 
+          storeShotDetails={storeShotDetails} 
+          errors={gameState.shotSaveErrors} 
+          isEditable={isEditable}
+        />
       </Grid>
     </Grid>
     </div>
