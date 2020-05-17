@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
 const EndDetails = ({ gameState, setShot, setEnd }) => {
   const classes = useStyles();
 
-  console.log("Game State: ", gameState)
   return (
     <div className={classes.root}>
       <Grid container direction="column" spacing={2} alignItems="center" >

@@ -8,7 +8,7 @@ import Box from '@material-ui/core/Box';
 
 import LoadingIcon from '../assets/Loading_icon.svg';
 
-const DashboardView = ({ handleGameSelection }) => {
+const DashboardView = ({ handleGameSelection, handleStatsSelection }) => {
   const [gameList, setGameList] = useState([]);
   const [dashboardLoaded, setDashboardLoaded] = useState(false);
 
@@ -47,6 +47,7 @@ const DashboardView = ({ handleGameSelection }) => {
       {dashboardLoaded && (
         <Dashboard
           handleGameSelection={handleGameSelection}
+          handleStatsSelection={handleStatsSelection}
           gameList={gameList}
         />
       )}

@@ -1,170 +1,67 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# 
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
-
-puts "Seeding Data ..."
-
-# Helper functions - DO NOT NEED AT THE MOMENT
-# def open_asset(file_name)
-#   File.open(Rails.root.join('db', 'seed_assets', file_name))
-# end
-
-# Only run on development (local) instances not on production, etc.
-unless Rails.env.development?
-  puts "Development seeds only (for now)!"
-  exit 0
-end
-
-# Let's do this ...
-
-## GAMES
-
-puts "Finding or Creating Games ..."
-
-game1 = Game.find_or_create_by!({
-  id: 1, 
-  date_time: 3.days.ago,
-  location: 'Vancouver',
-  completed: false
-})
-game2 = Game.find_or_create_by!({
-  id: 2, 
-  date_time: '2020-05-06T02:00:00.000Z',
-  location: 'North Shore',
-  completed: false
-})
-
-
-## ENDS
-
-puts "Re-Creating Ends ..."
-
-End.destroy_all
-
-# 10.times do 
-#   game1.ends.create!
-# end
-
-  game1.ends.create!({
-    score_team1: 1,
-    score_team2: 2
-  })
-
-  game1.ends.create!({
-    score_team1: 2,
-    score_team2: 0
-  })
-
-  game1.ends.create!({
-    score_team1: 0,
-    score_team2: 1
-  })
-
-  game1.ends.create!({
-    score_team1: 2,
-    score_team2: 0
-  })
-
-## TEAMS
-
-puts "Finding or Creating Teams ..."
-
-team1 = Team.find_or_create_by! team_name: "Jeff's Team"
-team2 = Team.find_or_create_by! team_name: "Yasu's Team"
-team3 = Team.find_or_create_by! team_name: "Alan's Team"
-
-## PLAYERS
-
-puts "Re-creating Players ..."
-
-Player.destroy_all
-
-team1.players.create!({
-  name:  'Vlad',
-  throw_order: 1
-})
-
-team1.players.create!({
-  name:  'Jas',
- throw_order: 2
-})
-
-team1.players.create!({
-  name:  'Dexter',
- throw_order: 3
-})
-
-team1.players.create!({
-  name:  'Allen',
- throw_order: 4
-})
-
-team2.players.create!({
-  name:  'Santiago',
-  throw_order: 1
-})
-
-team2.players.create!({
-  name:  'Aidan',
- throw_order: 2
-})
-
-team2.players.create!({
-  name:  'Jason',
- throw_order: 3
-})
-
-team2.players.create!({
-  name:  'Brad',
- throw_order: 4
-})
+Game.create!([
+  {date_time: "2020-05-13 19:33:31", location: "Vancouver", completed: false},
+  {date_time: "2020-05-06 02:00:00", location: "North Shore", completed: false},
+  {date_time: "2020-05-06 02:00:00", location: "Stats Test", completed: false}
+  ])
+  
+Team.create!([
+  {team_name: "Jeff's Team"},
+  {team_name: "Yasu's Team"},
+  {team_name: "Alan's Team"}
+  ])
+  
+GameParticipation.create!([
+  {team_id: 1, game_id: 1},
+  {team_id: 2, game_id: 1},
+  {team_id: 1, game_id: 2},
+  {team_id: 3, game_id: 2},
+  {team_id: 1, game_id: 3},
+  {team_id: 3, game_id: 3}
+  ])
+    
+      
+Player.create!([
+  {name: "Vlad", throw_order: 1, team_id: 1},
+  {name: "Jas", throw_order: 2, team_id: 1},
+  {name: "Dexter", throw_order: 3, team_id: 1},
+  {name: "Allen", throw_order: 4, team_id: 1},
+  {name: "Santiago", throw_order: 1, team_id: 2},
+  {name: "Aidan", throw_order: 2, team_id: 2},
+  {name: "Jason", throw_order: 3, team_id: 2},
+  {name: "Brad", throw_order: 4, team_id: 2},
+  {name: "Alice", throw_order: 1, team_id: 3},
+  {name: "Tin-man", throw_order: 2, team_id: 3},
+  {name: "Lion", throw_order: 3, team_id: 3},
+  {name: "Scarecrow", throw_order: 4, team_id: 3}
+])
+      
+End.create!([
+  {score_team1: 3, score_team2: 0, game_id: 3, first_team_id: 1, throw_order: "[{\"id\":1,\"name\":\"Vlad\",\"throw_order\":1,\"team_id\":1,\"created_at\":\"2020-05-16T19:33:31.232Z\",\"updated_at\":\"2020-05-16T19:33:31.232Z\"},{\"id\":9,\"name\":\"Alice\",\"throw_order\":1,\"team_id\":3,\"created_at\":\"2020-05-16T19:33:31.260Z\",\"updated_at\":\"2020-05-16T19:33:31.260Z\"},{\"id\":1,\"name\":\"Vlad\",\"throw_order\":1,\"team_id\":1,\"created_at\":\"2020-05-16T19:33:31.232Z\",\"updated_at\":\"2020-05-16T19:33:31.232Z\"},{\"id\":9,\"name\":\"Alice\",\"throw_order\":1,\"team_id\":3,\"created_at\":\"2020-05-16T19:33:31.260Z\",\"updated_at\":\"2020-05-16T19:33:31.260Z\"},{\"id\":2,\"name\":\"Jas\",\"throw_order\":2,\"team_id\":1,\"created_at\":\"2020-05-16T19:33:31.235Z\",\"updated_at\":\"2020-05-16T19:33:31.235Z\"},{\"id\":10,\"name\":\"Tin-man\",\"throw_order\":2,\"team_id\":3,\"created_at\":\"2020-05-16T19:33:31.264Z\",\"updated_at\":\"2020-05-16T19:33:31.264Z\"},{\"id\":2,\"name\":\"Jas\",\"throw_order\":2,\"team_id\":1,\"created_at\":\"2020-05-16T19:33:31.235Z\",\"updated_at\":\"2020-05-16T19:33:31.235Z\"},{\"id\":10,\"name\":\"Tin-man\",\"throw_order\":2,\"team_id\":3,\"created_at\":\"2020-05-16T19:33:31.264Z\",\"updated_at\":\"2020-05-16T19:33:31.264Z\"},{\"id\":3,\"name\":\"Dexter\",\"throw_order\":3,\"team_id\":1,\"created_at\":\"2020-05-16T19:33:31.239Z\",\"updated_at\":\"2020-05-16T19:33:31.239Z\"},{\"id\":11,\"name\":\"Lion\",\"throw_order\":3,\"team_id\":3,\"created_at\":\"2020-05-16T19:33:31.268Z\",\"updated_at\":\"2020-05-16T19:33:31.268Z\"},{\"id\":3,\"name\":\"Dexter\",\"throw_order\":3,\"team_id\":1,\"created_at\":\"2020-05-16T19:33:31.239Z\",\"updated_at\":\"2020-05-16T19:33:31.239Z\"},{\"id\":11,\"name\":\"Lion\",\"throw_order\":3,\"team_id\":3,\"created_at\":\"2020-05-16T19:33:31.268Z\",\"updated_at\":\"2020-05-16T19:33:31.268Z\"},{\"id\":4,\"name\":\"Allen\",\"throw_order\":4,\"team_id\":1,\"created_at\":\"2020-05-16T19:33:31.242Z\",\"updated_at\":\"2020-05-16T19:33:31.242Z\"},{\"id\":12,\"name\":\"Scarecrow\",\"throw_order\":4,\"team_id\":3,\"created_at\":\"2020-05-16T19:33:31.273Z\",\"updated_at\":\"2020-05-16T19:33:31.273Z\"},{\"id\":4,\"name\":\"Allen\",\"throw_order\":4,\"team_id\":1,\"created_at\":\"2020-05-16T19:33:31.242Z\",\"updated_at\":\"2020-05-16T19:33:31.242Z\"},{\"id\":12,\"name\":\"Scarecrow\",\"throw_order\":4,\"team_id\":3,\"created_at\":\"2020-05-16T19:33:31.273Z\",\"updated_at\":\"2020-05-16T19:33:31.273Z\"}]"},
+  {score_team1: nil, score_team2: nil, game_id: 3, first_team_id: 1, throw_order: "[{\"id\":1,\"name\":\"Vlad\",\"throw_order\":1,\"team_id\":1,\"created_at\":\"2020-05-16T19:33:31.232Z\",\"updated_at\":\"2020-05-16T19:33:31.232Z\"},{\"id\":9,\"name\":\"Alice\",\"throw_order\":1,\"team_id\":3,\"created_at\":\"2020-05-16T19:33:31.260Z\",\"updated_at\":\"2020-05-16T19:33:31.260Z\"},{\"id\":1,\"name\":\"Vlad\",\"throw_order\":1,\"team_id\":1,\"created_at\":\"2020-05-16T19:33:31.232Z\",\"updated_at\":\"2020-05-16T19:33:31.232Z\"},{\"id\":9,\"name\":\"Alice\",\"throw_order\":1,\"team_id\":3,\"created_at\":\"2020-05-16T19:33:31.260Z\",\"updated_at\":\"2020-05-16T19:33:31.260Z\"},{\"id\":2,\"name\":\"Jas\",\"throw_order\":2,\"team_id\":1,\"created_at\":\"2020-05-16T19:33:31.235Z\",\"updated_at\":\"2020-05-16T19:33:31.235Z\"},{\"id\":10,\"name\":\"Tin-man\",\"throw_order\":2,\"team_id\":3,\"created_at\":\"2020-05-16T19:33:31.264Z\",\"updated_at\":\"2020-05-16T19:33:31.264Z\"},{\"id\":2,\"name\":\"Jas\",\"throw_order\":2,\"team_id\":1,\"created_at\":\"2020-05-16T19:33:31.235Z\",\"updated_at\":\"2020-05-16T19:33:31.235Z\"},{\"id\":10,\"name\":\"Tin-man\",\"throw_order\":2,\"team_id\":3,\"created_at\":\"2020-05-16T19:33:31.264Z\",\"updated_at\":\"2020-05-16T19:33:31.264Z\"},{\"id\":3,\"name\":\"Dexter\",\"throw_order\":3,\"team_id\":1,\"created_at\":\"2020-05-16T19:33:31.239Z\",\"updated_at\":\"2020-05-16T19:33:31.239Z\"},{\"id\":11,\"name\":\"Lion\",\"throw_order\":3,\"team_id\":3,\"created_at\":\"2020-05-16T19:33:31.268Z\",\"updated_at\":\"2020-05-16T19:33:31.268Z\"},{\"id\":3,\"name\":\"Dexter\",\"throw_order\":3,\"team_id\":1,\"created_at\":\"2020-05-16T19:33:31.239Z\",\"updated_at\":\"2020-05-16T19:33:31.239Z\"},{\"id\":11,\"name\":\"Lion\",\"throw_order\":3,\"team_id\":3,\"created_at\":\"2020-05-16T19:33:31.268Z\",\"updated_at\":\"2020-05-16T19:33:31.268Z\"},{\"id\":4,\"name\":\"Allen\",\"throw_order\":4,\"team_id\":1,\"created_at\":\"2020-05-16T19:33:31.242Z\",\"updated_at\":\"2020-05-16T19:33:31.242Z\"},{\"id\":12,\"name\":\"Scarecrow\",\"throw_order\":4,\"team_id\":3,\"created_at\":\"2020-05-16T19:33:31.273Z\",\"updated_at\":\"2020-05-16T19:33:31.273Z\"},{\"id\":4,\"name\":\"Allen\",\"throw_order\":4,\"team_id\":1,\"created_at\":\"2020-05-16T19:33:31.242Z\",\"updated_at\":\"2020-05-16T19:33:31.242Z\"},{\"id\":12,\"name\":\"Scarecrow\",\"throw_order\":4,\"team_id\":3,\"created_at\":\"2020-05-16T19:33:31.273Z\",\"updated_at\":\"2020-05-16T19:33:31.273Z\"}]"},
+])
 
 
-team3.players.create!({
-  name:  'Alice',
-  throw_order: 1
-})
-
-team3.players.create!({
-  name:  'Tin-man',
- throw_order: 2
-})
-
-team3.players.create!({
-  name:  'Lion',
- throw_order: 3
-})
-
-team3.players.create!({
-  name:  'Scarecrow',
- throw_order: 4
-})
-
-## GAME PARTICIPATIONS
-
-puts "Re-Creating Game Participations ..."
-
-GameParticipation.destroy_all
-
-game1.game_participations.create!({
-  team_id: 1
-})
-
-game1.game_participations.create!({
-  team_id: 2
-})
-
-game2.game_participations.create!({
-  team_id: 1
-})
-
-game2.game_participations.create!({
-  team_id: 3
-})
-
-puts "DONE!"
+Shot.create!([
+  {shot_number: 1, rotation: "clockwise", rating: 4, shot_type: "Draw", rock_paths: "[{\"id\":1,\"x\":50,\"y\":50},{\"id\":2,\"x\":100,\"y\":50},{\"id\":3,\"x\":150,\"y\":50},{\"id\":4,\"x\":200,\"y\":50},{\"id\":5,\"x\":50,\"y\":100},{\"id\":6,\"x\":100,\"y\":100},{\"id\":7,\"x\":150,\"y\":100},{\"id\":8,\"x\":200,\"y\":100},{\"id\":9,\"x\":550,\"y\":50},{\"id\":10,\"x\":600,\"y\":50},{\"id\":11,\"x\":650,\"y\":50},{\"id\":12,\"x\":700,\"y\":50},{\"id\":13,\"x\":550,\"y\":100},{\"id\":14,\"x\":600,\"y\":100},{\"id\":15,\"x\":650,\"y\":100},{\"id\":16,\"x\":700,\"y\":100}]", comments: nil, target_position: nil, sweep_score: nil, hog_time: nil, end_id: 1, player_id: 1},
+  {shot_number: 2, rotation: "clockwise", rating: 4, shot_type: "Draw", rock_paths: "[{\"id\":1,\"x\":50,\"y\":50},{\"id\":2,\"x\":100,\"y\":50},{\"id\":3,\"x\":150,\"y\":50},{\"id\":4,\"x\":200,\"y\":50},{\"id\":5,\"x\":50,\"y\":100},{\"id\":6,\"x\":100,\"y\":100},{\"id\":7,\"x\":150,\"y\":100},{\"id\":8,\"x\":200,\"y\":100},{\"id\":9,\"x\":550,\"y\":50},{\"id\":10,\"x\":600,\"y\":50},{\"id\":11,\"x\":650,\"y\":50},{\"id\":12,\"x\":700,\"y\":50},{\"id\":13,\"x\":550,\"y\":100},{\"id\":14,\"x\":600,\"y\":100},{\"id\":15,\"x\":650,\"y\":100},{\"id\":16,\"x\":700,\"y\":100}]", comments: nil, target_position: nil, sweep_score: nil, hog_time: nil, end_id: 1, player_id: 9},
+  {shot_number: 3, rotation: "clockwise", rating: 3, shot_type: "Front", rock_paths: "[{\"id\":1,\"x\":50,\"y\":50},{\"id\":2,\"x\":100,\"y\":50},{\"id\":3,\"x\":150,\"y\":50},{\"id\":4,\"x\":200,\"y\":50},{\"id\":5,\"x\":50,\"y\":100},{\"id\":6,\"x\":100,\"y\":100},{\"id\":7,\"x\":150,\"y\":100},{\"id\":8,\"x\":200,\"y\":100},{\"id\":9,\"x\":550,\"y\":50},{\"id\":10,\"x\":600,\"y\":50},{\"id\":11,\"x\":650,\"y\":50},{\"id\":12,\"x\":700,\"y\":50},{\"id\":13,\"x\":550,\"y\":100},{\"id\":14,\"x\":600,\"y\":100},{\"id\":15,\"x\":650,\"y\":100},{\"id\":16,\"x\":700,\"y\":100}]", comments: nil, target_position: nil, sweep_score: nil, hog_time: nil, end_id: 1, player_id: 1},
+  {shot_number: 4, rotation: "clockwise", rating: 3, shot_type: "Front", rock_paths: "[{\"id\":1,\"x\":50,\"y\":50},{\"id\":2,\"x\":100,\"y\":50},{\"id\":3,\"x\":150,\"y\":50},{\"id\":4,\"x\":200,\"y\":50},{\"id\":5,\"x\":50,\"y\":100},{\"id\":6,\"x\":100,\"y\":100},{\"id\":7,\"x\":150,\"y\":100},{\"id\":8,\"x\":200,\"y\":100},{\"id\":9,\"x\":550,\"y\":50},{\"id\":10,\"x\":600,\"y\":50},{\"id\":11,\"x\":650,\"y\":50},{\"id\":12,\"x\":700,\"y\":50},{\"id\":13,\"x\":550,\"y\":100},{\"id\":14,\"x\":600,\"y\":100},{\"id\":15,\"x\":650,\"y\":100},{\"id\":16,\"x\":700,\"y\":100}]", comments: nil, target_position: nil, sweep_score: nil, hog_time: nil, end_id: 1, player_id: 9},
+  {shot_number: 5, rotation: "clockwise", rating: 2, shot_type: "Guard", rock_paths: "[{\"id\":1,\"x\":50,\"y\":50},{\"id\":2,\"x\":100,\"y\":50},{\"id\":3,\"x\":150,\"y\":50},{\"id\":4,\"x\":200,\"y\":50},{\"id\":5,\"x\":50,\"y\":100},{\"id\":6,\"x\":100,\"y\":100},{\"id\":7,\"x\":150,\"y\":100},{\"id\":8,\"x\":200,\"y\":100},{\"id\":9,\"x\":550,\"y\":50},{\"id\":10,\"x\":600,\"y\":50},{\"id\":11,\"x\":650,\"y\":50},{\"id\":12,\"x\":700,\"y\":50},{\"id\":13,\"x\":550,\"y\":100},{\"id\":14,\"x\":600,\"y\":100},{\"id\":15,\"x\":650,\"y\":100},{\"id\":16,\"x\":700,\"y\":100}]", comments: nil, target_position: nil, sweep_score: nil, hog_time: nil, end_id: 1, player_id: 2},
+  {shot_number: 6, rotation: "clockwise", rating: 2, shot_type: "Raise", rock_paths: "[{\"id\":1,\"x\":50,\"y\":50},{\"id\":2,\"x\":100,\"y\":50},{\"id\":3,\"x\":150,\"y\":50},{\"id\":4,\"x\":200,\"y\":50},{\"id\":5,\"x\":50,\"y\":100},{\"id\":6,\"x\":100,\"y\":100},{\"id\":7,\"x\":150,\"y\":100},{\"id\":8,\"x\":200,\"y\":100},{\"id\":9,\"x\":550,\"y\":50},{\"id\":10,\"x\":600,\"y\":50},{\"id\":11,\"x\":650,\"y\":50},{\"id\":12,\"x\":700,\"y\":50},{\"id\":13,\"x\":550,\"y\":100},{\"id\":14,\"x\":600,\"y\":100},{\"id\":15,\"x\":650,\"y\":100},{\"id\":16,\"x\":700,\"y\":100}]", comments: nil, target_position: nil, sweep_score: nil, hog_time: nil, end_id: 1, player_id: 10},
+  {shot_number: 7, rotation: "clockwise", rating: 2, shot_type: "Raise", rock_paths: "[{\"id\":1,\"x\":50,\"y\":50},{\"id\":2,\"x\":100,\"y\":50},{\"id\":3,\"x\":150,\"y\":50},{\"id\":4,\"x\":200,\"y\":50},{\"id\":5,\"x\":50,\"y\":100},{\"id\":6,\"x\":100,\"y\":100},{\"id\":7,\"x\":150,\"y\":100},{\"id\":8,\"x\":200,\"y\":100},{\"id\":9,\"x\":550,\"y\":50},{\"id\":10,\"x\":600,\"y\":50},{\"id\":11,\"x\":650,\"y\":50},{\"id\":12,\"x\":700,\"y\":50},{\"id\":13,\"x\":550,\"y\":100},{\"id\":14,\"x\":600,\"y\":100},{\"id\":15,\"x\":650,\"y\":100},{\"id\":16,\"x\":700,\"y\":100}]", comments: nil, target_position: nil, sweep_score: nil, hog_time: nil, end_id: 1, player_id: 2},
+  {shot_number: 8, rotation: "clockwise", rating: 1, shot_type: "Wick", rock_paths: "[{\"id\":1,\"x\":50,\"y\":50},{\"id\":2,\"x\":100,\"y\":50},{\"id\":3,\"x\":150,\"y\":50},{\"id\":4,\"x\":200,\"y\":50},{\"id\":5,\"x\":50,\"y\":100},{\"id\":6,\"x\":100,\"y\":100},{\"id\":7,\"x\":150,\"y\":100},{\"id\":8,\"x\":200,\"y\":100},{\"id\":9,\"x\":550,\"y\":50},{\"id\":10,\"x\":600,\"y\":50},{\"id\":11,\"x\":650,\"y\":50},{\"id\":12,\"x\":700,\"y\":50},{\"id\":13,\"x\":550,\"y\":100},{\"id\":14,\"x\":600,\"y\":100},{\"id\":15,\"x\":650,\"y\":100},{\"id\":16,\"x\":700,\"y\":100}]", comments: nil, target_position: nil, sweep_score: nil, hog_time: nil, end_id: 1, player_id: 10},
+  {shot_number: 9, rotation: "clockwise", rating: 1, shot_type: "Wick", rock_paths: "[{\"id\":1,\"x\":50,\"y\":50},{\"id\":2,\"x\":100,\"y\":50},{\"id\":3,\"x\":150,\"y\":50},{\"id\":4,\"x\":200,\"y\":50},{\"id\":5,\"x\":50,\"y\":100},{\"id\":6,\"x\":100,\"y\":100},{\"id\":7,\"x\":150,\"y\":100},{\"id\":8,\"x\":200,\"y\":100},{\"id\":9,\"x\":550,\"y\":50},{\"id\":10,\"x\":600,\"y\":50},{\"id\":11,\"x\":650,\"y\":50},{\"id\":12,\"x\":700,\"y\":50},{\"id\":13,\"x\":550,\"y\":100},{\"id\":14,\"x\":600,\"y\":100},{\"id\":15,\"x\":650,\"y\":100},{\"id\":16,\"x\":700,\"y\":100}]", comments: nil, target_position: nil, sweep_score: nil, hog_time: nil, end_id: 1, player_id: 3},
+  {shot_number: 10, rotation: "clockwise", rating: 0, shot_type: "Freeze", rock_paths: "[{\"id\":1,\"x\":50,\"y\":50},{\"id\":2,\"x\":100,\"y\":50},{\"id\":3,\"x\":150,\"y\":50},{\"id\":4,\"x\":200,\"y\":50},{\"id\":5,\"x\":50,\"y\":100},{\"id\":6,\"x\":100,\"y\":100},{\"id\":7,\"x\":150,\"y\":100},{\"id\":8,\"x\":200,\"y\":100},{\"id\":9,\"x\":550,\"y\":50},{\"id\":10,\"x\":600,\"y\":50},{\"id\":11,\"x\":650,\"y\":50},{\"id\":12,\"x\":700,\"y\":50},{\"id\":13,\"x\":550,\"y\":100},{\"id\":14,\"x\":600,\"y\":100},{\"id\":15,\"x\":650,\"y\":100},{\"id\":16,\"x\":700,\"y\":100}]", comments: nil, target_position: nil, sweep_score: nil, hog_time: nil, end_id: 1, player_id: 11},
+  {shot_number: 11, rotation: "clockwise", rating: 0, shot_type: "Freeze", rock_paths: "[{\"id\":1,\"x\":50,\"y\":50},{\"id\":2,\"x\":100,\"y\":50},{\"id\":3,\"x\":150,\"y\":50},{\"id\":4,\"x\":200,\"y\":50},{\"id\":5,\"x\":50,\"y\":100},{\"id\":6,\"x\":100,\"y\":100},{\"id\":7,\"x\":150,\"y\":100},{\"id\":8,\"x\":200,\"y\":100},{\"id\":9,\"x\":550,\"y\":50},{\"id\":10,\"x\":600,\"y\":50},{\"id\":11,\"x\":650,\"y\":50},{\"id\":12,\"x\":700,\"y\":50},{\"id\":13,\"x\":550,\"y\":100},{\"id\":14,\"x\":600,\"y\":100},{\"id\":15,\"x\":650,\"y\":100},{\"id\":16,\"x\":700,\"y\":100}]", comments: nil, target_position: nil, sweep_score: nil, hog_time: nil, end_id: 1, player_id: 3},
+  {shot_number: 12, rotation: "clockwise", rating: 4, shot_type: "TakeOut", rock_paths: "[{\"id\":1,\"x\":50,\"y\":50},{\"id\":2,\"x\":100,\"y\":50},{\"id\":3,\"x\":150,\"y\":50},{\"id\":4,\"x\":200,\"y\":50},{\"id\":5,\"x\":50,\"y\":100},{\"id\":6,\"x\":100,\"y\":100},{\"id\":7,\"x\":150,\"y\":100},{\"id\":8,\"x\":200,\"y\":100},{\"id\":9,\"x\":550,\"y\":50},{\"id\":10,\"x\":600,\"y\":50},{\"id\":11,\"x\":650,\"y\":50},{\"id\":12,\"x\":700,\"y\":50},{\"id\":13,\"x\":550,\"y\":100},{\"id\":14,\"x\":600,\"y\":100},{\"id\":15,\"x\":650,\"y\":100},{\"id\":16,\"x\":700,\"y\":100}]", comments: nil, target_position: nil, sweep_score: nil, hog_time: nil, end_id: 1, player_id: 11},
+  {shot_number: 13, rotation: "clockwise", rating: 4, shot_type: "TakeOut", rock_paths: "[{\"id\":1,\"x\":50,\"y\":50},{\"id\":2,\"x\":100,\"y\":50},{\"id\":3,\"x\":150,\"y\":50},{\"id\":4,\"x\":200,\"y\":50},{\"id\":5,\"x\":50,\"y\":100},{\"id\":6,\"x\":100,\"y\":100},{\"id\":7,\"x\":150,\"y\":100},{\"id\":8,\"x\":200,\"y\":100},{\"id\":9,\"x\":550,\"y\":50},{\"id\":10,\"x\":600,\"y\":50},{\"id\":11,\"x\":650,\"y\":50},{\"id\":12,\"x\":700,\"y\":50},{\"id\":13,\"x\":550,\"y\":100},{\"id\":14,\"x\":600,\"y\":100},{\"id\":15,\"x\":650,\"y\":100},{\"id\":16,\"x\":700,\"y\":100}]", comments: nil, target_position: nil, sweep_score: nil, hog_time: nil, end_id: 1, player_id: 4},
+  {shot_number: 14, rotation: "counterclockwise", rating: 4, shot_type: "HitAndRoll", rock_paths: "[{\"id\":1,\"x\":50,\"y\":50},{\"id\":2,\"x\":100,\"y\":50},{\"id\":3,\"x\":150,\"y\":50},{\"id\":4,\"x\":200,\"y\":50},{\"id\":5,\"x\":50,\"y\":100},{\"id\":6,\"x\":100,\"y\":100},{\"id\":7,\"x\":150,\"y\":100},{\"id\":8,\"x\":200,\"y\":100},{\"id\":9,\"x\":550,\"y\":50},{\"id\":10,\"x\":600,\"y\":50},{\"id\":11,\"x\":650,\"y\":50},{\"id\":12,\"x\":700,\"y\":50},{\"id\":13,\"x\":550,\"y\":100},{\"id\":14,\"x\":600,\"y\":100},{\"id\":15,\"x\":650,\"y\":100},{\"id\":16,\"x\":700,\"y\":100}]", comments: nil, target_position: nil, sweep_score: nil, hog_time: nil, end_id: 1, player_id: 12},
+  {shot_number: 15, rotation: "counterclockwise", rating: 4, shot_type: "HitAndRoll", rock_paths: "[{\"id\":1,\"x\":50,\"y\":50},{\"id\":2,\"x\":100,\"y\":50},{\"id\":3,\"x\":150,\"y\":50},{\"id\":4,\"x\":200,\"y\":50},{\"id\":5,\"x\":50,\"y\":100},{\"id\":6,\"x\":100,\"y\":100},{\"id\":7,\"x\":150,\"y\":100},{\"id\":8,\"x\":200,\"y\":100},{\"id\":9,\"x\":550,\"y\":50},{\"id\":10,\"x\":600,\"y\":50},{\"id\":11,\"x\":650,\"y\":50},{\"id\":12,\"x\":700,\"y\":50},{\"id\":13,\"x\":550,\"y\":100},{\"id\":14,\"x\":600,\"y\":100},{\"id\":15,\"x\":650,\"y\":100},{\"id\":16,\"x\":700,\"y\":100}]", comments: nil, target_position: nil, sweep_score: nil, hog_time: nil, end_id: 1, player_id: 4},
+  {shot_number: 16, rotation: "counterclockwise", rating: 4, shot_type: "Clearing", rock_paths: "[{\"id\":1,\"x\":50,\"y\":50},{\"id\":2,\"x\":100,\"y\":50},{\"id\":3,\"x\":150,\"y\":50},{\"id\":4,\"x\":200,\"y\":50},{\"id\":5,\"x\":50,\"y\":100},{\"id\":6,\"x\":100,\"y\":100},{\"id\":7,\"x\":150,\"y\":100},{\"id\":8,\"x\":200,\"y\":100},{\"id\":9,\"x\":550,\"y\":50},{\"id\":10,\"x\":600,\"y\":50},{\"id\":11,\"x\":650,\"y\":50},{\"id\":12,\"x\":700,\"y\":50},{\"id\":13,\"x\":550,\"y\":100},{\"id\":14,\"x\":600,\"y\":100},{\"id\":15,\"x\":650,\"y\":100},{\"id\":16,\"x\":700,\"y\":100}]", comments: nil, target_position: nil, sweep_score: nil, hog_time: nil, end_id: 1, player_id: 12},
+  {shot_number: 1, rotation: "counterclockwise", rating: 4, shot_type: "DoubleTakeOut", rock_paths: "[{\"id\":1,\"x\":50,\"y\":50},{\"id\":2,\"x\":100,\"y\":50},{\"id\":3,\"x\":150,\"y\":50},{\"id\":4,\"x\":200,\"y\":50},{\"id\":5,\"x\":50,\"y\":100},{\"id\":6,\"x\":100,\"y\":100},{\"id\":7,\"x\":150,\"y\":100},{\"id\":8,\"x\":200,\"y\":100},{\"id\":9,\"x\":550,\"y\":50},{\"id\":10,\"x\":600,\"y\":50},{\"id\":11,\"x\":650,\"y\":50},{\"id\":12,\"x\":700,\"y\":50},{\"id\":13,\"x\":550,\"y\":100},{\"id\":14,\"x\":600,\"y\":100},{\"id\":15,\"x\":650,\"y\":100},{\"id\":16,\"x\":700,\"y\":100}]", comments: nil, target_position: nil, sweep_score: nil, hog_time: nil, end_id: 2, player_id: 1},
+  {shot_number: 2, rotation: "counterclockwise", rating: 4, shot_type: "DoubleTakeOut", rock_paths: "[{\"id\":1,\"x\":50,\"y\":50},{\"id\":2,\"x\":100,\"y\":50},{\"id\":3,\"x\":150,\"y\":50},{\"id\":4,\"x\":200,\"y\":50},{\"id\":5,\"x\":50,\"y\":100},{\"id\":6,\"x\":100,\"y\":100},{\"id\":7,\"x\":150,\"y\":100},{\"id\":8,\"x\":200,\"y\":100},{\"id\":9,\"x\":550,\"y\":50},{\"id\":10,\"x\":600,\"y\":50},{\"id\":11,\"x\":650,\"y\":50},{\"id\":12,\"x\":700,\"y\":50},{\"id\":13,\"x\":550,\"y\":100},{\"id\":14,\"x\":600,\"y\":100},{\"id\":15,\"x\":650,\"y\":100},{\"id\":16,\"x\":700,\"y\":100}]", comments: nil, target_position: nil, sweep_score: nil, hog_time: nil, end_id: 2, player_id: 9},
+  {shot_number: 3, rotation: "counterclockwise", rating: 2, shot_type: "PromotionTakeOut", rock_paths: "[{\"id\":1,\"x\":50,\"y\":50},{\"id\":2,\"x\":100,\"y\":50},{\"id\":3,\"x\":150,\"y\":50},{\"id\":4,\"x\":200,\"y\":50},{\"id\":5,\"x\":50,\"y\":100},{\"id\":6,\"x\":100,\"y\":100},{\"id\":7,\"x\":150,\"y\":100},{\"id\":8,\"x\":200,\"y\":100},{\"id\":9,\"x\":550,\"y\":50},{\"id\":10,\"x\":600,\"y\":50},{\"id\":11,\"x\":650,\"y\":50},{\"id\":12,\"x\":700,\"y\":50},{\"id\":13,\"x\":550,\"y\":100},{\"id\":14,\"x\":600,\"y\":100},{\"id\":15,\"x\":650,\"y\":100},{\"id\":16,\"x\":700,\"y\":100}]", comments: nil, target_position: nil, sweep_score: nil, hog_time: nil, end_id: 2, player_id: 1},
+  {shot_number: 4, rotation: "counterclockwise", rating: 2, shot_type: "PromotionTakeOut", rock_paths: "[{\"id\":1,\"x\":50,\"y\":50},{\"id\":2,\"x\":100,\"y\":50},{\"id\":3,\"x\":150,\"y\":50},{\"id\":4,\"x\":200,\"y\":50},{\"id\":5,\"x\":50,\"y\":100},{\"id\":6,\"x\":100,\"y\":100},{\"id\":7,\"x\":150,\"y\":100},{\"id\":8,\"x\":200,\"y\":100},{\"id\":9,\"x\":550,\"y\":50},{\"id\":10,\"x\":600,\"y\":50},{\"id\":11,\"x\":650,\"y\":50},{\"id\":12,\"x\":700,\"y\":50},{\"id\":13,\"x\":550,\"y\":100},{\"id\":14,\"x\":600,\"y\":100},{\"id\":15,\"x\":650,\"y\":100},{\"id\":16,\"x\":700,\"y\":100}]", comments: nil, target_position: nil, sweep_score: nil, hog_time: nil, end_id: 2, player_id: 9},
+  {shot_number: 5, rotation: "counterclockwise", rating: 4, shot_type: "Draw", rock_paths: "[{\"id\":1,\"x\":50,\"y\":50},{\"id\":2,\"x\":100,\"y\":50},{\"id\":3,\"x\":150,\"y\":50},{\"id\":4,\"x\":200,\"y\":50},{\"id\":5,\"x\":50,\"y\":100},{\"id\":6,\"x\":100,\"y\":100},{\"id\":7,\"x\":150,\"y\":100},{\"id\":8,\"x\":200,\"y\":100},{\"id\":9,\"x\":550,\"y\":50},{\"id\":10,\"x\":600,\"y\":50},{\"id\":11,\"x\":650,\"y\":50},{\"id\":12,\"x\":700,\"y\":50},{\"id\":13,\"x\":550,\"y\":100},{\"id\":14,\"x\":600,\"y\":100},{\"id\":15,\"x\":650,\"y\":100},{\"id\":16,\"x\":700,\"y\":100}]", comments: nil, target_position: nil, sweep_score: nil, hog_time: nil, end_id: 2, player_id: 2},
+  {shot_number: 6, rotation: "counterclockwise", rating: 4, shot_type: "Draw", rock_paths: "[{\"id\":1,\"x\":50,\"y\":50},{\"id\":2,\"x\":100,\"y\":50},{\"id\":3,\"x\":150,\"y\":50},{\"id\":4,\"x\":200,\"y\":50},{\"id\":5,\"x\":50,\"y\":100},{\"id\":6,\"x\":100,\"y\":100},{\"id\":7,\"x\":150,\"y\":100},{\"id\":8,\"x\":200,\"y\":100},{\"id\":9,\"x\":550,\"y\":50},{\"id\":10,\"x\":600,\"y\":50},{\"id\":11,\"x\":650,\"y\":50},{\"id\":12,\"x\":700,\"y\":50},{\"id\":13,\"x\":550,\"y\":100},{\"id\":14,\"x\":600,\"y\":100},{\"id\":15,\"x\":650,\"y\":100},{\"id\":16,\"x\":700,\"y\":100}]", comments: nil, target_position: nil, sweep_score: nil, hog_time: nil, end_id: 2, player_id: 10}
+])
