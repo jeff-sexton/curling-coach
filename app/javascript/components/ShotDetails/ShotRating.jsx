@@ -42,7 +42,7 @@ const ShotRating = ({ rating, storeShotDetails, errors, isEditable }) => {
       <Select
         labelId="shot-rating"
         id="rating"
-        value={rating || ''}
+        value={rating || (rating === 0 && '0') || ''}
         onChange={(event) => setRating(event.target.value)}
         label={label}
         disabled={!isEditable}
