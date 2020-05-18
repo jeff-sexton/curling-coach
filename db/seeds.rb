@@ -1,8 +1,12 @@
 Game.create!([
   {date_time: "2020-05-13 19:33:31", location: "Vancouver", completed: false},
   {date_time: "2020-05-06 02:00:00", location: "North Shore", completed: false},
-  {date_time: "2020-05-06 02:00:00", location: "Richmond", completed: false},
-  {date_time: "2015-12-02 19:00:00", location: "Grande Prairie", completed: false}
+  {date_time: "2020-05-08 02:00:00", location: "Richmond", completed: false},
+  {date_time: "2015-12-02 19:00:00", location: "Grande Prairie", completed: false},
+  {date_time: 15.days.ago, location: "New West", completed: false},
+  {date_time: 30.days.ago, location: "Thunder Bay", completed: false},
+  {date_time: 20.days.ago, location: "Kelowna", completed: false},
+  {date_time: 10.days.ago, location: "Vancouver", completed: false},
 ])
 
 
@@ -11,7 +15,10 @@ Team.create!([
   {team_name: "Yasu's Team"},
   {team_name: "Alan's Team"},
   {team_name: "Homan"},
-  {team_name: "Sweeting"}
+  {team_name: "Sweeting"},
+  {team_name: "LHL Staff"},
+  {team_name: "LHL Alumni"},
+
 ])
 
 Player.create!([
@@ -45,7 +52,15 @@ GameParticipation.create!([
   {team_id: 1, game_id: 3},
   {team_id: 3, game_id: 3},
   {team_id: 5, game_id: 4},
-  {team_id: 4, game_id: 4}
+  {team_id: 4, game_id: 4},
+  {team_id: 6, game_id: 5},
+  {team_id: 3, game_id: 5},
+  {team_id: 6, game_id: 6},
+  {team_id: 2, game_id: 6},
+  {team_id: 6, game_id: 7},
+  {team_id: 1, game_id: 7},
+  {team_id: 6, game_id: 8},
+  {team_id: 7, game_id: 8},
 ])
 
 End.create!([
