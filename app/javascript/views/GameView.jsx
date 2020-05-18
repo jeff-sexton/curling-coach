@@ -5,7 +5,6 @@ import useGameData from '../hooks/useGameData';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
-import CardMedia from '@material-ui/core/CardMedia';
 
 import StrategyBoard from '../components/StrategyBoard';
 import GameDetails from '../components/GameDetails';
@@ -14,7 +13,7 @@ import ShotDetails from '../components/ShotDetails';
 import Buttons from '../components/Buttons';
 import StartEndModal from '../components/StartEndModal';
 import FinishEndModal from '../components/FinishEndModal';
-import LoadingIcon from '../assets/Loading_icon.svg';
+import Loading from '../components/Loading';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,27 +34,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const loadingStyles = makeStyles({
-  loadingBox: {
-    width: '40%',
-    margin: 'auto',
-    textAlign: 'center',
-  },
-  root: {
-    width: '100%',
-    position: 'relative',
-    animation: '$animation 3s infinite',
-    animationTimingFunction: 'linear',
-  },
-  '@keyframes animation': {
-    from: { transform: 'rotate(0deg)' },
-    to: { transform: 'rotate(360deg)' },
-  },
-});
-
 const GameView = ({ gameId }) => {
   const classes = useStyles();
-  const loadingClasses = loadingStyles();
 
   const {
     gameState,
@@ -96,24 +76,7 @@ const GameView = ({ gameId }) => {
 
   return (
     <>
-      {!loaded && (
-        <Box
-          className={loadingClasses.loadingBox}
-          display="flex"
-          flexDirection="column"
-        >
-          <Box>
-            <h1>LOADING</h1>
-          </Box>
-          <Box>
-            <CardMedia
-              image={LoadingIcon}
-              component="img"
-              classes={{ root: loadingClasses.root }}
-            />
-          </Box>
-        </Box>
-      )}
+      {!loaded && <Loading />}
       {loaded && (
         <div className={classes.root}>
           <Box display="flex" justifyContent="space-around" height="80vh">
@@ -158,7 +121,11 @@ const GameView = ({ gameId }) => {
             </Box>
           </Box>
           <StartEndModal gameState={gameState} startEnd={startEnd} />
-          <FinishEndModal gameState={gameState} finishEnd={finishEnd} startEnd={startEnd} />
+          <FinishEndModal
+            gameState={gameState}
+            finishEnd={finishEnd}
+            startEnd={startEnd}
+          />
         </div>
       )}
     </>
