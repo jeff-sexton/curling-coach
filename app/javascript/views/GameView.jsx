@@ -34,7 +34,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const GameView = ({ gameId }) => {
+
+const GameView = ({ gameId, handleStatsSelection }) => {
   const classes = useStyles();
 
   const {
@@ -74,6 +75,10 @@ const GameView = ({ gameId }) => {
     setIsEditable(true);
   };
 
+  const handleStatsClick = () => {
+    handleStatsSelection(gameId);
+  }
+
   return (
     <>
       {!loaded && <Loading />}
@@ -110,6 +115,7 @@ const GameView = ({ gameId }) => {
                   gameState={gameState}
                   storeShotDetails={storeShotDetails}
                   isEditable={isEditable}
+                  handleStatsClick={handleStatsClick}
                 />
               </Paper>
               <Buttons
