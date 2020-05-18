@@ -8,6 +8,7 @@ import Tab from '@material-ui/core/Tab';
 import axios from 'axios';
 
 import StatsPanel from '../components/StatsPanel';
+import Loading from '../components/Loading';
 
 const a11yProps = (index) => {
   return {
@@ -68,7 +69,7 @@ const StatsView = ({ gameId }) => {
         </>
       )}
 
-      {stats.length === 0 && <h1>Loading</h1>}
+      {stats.length === 0 && <Loading/>}
     </div>
   );
 };
