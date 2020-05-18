@@ -30,5 +30,7 @@ Things you may want to cover:
 3. run ```yarn install```
 4. run ```yarn update```
 5. Create database ```rails db:create```
-6. Start server ``` rails server ```
-7. Start web pack for live updates during development ```bin/webpack-dev-server```
+6. migrate ``` bin/rails db:migrate ```
+6. seed ``` bin/rails db:seed ```
+7. Start web pack for live updates during development and initial pack ```bin/webpack-dev-server```
+6. Start rails server ``` rails server ```
