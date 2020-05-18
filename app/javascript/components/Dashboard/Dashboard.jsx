@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 800,
   },
   title: {
-    fontFamily: theme.typography.h1.fontFamily,
+    fontFamily: theme.typography.fontFamily,
   },
 }));
 
