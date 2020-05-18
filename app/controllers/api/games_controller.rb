@@ -8,14 +8,14 @@ class Api::GamesController < ApplicationController
   def show
     game = Game.find(params[:id])
     # ends = game.ends.map { |curl_end| { end: curl_end, shots: curl_end.shots }}
-    ends = game.ends.map do |curl_end|
+    ends = game.ends.order(:id).map do |curl_end|
 
       # convert nested json object to an array of objects before sending to the client
       if curl_end.throw_order
         curl_end.throw_order = JSON.parse(curl_end.throw_order)
       end
       
-      shots = curl_end.shots
+      shots = curl_end.shots.order(:shot_number)
 
       # Parse rock paths back to an array of hashes before sending to client
       shots.map do |shot|
