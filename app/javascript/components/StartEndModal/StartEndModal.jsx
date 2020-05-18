@@ -39,10 +39,10 @@ const StartEndModal = ({ gameState, startEnd, errors }) => {
   const [selectedTeamId, setSelectedTeamId] = useState(first_team_id || '');
 
   const [open, setOpen] = useState(false);
-  const [teams] = useState(teams_with_players.map((team, index) => {
+  const teams = teams_with_players.map((team, index) => {
       return ( <MenuItem key={index} value={team.team.id}>{team.team.team_name}</MenuItem> );
-    })
-  );
+    });
+  
 
   const errorsExist = errors && errors.throw_order;
   const label = errorsExist ? "First Team required*" : "First Team*";

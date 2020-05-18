@@ -17,7 +17,7 @@ const ScoreBoard = ({ gameState }) => {
   const classes = useStyles();
   const { ends, currentEnd, teams_with_players } = gameState;
 
-  const [endNumbers] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+  const endNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
   const [rows, setRows] = useState([]);
 
   const sum = (arr) => arr.reduce((a, b) => a + b, 0);
