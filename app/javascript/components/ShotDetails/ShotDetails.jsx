@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     margin: theme.spacing(0),
+    fontFamily: theme.typography.fontFamily,
   },
   // button: {
   //   marginTop: theme.spacing(1.5),
@@ -36,7 +37,7 @@ const ShotDetails = ({
     <div className={classes.root}>
       <Box display="flex" justifyContent="space-around" alignItems="center" mb={2}>
         <Box>
-          <h3 className={classes.title}>Shot Details</h3>
+          <h3 className={classes.title}>SHOT DETAIL</h3>
         </Box>
         <Box>
           <Button
