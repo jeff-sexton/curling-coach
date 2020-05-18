@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { makeStyles } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
 
 import GamePreview from './GamePreview';
 
@@ -21,9 +23,16 @@ const Dashboard = ({ handleGameSelection, handleStatsSelection, gameList }) => {
 
   return (
     <div className={classes.root}>
-      <h1> Dashboard </h1>
+      <Box textAlign="center">
+        <h1> Dashboard </h1>
+      </Box>
       {gameList.map((game) => (
-        <GamePreview key={game.id} handleGameSelection={handleGameSelection} handleStatsSelection={handleStatsSelection} game={game} />
+        <GamePreview
+          key={game.id}
+          handleGameSelection={handleGameSelection}
+          handleStatsSelection={handleStatsSelection}
+          game={game}
+        />
       ))}
     </div>
   );
