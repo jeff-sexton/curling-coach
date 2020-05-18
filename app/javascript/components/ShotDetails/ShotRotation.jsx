@@ -38,7 +38,7 @@ const ShotRotation = ({ rotation, storeShotDetails, errors, isEditable }) => {
       <Select
         labelId="shot-rotation"
         id="rotation"
-        value={rotation}
+        value={rotation || ''}
         onChange={(event) => setShotRotation(event.target.value)}
         label={label}
         disabled={!isEditable}
