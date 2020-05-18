@@ -52,8 +52,10 @@ const StartEndModal = ({ gameState, startEnd, errors }) => {
     if (currentEnd > 0 && ends[currentEnd - 1].end.score_team1 >= 0) {
       if (ends[currentEnd - 1].end.score_team1 > 0) {
         startEnd(teams_with_players[0].team.id);
-      } else {
+      } else if (ends[currentEnd - 1].end.score_team2 > 0) {
         startEnd(teams_with_players[1].team.id);
+      } else {
+        startEnd(ends[currentEnd - 1].end.first_team_id);
       }
     } else if (ends[currentEnd] && !first_team_id) {
         setOpen(true);
