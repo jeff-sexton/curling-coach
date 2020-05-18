@@ -7,13 +7,11 @@ const ScoreBoardStyles = (theme) => ({
   },
   teamNameRow: {
     '& tr:nth-child(1) > th': {
-      // backgroundColor: theme.palette.team1Color.main,
-      backgroundColor: "red",
+      backgroundColor: theme.palette.team1Color.main,
       color: "white"
     },
     '& tr:nth-child(2) > th': {
-      // backgroundColor: theme.palette.team2Color.main,
-      backgroundColor: "yellow",
+      backgroundColor: theme.palette.team2Color.main,
     },
   },
   teamName: {
