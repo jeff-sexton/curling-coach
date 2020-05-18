@@ -5,7 +5,7 @@ import Box from '@material-ui/core/Box';
 
 import GamePreview from './GamePreview';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
       // margin: theme.spacing(1),
@@ -16,6 +16,9 @@ const useStyles = makeStyles(() => ({
     margin: 'auto',
     maxWidth: 800,
   },
+  title: {
+    fontFamily: theme.typography.h1.fontFamily,
+  },
 }));
 
 const Dashboard = ({ handleGameSelection, handleStatsSelection, gameList }) => {
@@ -23,8 +26,8 @@ const Dashboard = ({ handleGameSelection, handleStatsSelection, gameList }) => {
 
   return (
     <div className={classes.root}>
-      <Box textAlign="center">
-        <h1> Dashboard </h1>
+      <Box textAlign="center" mt={2} mb={2}>
+        <h1 className={classes.title}> DASHBOARD </h1>
       </Box>
       {gameList.map((game) => (
         <GamePreview
