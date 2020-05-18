@@ -31,7 +31,7 @@ const ShotRotation = ({ rotation, storeShotDetails, errors, isEditable }) => {
   const setShotRotation = (rotation) => {
     storeShotDetails({rotation});
   };
-
+  
   return (
     <FormControl variant="outlined" className={classes.formControl} error={errorsExist}>
       <InputLabel id="shot-rotation">{label}</InputLabel>

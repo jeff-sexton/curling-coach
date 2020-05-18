@@ -80,6 +80,7 @@ const FinishEndModal = ({ gameState, finishEnd, startEnd, errors }) => {
     const score_team1 = teamScores[0];
     const score_team2 = teamScores[1];
     finishEnd({ score_team1, score_team2 });
+    setTeamScores(['', '']);
     handleClose();
   };
 

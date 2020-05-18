@@ -75,6 +75,7 @@ const ShotDetails = ({
             isEditable={isEditable}
           />
         </Grid>
+
       </Grid>
     </div>
   );
