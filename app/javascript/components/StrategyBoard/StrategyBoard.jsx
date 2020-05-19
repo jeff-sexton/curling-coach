@@ -152,7 +152,7 @@ const StrategyBoard = ({
       } else {
         clearInterval(replayInterval);
       }
-    }, 30);
+    }, 50);
   };
 
   // Replay rock paths on initial load
@@ -205,7 +205,7 @@ const StrategyBoard = ({
         } else {
           clearInterval(replayInterval);
         }
-      }, 30);
+      }, 50);
     }
   }, [currentEnd]);
 
