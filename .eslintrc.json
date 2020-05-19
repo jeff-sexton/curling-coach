@@ -24,7 +24,7 @@
     ],
     "rules": {
       "no-console": "warn",
-      "react/prop-types": 1
+      "react/prop-types": 0
     }
   }
   
