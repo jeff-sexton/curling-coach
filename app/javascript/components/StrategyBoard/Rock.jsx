@@ -142,6 +142,7 @@ const Rock = ({
     >
       <circle r={25} fill="grey" stroke="lightgrey" strokeWidth="2" />
       <circle r={15} fill={color} />
+      <rect x={-6} y={-5} rx={5} ry={5} width={27} height={10} fill={color} stroke="grey" strokeWidth="3" />
     </svg>
   );
 };
