@@ -6,22 +6,14 @@ const useStyles = makeStyles((theme) => ({
   root: {
     border: 0,
     borderRadius: 3,
-    width: 'fit-content'
-  },
-  team1Style : {
-    background: theme.palette.team1Color.main,
-  },
-  team2Style : {
-    background: theme.palette.team2Color.main,
-    "& .MuiButton-label": {
-      color: theme.palette.text.primary,
-      },
+    width: 'fit-content',
+    pointerEvents: "none"
   }
 }));
 
-const ThrowTurn = ({ gameState }) => {
+const ThrowTurn = ({ gameState, classes }) => {
 
-  const classes = useStyles();
+  const localClasses = useStyles();
 
   const { currentEnd, currentShot, ends, teams_with_players } = gameState;
 
@@ -49,7 +41,7 @@ const ThrowTurn = ({ gameState }) => {
   return (
     <>
       <Button
-        className={`${classes.root} ${player1Background ? classes.team1Style : classes.team2Style}`}
+        className={`${localClasses.root} ${player1Background ? classes.team1Style : classes.team2Style}`}
         variant="contained"
         color="primary"
         textalign="center"

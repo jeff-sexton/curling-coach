@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
 import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-// import Menu from '@material-ui/core/Menu';
+import Box from '@material-ui/core/Box';
 import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -19,24 +18,24 @@ const useStyles = makeStyles((theme) => ({
     width: "auto",
     height: "auto",
     backgroundColor: theme.palette.background.paper,
-    border: '4px solid #FF0000',
     padding: "1%",
     position: "absolute",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)"
   },
+
   listItem: {
-    background: '#42a5f5',
-    textAlign: "center",
-    borderRadius: 5,
+    background: 'linear-gradient(to right, #42a5f5, #4dd0e1)',
     '&.Mui-selected, &:hover' : {
-      background: "red"
+      background: "white",
+      color: "black"
     },
+    borderRadius: 5,
     color: "white",
-    fontSize: "20",
     fontWeight: "bolder",
-    width: "100%"
+    width: "100%",
+    marginBottom: '5%'
   },  
 }));
 
@@ -47,13 +46,6 @@ const ShotMenu = ({ gameState, setShot }) => {
 
   const [open, setOpen] = useState(false);
 
-  const shotItemSpacing = () => {
-    if (ends[currentEnd].shots.length <= 2) {
-      return 12 / ends[currentEnd].shots.length;
-    }
-    return 4;
-  }
-
   const shotItemClick = (index) => {
     setShot(index);
     setOpen(false);
@@ -61,7 +53,6 @@ const ShotMenu = ({ gameState, setShot }) => {
   
   const shotItems = ends[currentEnd].shots.map((value, index) => {
     return (
-      <Grid container item xs={shotItemSpacing()} key={index} justify="center">
         <MenuItem 
           className={classes.listItem}
           key={index} 
@@ -70,16 +61,21 @@ const ShotMenu = ({ gameState, setShot }) => {
         >
           Shot {index + 1}
         </MenuItem>
-      </Grid>   
     );
   })
 
 
   const modalContent = (
     <Paper className={classes.paper}>
-      <Grid container spacing={2} justify="flex-start" alignItems="center"  >
+      <Box 
+        display="flex" 
+        flexDirection="column" 
+        // flexWrap="wrap" 
+        justifyContent="center" 
+        alignItems="center"  
+      >
           {shotItems}
-      </Grid>
+      </Box>
     </Paper>
   );
 
