@@ -1,5 +1,5 @@
 Game.create!([
-  {date_time: "2020-05-13 19:33:31", location: "Vancouver", completed: false},
+  {date_time: "2009-03-10 01:30:00", location: "Calgary", completed: false},
   {date_time: "2020-05-06 02:00:00", location: "North Shore", completed: false},
   {date_time: "2020-05-08 02:00:00", location: "Richmond", completed: false},
   {date_time: "2015-12-02 19:00:00", location: "Grande Prairie", completed: false},
@@ -18,6 +18,9 @@ Team.create!([
   {team_name: "Sweeting"},
   {team_name: "LHL Staff"},
   {team_name: "LHL Alumni"},
+  {team_name: "Ontario"},
+  {team_name: "Saskatchewan"},
+
 
 ])
 
@@ -53,12 +56,22 @@ Player.create!([
   {name: "Alice", throw_order: 3, team_id: 7}, 
   {name: "Sarah", throw_order: 4, team_id: 7}, 
 
+  {name: "Craig Savill", throw_order: 1, team_id: 8}, 
+  {name: "Brent Laing", throw_order: 2, team_id: 8}, 
+  {name: "Richard Hart", throw_order: 3, team_id: 8}, 
+  {name: "Glenn Howard", throw_order: 4, team_id: 8}, 
+
+  {name: "Dean Hicke", throw_order: 1, team_id: 9}, 
+  {name: "Aryn Schmidt", throw_order: 2, team_id: 9}, 
+  {name: "Scott Bitiz", throw_order: 3, team_id: 9}, 
+  {name: "Joel Jordinson", throw_order: 4, team_id: 9}, 
+
 
 ])
 
 GameParticipation.create!([
-  {team_id: 1, game_id: 1},
-  {team_id: 2, game_id: 1},
+  {team_id: 8, game_id: 1},
+  {team_id: 9, game_id: 1},
   {team_id: 1, game_id: 2},
   {team_id: 3, game_id: 2},
   {team_id: 1, game_id: 3},
