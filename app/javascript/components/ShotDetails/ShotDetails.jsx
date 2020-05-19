@@ -13,9 +13,13 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     textAlign: 'center',
   },
-  button: {
-    marginTop: theme.spacing(1.5),
+  title: {
+    margin: theme.spacing(0),
+    fontFamily: theme.typography.fontFamily,
   },
+  // button: {
+  //   marginTop: theme.spacing(1.5),
+  // },
 }));
 
 const ShotDetails = ({
@@ -31,9 +35,9 @@ const ShotDetails = ({
 
   return (
     <div className={classes.root}>
-      <Box display="flex" justifyContent="space-around">
+      <Box display="flex" justifyContent="space-around" alignItems="center" mb={2}>
         <Box>
-          <h3>Shot Details</h3>
+          <h3 className={classes.title}>SHOT DETAIL</h3>
         </Box>
         <Box>
           <Button
@@ -75,7 +79,6 @@ const ShotDetails = ({
             isEditable={isEditable}
           />
         </Grid>
-
       </Grid>
     </div>
   );
