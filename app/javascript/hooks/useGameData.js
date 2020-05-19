@@ -5,12 +5,10 @@ import axios from 'axios';
 const SET_INITIAL_GAME_STATE = 'SET_INITIAL_GAME_STATE';
 const SET_THROW_ORDER = 'SET_THROW_ORDER'; // not currently used
 const SET_FIRST_TEAM = 'SET_FIRST_TEAM'; // not currently used
-const SET_CURRENT_SHOT = 'SET_CURRENT_SHOT';
 const SET_CURRENT_SHOT_AND_END = 'SET_CURRENT_SHOT_AND_END';
 const SET_SHOT_DETAILS = 'SET_SHOT_DETAILS';
 const SET_SHOT_SAVE_ERRORS = 'SET_SHOT_SAVE_ERRORS';
 const SET_END_DETAILS = 'SET_END_DETAILS';
-const SET_CURRENT_END = 'SET_CURRENT_END';
 const INITIALIZE_END = 'INITIALIZE_END';
 const INITIALIZE_SHOT = 'INITIALIZE_SHOT';
 const SET_PATH_HISTORY = 'SET_PATH_HISTORY';
@@ -69,13 +67,6 @@ const reducer = (state, action) => {
   };
   
   const SET_CURRENT_SHOT_AND_END = ({ value: {currentShot, currentEnd }}) => ({ ...state, currentShot, currentEnd });
-
-  const SET_CURRENT_END = ({ value: currentEnd }) => ({ ...state, currentEnd });
-
-  const SET_CURRENT_SHOT = ({ value: currentShot }) => ({
-    ...state,
-    currentShot,
-  });
 
   const SET_SHOT_DETAILS = ({ value }) => {
     const currentEnd = state.currentEnd;
@@ -221,8 +212,6 @@ const reducer = (state, action) => {
     SET_INITIAL_GAME_STATE,
     SET_THROW_ORDER,
     SET_FIRST_TEAM,
-    SET_CURRENT_SHOT,
-    SET_CURRENT_END,
     SET_CURRENT_SHOT_AND_END,
     SET_SHOT_DETAILS,
     SET_SHOT_SAVE_ERRORS,
@@ -297,8 +286,7 @@ const useGameData = () => {
         gameState.ends[currentEnd].end.score_team1 !== null &&
         gameState.ends[currentEnd].end.score_team1 !== null
       ) {
-        dispatch({ type: SET_CURRENT_END, value: nextEnd });
-        dispatch({ type: SET_CURRENT_SHOT, value: 0 });
+        dispatch({type: SET_CURRENT_SHOT_AND_END, value: {currentShot: 0, currentEnd: nextEnd}})
       } else {
         dispatch({ type: SET_COMPLETE_END_PROMPT, value: true });
       }
@@ -309,14 +297,14 @@ const useGameData = () => {
         value: { shot: newCurrentShot, end: currentEnd },
       });
 
-      dispatch({ type: SET_CURRENT_SHOT, value: newCurrentShot });
+      dispatch({type: SET_CURRENT_SHOT_AND_END, value: {currentShot: newCurrentShot, currentEnd: currentEnd}})
     }
   };
 
   const prevShot = () => {
     const newCurrentShot = gameState.currentShot - 1;
     if (newCurrentShot >= 0) {
-      dispatch({ type: SET_CURRENT_SHOT, value: newCurrentShot });
+      dispatch({type: SET_CURRENT_SHOT_AND_END, value: {currentShot: newCurrentShot, currentEnd: gameState.currentEnd}})
       dispatch({ type: SET_SHOT_SAVE_ERRORS, value: null });
     }
   };
@@ -368,7 +356,7 @@ const useGameData = () => {
   };
 
   const setShot = (shot) => {
-    dispatch({ type: SET_CURRENT_SHOT, value: shot });
+    dispatch({type: SET_CURRENT_SHOT_AND_END, value: {currentShot: shot, currentEnd: gameState.currentEnd}})
   };
 
   const setEnd = (end) => {
@@ -381,7 +369,7 @@ const useGameData = () => {
 
     const throw_order = [];
     for (const teamObj of teams_with_players) {
-      let teamOffset = teamObj.team.id === first_team_id ? 0 : 1;
+      const teamOffset = teamObj.team.id === first_team_id ? 0 : 1;
 
       for (const player of teamObj.players) {
         const playerOffset = (player.throw_order - 1) * 4;
@@ -449,12 +437,8 @@ const useGameData = () => {
       .then((res) => {
         dispatch({ type: SET_END_DETAILS, value: res.data });
 
-        // nextShot();
-
         if (gameState.currentEnd < 12) {
           dispatch({type: SET_CURRENT_SHOT_AND_END, value: {currentShot: 0, currentEnd: gameState.currentEnd + 1}})
-          // dispatch({ type: SET_CURRENT_END, value: gameState.currentEnd + 1 });
-          // dispatch({ type: SET_CURRENT_SHOT, value: 0 });
         }
       })
       .catch((err) => {
