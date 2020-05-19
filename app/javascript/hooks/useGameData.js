@@ -6,6 +6,7 @@ const SET_INITIAL_GAME_STATE = 'SET_INITIAL_GAME_STATE';
 const SET_THROW_ORDER = 'SET_THROW_ORDER'; // not currently used
 const SET_FIRST_TEAM = 'SET_FIRST_TEAM'; // not currently used
 const SET_CURRENT_SHOT = 'SET_CURRENT_SHOT';
+const SET_CURRENT_SHOT_AND_END = 'SET_CURRENT_SHOT_AND_END';
 const SET_SHOT_DETAILS = 'SET_SHOT_DETAILS';
 const SET_SHOT_SAVE_ERRORS = 'SET_SHOT_SAVE_ERRORS';
 const SET_END_DETAILS = 'SET_END_DETAILS';
@@ -66,6 +67,8 @@ const reducer = (state, action) => {
 
     return { ...state, ends };
   };
+  
+  const SET_CURRENT_SHOT_AND_END = ({ value: {currentShot, currentEnd }}) => ({ ...state, currentShot, currentEnd });
 
   const SET_CURRENT_END = ({ value: currentEnd }) => ({ ...state, currentEnd });
 
@@ -220,6 +223,7 @@ const reducer = (state, action) => {
     SET_FIRST_TEAM,
     SET_CURRENT_SHOT,
     SET_CURRENT_END,
+    SET_CURRENT_SHOT_AND_END,
     SET_SHOT_DETAILS,
     SET_SHOT_SAVE_ERRORS,
     SET_END_DETAILS,
@@ -369,8 +373,7 @@ const useGameData = () => {
 
   const setEnd = (end) => {
     dispatch({ type: INITIALIZE_SHOT, value: { shot: 0, end: end } });
-    dispatch({ type: SET_CURRENT_SHOT, value: 0 });
-    dispatch({ type: SET_CURRENT_END, value: end });
+    dispatch({type: SET_CURRENT_SHOT_AND_END, value: {currentShot: 0, currentEnd: end}})
   }
 
   const startEnd = (first_team_id) => {
@@ -444,12 +447,14 @@ const useGameData = () => {
     axios
       .patch(`api/ends/${endId}`, end)
       .then((res) => {
-        console.log('this is the patch response', res.data);
         dispatch({ type: SET_END_DETAILS, value: res.data });
 
+        // nextShot();
+
         if (gameState.currentEnd < 12) {
-          dispatch({ type: SET_CURRENT_SHOT, value: 0 });
-          dispatch({ type: SET_CURRENT_END, value: gameState.currentEnd + 1 });
+          dispatch({type: SET_CURRENT_SHOT_AND_END, value: {currentShot: 0, currentEnd: gameState.currentEnd + 1}})
+          // dispatch({ type: SET_CURRENT_END, value: gameState.currentEnd + 1 });
+          // dispatch({ type: SET_CURRENT_SHOT, value: 0 });
         }
       })
       .catch((err) => {
