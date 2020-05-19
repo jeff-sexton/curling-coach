@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import Box from '@material-ui/core/Box';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -22,6 +23,11 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(1),
       width: 200,
     },
+  },
+  title: {
+    margin: theme.spacing(0),
+    fontFamily: theme.typography.fontFamily,
+    borderBottom: 'black 3px solid'
   },
 }));
 
@@ -86,21 +92,27 @@ const FinishEndModal = ({ gameState, finishEnd, startEnd, errors }) => {
 
   const body = (
     <div className={classes.paper}>
-      <h2 id="finish-end">Complete End: {currentEnd + 1}</h2>
-      <p id="finish-end-description">Please enter the scores for this end:</p>
-      <form className={classes.root} noValidate autoComplete="off">
-        {teams}
-      </form>
+      <Box display="flex" flexDirection="column" justifyContent="space-around" alignItems="center" textAlign="center" m={2}>
+        <Box>
+          <h2 id="finish-end" className={classes.title}>Complete End: {currentEnd + 1}</h2>
+        </Box>
+        <Box>
+          <p id="finish-end-description">Please enter the scores for this end:</p>  
+        </Box>
+        <form className={classes.root} noValidate autoComplete="off">
+          {teams}
+        </form>
 
-      <Button
-        variant="contained"
-        onClick={onSave}
-        color="secondary"
-        className={classes.button}
-        aria-label="Save Scores"
-      >
-        Save
-      </Button>
+        <Button
+          variant="contained"
+          onClick={onSave}
+          color="secondary"
+          className={classes.button}
+          aria-label="Save Scores"
+        >
+          Save
+        </Button>
+      </Box>
     </div>
   );
 
