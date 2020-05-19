@@ -9,21 +9,6 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
-  team1Style : {
-    background: theme.palette.team1Color.main,
-  },
-  team2Style : {
-    // background: 'linear-gradient(to right, #ffee58, #ffdb0f)',
-    background: theme.palette.team2Color.main,
-    "& .MuiButton-label": {
-      color: theme.palette.text.primary,
-      },
   }
 }));
 
@@ -47,7 +32,7 @@ const EndDetails = ({ gameState, setShot, setEnd }) => {
             <LinearProgress variant="determinate" value={(gameState.currentShot / 16) * 100} />
         </Grid>
         <Grid item xs>
-          {gameState.ends[gameState.currentEnd].end.throw_order && <ThrowTurn gameState={gameState} classes={classes}/>}
+          {gameState.ends[gameState.currentEnd].end.throw_order && <ThrowTurn gameState={gameState}/>}
         </Grid>
       </Grid>
     </div>
