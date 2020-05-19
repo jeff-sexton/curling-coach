@@ -24,6 +24,7 @@ const Rock = ({
   const [position, setPosition] = useState({ x, y });
   const [storedPositionStep, setStoredPositionStep] = useState({ x, y });
   const [selected, setSelected] = useState(false);
+  const [movedThisShot, setMovedThisShot] = useState(false);
 
   const { currentEnd, currentShot, loaded } = gameState;
 
@@ -50,6 +51,12 @@ const Rock = ({
       setPosition({ x: changeX, y: changeY });
     }
   }, [positionChange]);
+
+  // Reset moved indicator for every shot
+  useEffect(() => {
+    setMovedThisShot(false);
+
+  }, [currentShot])
 
   // Add new rock paths to pathHistory on user drag
   useEffect(() => {
@@ -107,8 +114,22 @@ const Rock = ({
       }
     };
 
+    const storeLastPosition = () => {
+      storeHistory({ id, x: position.x, y: position.y });
+      setStoredPositionStep({ x: position.x, y: position.y });
+      setPosition({ x: position.x, y: position.y });
+    };
+
     if (selected) {
+      setMovedThisShot(true);
       document.addEventListener('mousemove', trackMouse);
+    } else if ( movedThisShot === true &&
+      ( storedPositionStep.x !== position.x ||
+      storedPositionStep.y !== position.y )
+    ) {
+      // ensure any moved rocks record their finial positions in the history array
+      setMovedThisShot(false);
+      storeLastPosition();
     }
 
     return () => {

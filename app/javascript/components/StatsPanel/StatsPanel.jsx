@@ -11,8 +11,7 @@ const StatsPanel = (props) => {
   const players = stats.players.map((player, index) => {
     return (
       <div key={index}>
-        <Typography>Stats for {player.player.name}</Typography>
-        <StatsTable stats={player.player_stats} />
+        <StatsTable stats={player.player_stats} name={player.player.name} />
       </div>
     );
   });
@@ -26,8 +25,7 @@ const StatsPanel = (props) => {
     >
       {value === index && (
         <Box p={3}>
-          <Typography>Stats for {stats.team.team_name}</Typography>
-          <StatsTable stats={stats.team_stats} />
+          <StatsTable stats={stats.team_stats} name={stats.team.team_name} />
           {players}
         </Box>
       )}

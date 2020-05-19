@@ -18,6 +18,7 @@ const theme = createMuiTheme({
     text: {
       primary: '#2e2e2e',
       // secondary: '#ffffff',
+      titles: 'aliceblue'
     },
     // team1Color is used only for scorebaord for now
     team1Color: {
