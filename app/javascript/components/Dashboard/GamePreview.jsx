@@ -5,6 +5,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import EqualizerIcon from '@material-ui/icons/Equalizer';
+
 
 import GamePreviewStyles from './GamePreviewStyles';
 
@@ -73,7 +75,8 @@ const GamePreview = ({ handleGameSelection, handleStatsSelection, game }) => {
           color="secondary"
           onClick={handleStatsClick}
         >
-          Stats
+          Stats&nbsp;
+          <EqualizerIcon />
         </Button>
       </Box>
     </Box>
