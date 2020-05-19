@@ -30,7 +30,7 @@ Player.create!([
   {name: "Aidan", throw_order: 2, team_id: 2},
   {name: "Jason", throw_order: 3, team_id: 2},
   {name: "Brad", throw_order: 4, team_id: 2},
-  {name: "Alice", throw_order: 1, team_id: 3},
+  {name: "Dorothy", throw_order: 1, team_id: 3},
   {name: "Tin-man", throw_order: 2, team_id: 3},
   {name: "Lion", throw_order: 3, team_id: 3},
   {name: "Scarecrow", throw_order: 4, team_id: 3},
@@ -42,6 +42,18 @@ Player.create!([
   {name: "Dana Ferguson", throw_order: 2, team_id: 5}, 
   {name: "Lori Olson-Johns", throw_order: 3, team_id: 5}, 
   {name: "Val Sweeting", throw_order: 4, team_id: 5}, 
+
+  {name: "Glen", throw_order: 1, team_id: 6}, 
+  {name: "Andy", throw_order: 2, team_id: 6}, 
+  {name: "Hafiz", throw_order: 3, team_id: 6}, 
+  {name: "Travis", throw_order: 4, team_id: 6}, 
+
+  {name: "Steve", throw_order: 1, team_id: 7}, 
+  {name: "Nathan", throw_order: 2, team_id: 7}, 
+  {name: "Alice", throw_order: 3, team_id: 7}, 
+  {name: "Sarah", throw_order: 4, team_id: 7}, 
+
+
 ])
 
 GameParticipation.create!([
