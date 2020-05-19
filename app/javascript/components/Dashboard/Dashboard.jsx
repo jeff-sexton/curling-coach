@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     fontFamily: theme.typography.fontFamily,
+    color: "white"
   },
 }));
 
@@ -27,7 +28,7 @@ const Dashboard = ({ handleGameSelection, handleStatsSelection, gameList }) => {
   return (
     <div className={classes.root}>
       <Box textAlign="center" mt={2} mb={2}>
-        <h1 className={classes.title}> DASHBOARD </h1>
+        <h1 className={classes.title}> GAMES </h1>
       </Box>
       {gameList.map((game) => (
         <GamePreview

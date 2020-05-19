@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import LoadingIcon from '../../assets/Loading_icon.svg';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   loadingBox: {
     width: '40%',
     margin: 'auto',
@@ -22,7 +22,11 @@ const useStyles = makeStyles({
     from: { transform: 'rotate(0deg)' },
     to: { transform: 'rotate(360deg)' },
   },
-});
+  title: {
+    fontFamily: theme.typography.fontFamily,
+    color: "white"
+  },
+}));
 
 const Loading = () => {
   const classes = useStyles();
@@ -34,7 +38,7 @@ const Loading = () => {
       flexDirection="column"
     >
       <Box>
-        <h1>LOADING</h1>
+        <h1 className={classes.title}>LOADING</h1>
       </Box>
       <Box>
         <CardMedia
