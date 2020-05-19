@@ -12,15 +12,20 @@ import Loading from '../components/Loading';
 
 const a11yProps = (index) => {
   return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    id: `team-tab-${index}`,
+    'aria-controls': `team-tabpanel-${index}`,
   };
 };
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    '& .MuiTab-textColorInherit': {
+      color: theme.palette.text.titles,
+    }
+  
   },
+
 }));
 
 const StatsView = ({ gameId }) => {
@@ -50,14 +55,13 @@ const StatsView = ({ gameId }) => {
 
   return (
     <div className={classes.root}>
-      <h1>Stats for Game: {gameId}</h1>
       {stats.length > 0 && (
         <>
-          <AppBar position="static">
+          <AppBar position="static"> 
             <Tabs
               value={value}
               onChange={handleChange}
-              aria-label="simple tabs example"
+              aria-label="Team Stats Tabs"
             >
               <Tab label={stats[0].team.team_name} {...a11yProps(0)} />
               <Tab label={stats[1].team.team_name} {...a11yProps(1)} />
