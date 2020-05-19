@@ -29,7 +29,8 @@ const useStyles = makeStyles((theme) => ({
     background: 'linear-gradient(to right, #42a5f5, #4dd0e1)',
     '&.Mui-selected, &:hover' : {
       background: "white",
-      color: "black"
+      color: "black",
+      border: "1px solid black"
     },
     borderRadius: 5,
     color: "white",
@@ -70,7 +71,6 @@ const ShotMenu = ({ gameState, setShot }) => {
       <Box 
         display="flex" 
         flexDirection="column" 
-        // flexWrap="wrap" 
         justifyContent="center" 
         alignItems="center"  
       >
