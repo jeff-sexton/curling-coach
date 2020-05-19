@@ -21,11 +21,11 @@ const theme = createMuiTheme({
     },
     // team1Color is used only for scorebaord for now
     team1Color: {
-      main: '#f4511e',
+      main: 'red',
     },
     // team2Color is used only for scorebaord for now
     team2Color: {
-      main: '#fdd835',
+      main: 'yellow',
     },
   },
   typography: {
@@ -38,9 +38,9 @@ const theme = createMuiTheme({
         color: 'white',
       },
       // changes color of button
-      // contained: {
-      //   backgroundColor: "#6586c0",
-      // }
+      contained: {
+        backgroundColor: "#6586c0",
+      }
     },
     MuiTableCell: {
       head: {
