@@ -108,6 +108,7 @@ const StrategyBoard = ({
   const [positionChange, setPositionChange] = useState({});
 
   const previousShotNumber = usePrevious(currentShot);
+  const previousEndNumber = usePrevious(currentEnd);
 
   const FORWARD = 'FORWARD';
   const BACKWARD = 'BACKWARD';
@@ -161,10 +162,10 @@ const StrategyBoard = ({
 
   // Replay rock paths when shot is jumped to
   useEffect(() => {
-    if (Math.abs(currentShot - previousShotNumber) > 2) {
+    if (Math.abs(currentShot - previousShotNumber) > 1 || currentEnd !== previousEndNumber) {
       replayRockPath(FORWARD, currentShot, currentEnd);
     }
-  }, [currentShot]);
+  }, [currentShot, currentEnd]);
 
   // Reset Rocks to inital positions for new ends
   useEffect(() => {
