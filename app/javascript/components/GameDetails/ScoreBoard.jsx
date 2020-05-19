@@ -66,6 +66,7 @@ const ScoreBoard = ({ gameState }) => {
                     {ends[index] && 
                      !ends[index + 1] &&
                      ends[index].end.first_team_id !== row.teamId &&
+                     ends[index].end[`score_team${rowIndex + 1}`] === null &&
                      ends[index].end.throw_order && (
                       <CardMedia
                         image={HammerIcon}
