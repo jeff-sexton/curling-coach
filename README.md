@@ -2,6 +2,8 @@
 
 An app to assist coaching a curling team - Provides an interactive UI to record shot by shot rock positions and record statistics for each shot. Provides animated playback of game progress to discuss strategy with players and shot analytics.
 
+Application is hosted for demonstration purposes: https://secret-stream-22394.herokuapp.com/
+
 
 ## Final Product
 

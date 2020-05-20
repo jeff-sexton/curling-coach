@@ -5,7 +5,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import css from '../styles/application.css'
+import "../styles/application.css";
+
 
 import App from './Application'
 
