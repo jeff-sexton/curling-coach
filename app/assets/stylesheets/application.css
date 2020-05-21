@@ -15,6 +15,6 @@
  */
 
  body {
-  background-image: url("../images/ice-age.png");
+  background-image: url("/assets/ice_age.png");
   background-color: #3c6e8c;
 }

@@ -5,9 +5,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-// import "../styles/application.css";
-
-
 import App from './Application'
 
 
