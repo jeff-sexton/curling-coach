@@ -4,6 +4,10 @@ An app to assist coaching a curling team - Provides an interactive UI to record 
 
 Application is hosted for demonstration purposes: https://secret-stream-22394.herokuapp.com/
 
+Video Demonstration:
+
+https://youtu.be/sFFX88RGneU
+
 
 ## Final Product
 
