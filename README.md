@@ -2,6 +2,12 @@
 
 An app to assist coaching a curling team - Provides an interactive UI to record shot by shot rock positions and record statistics for each shot. Provides animated playback of game progress to discuss strategy with players and shot analytics.
 
+Application is hosted for demonstration purposes: https://secret-stream-22394.herokuapp.com/
+
+Video Demonstration:
+
+https://youtu.be/sFFX88RGneU
+
 
 ## Final Product
 
@@ -16,15 +22,15 @@ An app to assist coaching a curling team - Provides an interactive UI to record 
 
 ## Setup
 
-1. clone 
+1. clone repository to local machine 
 2. run ```bundle install```
 3. run ```yarn install```
-4. run ```yarn update```
+4. Configure local or remote instance of PostgreSQL and add connection details to config/database.yml
 5. Create database ```rails db:create```
-6. migrate ``` bin/rails db:migrate ```
-6. seed ``` bin/rails db:seed ```
-7. Start web pack for live updates during development and initial pack ```bin/webpack-dev-server```
-6. Start rails server ``` rails server ```
+6. Run database migrations ``` bin/rails db:migrate ```
+7. Seed database ``` bin/rails db:seed ```
+8. Start web pack for live updates during development and initial pack ```bin/webpack-dev-server```
+9. Start rails server ``` rails server ```
 
 
 ## Dependencies

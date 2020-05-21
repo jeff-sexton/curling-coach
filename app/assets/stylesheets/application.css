@@ -13,3 +13,8 @@
  *= require_tree .
  *= require_self
  */
+
+ body {
+  background-image: url("ice_age.png");
+  background-color: #3c6e8c;
+}
