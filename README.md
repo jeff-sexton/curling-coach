@@ -8,6 +8,12 @@ Video Demonstration:
 
 https://youtu.be/sFFX88RGneU
 
+## Group Members
+
+* Jeff Sexton - https://github.com/jeff-sexton
+* Yasu - https://github.com/yasu71
+* Alan Marx - https://github.com/Alan-Marx
+
 
 ## Final Product
 
