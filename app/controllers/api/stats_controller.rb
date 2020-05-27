@@ -1,89 +1,89 @@
 class Api::StatsController < ApplicationController
 
   def show    
-    game_shots = Shot.joins(end: :game, player: :team).where("games.id = ?", params[:id])
-    teams = Team.joins(game_participations: :game).where("games.id = ?", params[:id])
+    # game_shots = Shot.joins(end: :game, player: :team).where("games.id = ?", params[:id])
+    # teams = Team.joins(game_participations: :game).where("games.id = ?", params[:id])
     
-    game_stats = teams.map {|team| 
-      {
-        team: team, 
-        team_stats: {
-          clockwise: 
-          { 
-            count: game_shots.where("teams.id = ? AND shots.rotation = 'clockwise'", team.id).group(:shot_type).count(:rating), 
-            sum: game_shots.where("teams.id = ? AND shots.rotation = 'clockwise'", team.id).group(:shot_type).sum(:rating), 
-            all_draws_count: game_shots.where("teams.id = ? AND shots.rotation = 'clockwise'", team.id).where(shot_type: ['Draw','Front','Guard','Raise','Wick','Freeze']).count(:rating), 
-            all_draws_sum: game_shots.where("teams.id = ? AND shots.rotation = 'clockwise'", team.id).where(shot_type: ['Draw','Front','Guard','Raise','Wick','Freeze']).sum(:rating), 
-            all_takeouts_count: game_shots.where("teams.id = ? AND shots.rotation = 'clockwise'", team.id).where(shot_type: ['TakeOut','HitAndRoll','Clearing','DoubleTakeOut','PromotionTakeOut']).count(:rating), 
-            all_takeouts_sum: game_shots.where("teams.id = ? AND shots.rotation = 'clockwise'", team.id).where(shot_type: ['TakeOut','HitAndRoll','Clearing','DoubleTakeOut','PromotionTakeOut']).sum(:rating), 
-            total_count: game_shots.where("teams.id = ? AND shots.rotation = 'clockwise'", team.id).count(:rating), 
-            total_sum: game_shots.where("teams.id = ? AND shots.rotation = 'clockwise'", team.id).sum(:rating), 
-          },
-          counterclockwise: 
-          { 
-            count: game_shots.where("teams.id = ? AND shots.rotation = 'counterclockwise'", team.id).group(:shot_type).count(:rating), 
-            sum: game_shots.where("teams.id = ? AND shots.rotation = 'counterclockwise'", team.id).group(:shot_type).sum(:rating),
-            all_draws_count: game_shots.where("teams.id = ? AND shots.rotation = 'counterclockwise'", team.id).where(shot_type: ['Draw','Front','Guard','Raise','Wick','Freeze']).count(:rating), 
-            all_draws_sum: game_shots.where("teams.id = ? AND shots.rotation = 'counterclockwise'", team.id).where(shot_type: ['Draw','Front','Guard','Raise','Wick','Freeze']).sum(:rating), 
-            all_takeouts_count: game_shots.where("teams.id = ? AND shots.rotation = 'counterclockwise'", team.id).where(shot_type: ['TakeOut','HitAndRoll','Clearing','DoubleTakeOut','PromotionTakeOut']).count(:rating), 
-            all_takeouts_sum: game_shots.where("teams.id = ? AND shots.rotation = 'counterclockwise'", team.id).where(shot_type: ['TakeOut','HitAndRoll','Clearing','DoubleTakeOut','PromotionTakeOut']).sum(:rating), 
-            total_count: game_shots.where("teams.id = ? AND shots.rotation = 'counterclockwise'", team.id).count(:rating), 
-            total_sum: game_shots.where("teams.id = ? AND shots.rotation = 'counterclockwise'", team.id).sum(:rating), 
-          },
-          combined: 
-          { 
-            count: game_shots.where("teams.id = ?", team.id).group(:shot_type).count(:rating), 
-            sum: game_shots.where("teams.id = ?", team.id).group(:shot_type).sum(:rating),
-            all_draws_count: game_shots.where("teams.id = ?", team.id).where(shot_type: ['Draw','Front','Guard','Raise','Wick','Freeze']).count(:rating), 
-            all_draws_sum: game_shots.where("teams.id = ?", team.id).where(shot_type: ['Draw','Front','Guard','Raise','Wick','Freeze']).sum(:rating), 
-            all_takeouts_count: game_shots.where("teams.id = ?", team.id).where(shot_type: ['TakeOut','HitAndRoll','Clearing','DoubleTakeOut','PromotionTakeOut']).count(:rating), 
-            all_takeouts_sum: game_shots.where("teams.id = ?", team.id).where(shot_type: ['TakeOut','HitAndRoll','Clearing','DoubleTakeOut','PromotionTakeOut']).sum(:rating), 
-            total_count: game_shots.where("teams.id = ?", team.id).count(:rating), 
-            total_sum: game_shots.where("teams.id = ?", team.id).sum(:rating), 
-          },
-        },
-        players: team.players.map {|player|
-          {
-            player: player,
-            player_stats: {
-              clockwise: 
-              { 
-                count: game_shots.where("player_id = ? AND shots.rotation = 'clockwise'", player.id).group(:shot_type).count(:rating), 
-                sum: game_shots.where("player_id = ? AND shots.rotation = 'clockwise'", player.id).group(:shot_type).sum(:rating),
-                all_draws_count: game_shots.where("player_id = ? AND shots.rotation = 'clockwise'", player.id).where(shot_type: ['Draw','Front','Guard','Raise','Wick','Freeze']).count(:rating), 
-                all_draws_sum: game_shots.where("player_id = ? AND shots.rotation = 'clockwise'", player.id).where(shot_type: ['Draw','Front','Guard','Raise','Wick','Freeze']).sum(:rating), 
-                all_takeouts_count: game_shots.where("player_id = ? AND shots.rotation = 'clockwise'", player.id).where(shot_type: ['TakeOut','HitAndRoll','Clearing','DoubleTakeOut','PromotionTakeOut']).count(:rating), 
-                all_takeouts_sum: game_shots.where("player_id = ? AND shots.rotation = 'clockwise'", player.id).where(shot_type: ['TakeOut','HitAndRoll','Clearing','DoubleTakeOut','PromotionTakeOut']).sum(:rating), 
-                total_count: game_shots.where("player_id = ? AND shots.rotation = 'clockwise'", player.id).count(:rating), 
-                total_sum: game_shots.where("player_id = ? AND shots.rotation = 'clockwise'", player.id).sum(:rating), 
-              },
-              counterclockwise: 
-              { 
-                count: game_shots.where("player_id = ? AND shots.rotation = 'counterclockwise'", player.id).group(:shot_type).count(:rating), 
-                sum: game_shots.where("player_id = ? AND shots.rotation = 'counterclockwise'", player.id).group(:shot_type).sum(:rating),
-                all_draws_count: game_shots.where("player_id = ? AND shots.rotation = 'counterclockwise'", player.id).where(shot_type: ['Draw','Front','Guard','Raise','Wick','Freeze']).count(:rating), 
-                all_draws_sum: game_shots.where("player_id = ? AND shots.rotation = 'counterclockwise'", player.id).where(shot_type: ['Draw','Front','Guard','Raise','Wick','Freeze']).sum(:rating), 
-                all_takeouts_count: game_shots.where("player_id = ? AND shots.rotation = 'counterclockwise'", player.id).where(shot_type: ['TakeOut','HitAndRoll','Clearing','DoubleTakeOut','PromotionTakeOut']).count(:rating), 
-                all_takeouts_sum: game_shots.where("player_id = ? AND shots.rotation = 'counterclockwise'", player.id).where(shot_type: ['TakeOut','HitAndRoll','Clearing','DoubleTakeOut','PromotionTakeOut']).sum(:rating), 
-                total_count: game_shots.where("player_id = ? AND shots.rotation = 'counterclockwise'", player.id).count(:rating), 
-                total_sum: game_shots.where("player_id = ? AND shots.rotation = 'counterclockwise'", player.id).sum(:rating),  
-              },
-              combined: 
-              { 
-                count: game_shots.where("player_id = ?", player.id).group(:shot_type).count(:rating), 
-                sum: game_shots.where("player_id = ?", player.id).group(:shot_type).sum(:rating),
-                all_draws_count: game_shots.where("player_id = ?", player.id).where(shot_type: ['Draw','Front','Guard','Raise','Wick','Freeze']).count(:rating), 
-                all_draws_sum: game_shots.where("player_id = ?", player.id).where(shot_type: ['Draw','Front','Guard','Raise','Wick','Freeze']).sum(:rating), 
-                all_takeouts_count: game_shots.where("player_id = ?", player.id).where(shot_type: ['TakeOut','HitAndRoll','Clearing','DoubleTakeOut','PromotionTakeOut']).count(:rating), 
-                all_takeouts_sum: game_shots.where("player_id = ?", player.id).where(shot_type: ['TakeOut','HitAndRoll','Clearing','DoubleTakeOut','PromotionTakeOut']).sum(:rating), 
-                total_count: game_shots.where("player_id = ?", player.id).count(:rating), 
-                total_sum: game_shots.where("player_id = ?", player.id).sum(:rating), 
-              },
-            },
-          }
-        }
-      }
-    }
+    # game_stats = teams.map {|team| 
+    #   {
+    #     team: team, 
+    #     team_stats: {
+    #       clockwise: 
+    #       { 
+    #         count: game_shots.where("teams.id = ? AND shots.rotation = 'clockwise'", team.id).group(:shot_type).count(:rating), 
+    #         sum: game_shots.where("teams.id = ? AND shots.rotation = 'clockwise'", team.id).group(:shot_type).sum(:rating), 
+    #         all_draws_count: game_shots.where("teams.id = ? AND shots.rotation = 'clockwise'", team.id).where(shot_type: ['Draw','Front','Guard','Raise','Wick','Freeze']).count(:rating), 
+    #         all_draws_sum: game_shots.where("teams.id = ? AND shots.rotation = 'clockwise'", team.id).where(shot_type: ['Draw','Front','Guard','Raise','Wick','Freeze']).sum(:rating), 
+    #         all_takeouts_count: game_shots.where("teams.id = ? AND shots.rotation = 'clockwise'", team.id).where(shot_type: ['TakeOut','HitAndRoll','Clearing','DoubleTakeOut','PromotionTakeOut']).count(:rating), 
+    #         all_takeouts_sum: game_shots.where("teams.id = ? AND shots.rotation = 'clockwise'", team.id).where(shot_type: ['TakeOut','HitAndRoll','Clearing','DoubleTakeOut','PromotionTakeOut']).sum(:rating), 
+    #         total_count: game_shots.where("teams.id = ? AND shots.rotation = 'clockwise'", team.id).count(:rating), 
+    #         total_sum: game_shots.where("teams.id = ? AND shots.rotation = 'clockwise'", team.id).sum(:rating), 
+    #       },
+    #       counterclockwise: 
+    #       { 
+    #         count: game_shots.where("teams.id = ? AND shots.rotation = 'counterclockwise'", team.id).group(:shot_type).count(:rating), 
+    #         sum: game_shots.where("teams.id = ? AND shots.rotation = 'counterclockwise'", team.id).group(:shot_type).sum(:rating),
+    #         all_draws_count: game_shots.where("teams.id = ? AND shots.rotation = 'counterclockwise'", team.id).where(shot_type: ['Draw','Front','Guard','Raise','Wick','Freeze']).count(:rating), 
+    #         all_draws_sum: game_shots.where("teams.id = ? AND shots.rotation = 'counterclockwise'", team.id).where(shot_type: ['Draw','Front','Guard','Raise','Wick','Freeze']).sum(:rating), 
+    #         all_takeouts_count: game_shots.where("teams.id = ? AND shots.rotation = 'counterclockwise'", team.id).where(shot_type: ['TakeOut','HitAndRoll','Clearing','DoubleTakeOut','PromotionTakeOut']).count(:rating), 
+    #         all_takeouts_sum: game_shots.where("teams.id = ? AND shots.rotation = 'counterclockwise'", team.id).where(shot_type: ['TakeOut','HitAndRoll','Clearing','DoubleTakeOut','PromotionTakeOut']).sum(:rating), 
+    #         total_count: game_shots.where("teams.id = ? AND shots.rotation = 'counterclockwise'", team.id).count(:rating), 
+    #         total_sum: game_shots.where("teams.id = ? AND shots.rotation = 'counterclockwise'", team.id).sum(:rating), 
+    #       },
+    #       combined: 
+    #       { 
+    #         count: game_shots.where("teams.id = ?", team.id).group(:shot_type).count(:rating), 
+    #         sum: game_shots.where("teams.id = ?", team.id).group(:shot_type).sum(:rating),
+    #         all_draws_count: game_shots.where("teams.id = ?", team.id).where(shot_type: ['Draw','Front','Guard','Raise','Wick','Freeze']).count(:rating), 
+    #         all_draws_sum: game_shots.where("teams.id = ?", team.id).where(shot_type: ['Draw','Front','Guard','Raise','Wick','Freeze']).sum(:rating), 
+    #         all_takeouts_count: game_shots.where("teams.id = ?", team.id).where(shot_type: ['TakeOut','HitAndRoll','Clearing','DoubleTakeOut','PromotionTakeOut']).count(:rating), 
+    #         all_takeouts_sum: game_shots.where("teams.id = ?", team.id).where(shot_type: ['TakeOut','HitAndRoll','Clearing','DoubleTakeOut','PromotionTakeOut']).sum(:rating), 
+    #         total_count: game_shots.where("teams.id = ?", team.id).count(:rating), 
+    #         total_sum: game_shots.where("teams.id = ?", team.id).sum(:rating), 
+    #       },
+    #     },
+    #     players: team.players.map {|player|
+    #       {
+    #         player: player,
+    #         player_stats: {
+    #           clockwise: 
+    #           { 
+    #             count: game_shots.where("player_id = ? AND shots.rotation = 'clockwise'", player.id).group(:shot_type).count(:rating), 
+    #             sum: game_shots.where("player_id = ? AND shots.rotation = 'clockwise'", player.id).group(:shot_type).sum(:rating),
+    #             all_draws_count: game_shots.where("player_id = ? AND shots.rotation = 'clockwise'", player.id).where(shot_type: ['Draw','Front','Guard','Raise','Wick','Freeze']).count(:rating), 
+    #             all_draws_sum: game_shots.where("player_id = ? AND shots.rotation = 'clockwise'", player.id).where(shot_type: ['Draw','Front','Guard','Raise','Wick','Freeze']).sum(:rating), 
+    #             all_takeouts_count: game_shots.where("player_id = ? AND shots.rotation = 'clockwise'", player.id).where(shot_type: ['TakeOut','HitAndRoll','Clearing','DoubleTakeOut','PromotionTakeOut']).count(:rating), 
+    #             all_takeouts_sum: game_shots.where("player_id = ? AND shots.rotation = 'clockwise'", player.id).where(shot_type: ['TakeOut','HitAndRoll','Clearing','DoubleTakeOut','PromotionTakeOut']).sum(:rating), 
+    #             total_count: game_shots.where("player_id = ? AND shots.rotation = 'clockwise'", player.id).count(:rating), 
+    #             total_sum: game_shots.where("player_id = ? AND shots.rotation = 'clockwise'", player.id).sum(:rating), 
+    #           },
+    #           counterclockwise: 
+    #           { 
+    #             count: game_shots.where("player_id = ? AND shots.rotation = 'counterclockwise'", player.id).group(:shot_type).count(:rating), 
+    #             sum: game_shots.where("player_id = ? AND shots.rotation = 'counterclockwise'", player.id).group(:shot_type).sum(:rating),
+    #             all_draws_count: game_shots.where("player_id = ? AND shots.rotation = 'counterclockwise'", player.id).where(shot_type: ['Draw','Front','Guard','Raise','Wick','Freeze']).count(:rating), 
+    #             all_draws_sum: game_shots.where("player_id = ? AND shots.rotation = 'counterclockwise'", player.id).where(shot_type: ['Draw','Front','Guard','Raise','Wick','Freeze']).sum(:rating), 
+    #             all_takeouts_count: game_shots.where("player_id = ? AND shots.rotation = 'counterclockwise'", player.id).where(shot_type: ['TakeOut','HitAndRoll','Clearing','DoubleTakeOut','PromotionTakeOut']).count(:rating), 
+    #             all_takeouts_sum: game_shots.where("player_id = ? AND shots.rotation = 'counterclockwise'", player.id).where(shot_type: ['TakeOut','HitAndRoll','Clearing','DoubleTakeOut','PromotionTakeOut']).sum(:rating), 
+    #             total_count: game_shots.where("player_id = ? AND shots.rotation = 'counterclockwise'", player.id).count(:rating), 
+    #             total_sum: game_shots.where("player_id = ? AND shots.rotation = 'counterclockwise'", player.id).sum(:rating),  
+    #           },
+    #           combined: 
+    #           { 
+    #             count: game_shots.where("player_id = ?", player.id).group(:shot_type).count(:rating), 
+    #             sum: game_shots.where("player_id = ?", player.id).group(:shot_type).sum(:rating),
+    #             all_draws_count: game_shots.where("player_id = ?", player.id).where(shot_type: ['Draw','Front','Guard','Raise','Wick','Freeze']).count(:rating), 
+    #             all_draws_sum: game_shots.where("player_id = ?", player.id).where(shot_type: ['Draw','Front','Guard','Raise','Wick','Freeze']).sum(:rating), 
+    #             all_takeouts_count: game_shots.where("player_id = ?", player.id).where(shot_type: ['TakeOut','HitAndRoll','Clearing','DoubleTakeOut','PromotionTakeOut']).count(:rating), 
+    #             all_takeouts_sum: game_shots.where("player_id = ?", player.id).where(shot_type: ['TakeOut','HitAndRoll','Clearing','DoubleTakeOut','PromotionTakeOut']).sum(:rating), 
+    #             total_count: game_shots.where("player_id = ?", player.id).count(:rating), 
+    #             total_sum: game_shots.where("player_id = ?", player.id).sum(:rating), 
+    #           },
+    #         },
+    #       }
+    #     }
+    #   }
+    # }
 
 
     
@@ -108,8 +108,24 @@ class Api::StatsController < ApplicationController
 
   #   puts testQuery.inspect
 
+    # test_shots = Game.includes(ends: :shots).find(4)
 
-    render json: game_stats
+    # test_stats = test_shots.ends.map {|this_end| this_end.shots}.flatten
+
+    # ccw_shots = test_shots.ends.references(:shots).where("shots.rotation = 'clockwise'")
+
+    game_shots = Shot.includes(end: :game, player: :team).references(:games).where("games.id = ?", params[:id])
+    test_stats = {}
+    test_stats[:count] = game_shots.group(:shot_type).count()
+    test_stats[:sum] = game_shots.sum(:rating)
+
+
+
+
+
+    render json: test_stats
+
+
   end
 
   def make_stats (where)
