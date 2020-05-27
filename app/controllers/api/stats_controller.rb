@@ -114,21 +114,28 @@ class Api::StatsController < ApplicationController
 
     # ccw_shots = test_shots.ends.references(:shots).where("shots.rotation = 'clockwise'")
 
-    game_shots = Shot.includes(end: :game, player: :team).references(:games).where("games.id = ?", params[:id])
-    test_stats = {}
-    test_stats[:count] = game_shots.group(:shot_type).count()
-    test_stats[:sum] = game_shots.sum(:rating)
+    # game_shots = Shot.includes(end: :game).references(:games).where("games.id = ?", params[:id])
+    # test_stats = {}
+    # test_stats[:count1a] = game_shots.group(:player_id, :rotation, :shot_type).count()
+    # test_stats[:count1b] = game_shots.where("shots.rotation = 'counterclockwise' AND player_id = ?", 17).group(:shot_type).count()
+    # test_stats[:count2a] = game_shots.where("shots.rotation = 'clockwise' AND player_id = ?", 18).group(:shot_type).count()
+    # test_stats[:sum] = game_shots.sum(:rating)
+
+
+    teams = Team.includes(players: [shots: [end: :game]]).references(:games).where("games.id = ?", params[:id])
+
+    data = teams.map {|team| {team: team, team_stats: get_team_stats(team, team.id), players: team.players}}
 
 
 
-
-
-    render json: test_stats
+    render json: data
 
 
   end
 
-  def make_stats (where)
+  def get_team_stats (table, team_id)
+     team_shots = table.players.map {|player| player.shots}.flatten
+    team_shots.select(:shot_type)
 
 
   end
