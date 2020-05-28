@@ -10,11 +10,11 @@ class Api::StatsController < ApplicationController
     data = teams.map { |team| 
       {
         team: team, 
-        team_stats: game_stats[team.id][:team_stats], 
+        team_stats: game_stats[team.id] && game_stats[team.id][:team_stats], 
         players: team.players.map { |player|
           {
             player: player,
-            player_stats: game_stats[team.id][:players][player.id]
+            player_stats: game_stats[team.id] && game_stats[team.id][:players] && game_stats[team.id][:players][player.id]
           }
         }
       }
