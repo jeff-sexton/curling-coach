@@ -104,7 +104,7 @@ class Api::StatsController < ApplicationController
     game_shots = Team.joins(players: [shots: [end: :game]]).where("games.id = ?", params[:id]).select('team_id, player_id, rotation, shot_type, sum(rating), count(*)').group( :team_id, :player_id, :rotation, :shot_type)
     
     data = {
-      stats: get_all_stats(game_shots),
+      stats: get_all_game_stats(game_shots),
       # team1: get_stats_table(game_shots.where('team_id = ?', 4)),
       # team2: get_stats_table(game_shots.where('team_id = ?', 5)),
       # player13: get_stats_table(game_shots.where('player_id = ?', 13)),
@@ -133,49 +133,75 @@ class Api::StatsController < ApplicationController
 
       # Create Team Id key if necessary
       if !data_table[shot.team_id]
-        data_table[shot.team_id] = {team_stats: {all_draws: {}, all_takeouts: {}, not_scored: {}, total: {} }, players: {}}
+        data_table[shot.team_id] = {team_stats: {}, players: {}}
       end
       # Create Player Id if necessary
       if !data_table[shot.team_id][:players][shot.player_id]
-        data_table[shot.team_id][:players][shot.player_id] = {all_draws: {}, all_takeouts: {}, not_scored: {}, total: {} }
+        data_table[shot.team_id][:players][shot.player_id] = {}
       end
 
-      # Handle not_scored shots
-      if shot.shot_type == 'not_scored'
-        data_table[shot.team_id][:team_stats][:not_scored].merge!({count: shot.count}) {|key, oldval, newval| oldval + newval}
-        data_table[shot.team_id][:players][shot.player_id][:not_scored].merge!({count: shot.count}) {|key, oldval, newval| oldval + newval}
-        next # Skip to next shot in array
-      end
-
-      # create shot type keys if necessary
-      if !data_table[shot.team_id][:team_stats][shot.shot_type.to_sym] 
-        data_table[shot.team_id][:team_stats][shot.shot_type.to_sym] = {}
-      end
-      if !data_table[shot.team_id][:players][shot.player_id][shot.shot_type.to_sym] 
-        data_table[shot.team_id][:players][shot.player_id][shot.shot_type.to_sym] = {}
-      end
-      
       # Create Shot Type Rows
-      add_to_row(shot.shot_type.to_sym, data_table, shot)
+      add_to_row(shot.shot_type.to_sym, data_table[shot.team_id][:team_stats], shot)
+      add_to_row(shot.shot_type.to_sym, data_table[shot.team_id][:players][shot.player_id], shot)
       
       # Create All Draws Rows
       if ['Draw','Front','Guard','Raise','Wick','Freeze'].include? shot.shot_type
-        add_to_row(:all_draws, data_table, shot)
+        add_to_row(:all_draws, data_table[shot.team_id][:team_stats], shot)
+        add_to_row(:all_draws, data_table[shot.team_id][:players][shot.player_id], shot)
       end
 
       # Create All Takeouts Rows
       if ['TakeOut','HitAndRoll','Clearing','DoubleTakeOut','PromotionTakeOut'].include? shot.shot_type
-        add_to_row(:all_takeouts, data_table, shot)
+        add_to_row(:all_takeouts, data_table[shot.team_id][:team_stats], shot)
+        add_to_row(:all_takeouts, data_table[shot.team_id][:players][shot.player_id], shot)
       end
 
       # Create total rows
-      add_to_row(:total, data_table, shot)
+      add_to_row(:total, data_table[shot.team_id][:team_stats], shot)
+      add_to_row(:total, data_table[shot.team_id][:players][shot.player_id], shot)
     }
 
     data_table
   end
 
   def add_to_row (row_sym, data_table, shot)
+    # Handle not_scored shots
+    if shot.shot_type == 'NotScored'
+      data_table[:not_scored].merge!({count: shot.count}) {|key, oldval, newval| oldval + newval}
+      return # Skip to next shot in array
+    end
+
+    # create shot type keys if necessary
+    if !data_table[row_sym] 
+      data_table[row_sym] = {}
+    end
+
+    # create rotation key if necessary
+    if !data_table[row_sym][shot.rotation.to_sym]
+      data_table[row_sym][shot.rotation.to_sym] = {}
+    end
+    
+    # add basic shot type data to appropiate keys - both team total and individual player  
+    data_table[row_sym][shot.rotation.to_sym].merge!({sum: shot.sum, count: shot.count})  {|key, oldval, newval| oldval + newval}
+   
+    # Calculate percentage
+    data_table[row_sym][shot.rotation.to_sym][:percent] = data_table[row_sym][shot.rotation.to_sym][:sum] / (data_table[row_sym][shot.rotation.to_sym][:count] * 4.0) * 100.00
+    
+
+    # Create combined key if necessary
+    if !data_table[row_sym][:combined]
+      data_table[row_sym][:combined] = {}
+    end
+
+    # add combined shots of types to appropiate keys      
+    data_table[row_sym][:combined].merge!({sum: shot.sum, count: shot.count})  {|key, oldval, newval| oldval + newval}
+    
+    # Calculate combined percentage
+    data_table[row_sym][:combined][:percent] = data_table[row_sym][:combined][:sum] / (data_table[row_sym][:combined][:count] * 4.0) * 100.00
+  end
+
+
+  def add_to_multiple_rows (row_sym, data_table, shot)
     # create rotation key if necessary
     if !data_table[shot.team_id][:team_stats][row_sym][shot.rotation.to_sym]
       data_table[shot.team_id][:team_stats][row_sym][shot.rotation.to_sym] = {}
