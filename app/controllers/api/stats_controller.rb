@@ -299,8 +299,8 @@ class Api::StatsController < ApplicationController
     game_shots = Team.joins(players: [shots: [end: :game]]).where("games.id = ?", params[:id]).select('team_id, player_id, rotation, shot_type, sum(rating), count(rating)').group( :team_id, :player_id, :rotation, :shot_type)
     
     data = {
-      team1: get_stats(game_shots.where('team_id = ?', 4)), # use where or pass an id parameter?
-      team2: get_stats(game_shots.where('team_id = ?', 5)),
+      team1: get_stats(game_shots), # use where or pass an id parameter?
+      # team2: get_stats(game_shots.where('team_id = ?', 5)),
     }
     
 
@@ -312,29 +312,54 @@ class Api::StatsController < ApplicationController
 
     data_table = {}
 
-    shots.each {|shot| 
+    shots.each {|shot|
+
+      if !data_table[shot.team_id]
+        data_table[shot.team_id] = {team_stats: {}, players: {}}
+      end
+      if !data_table[shot.team_id][:players][shot.player_id]
+        data_table[shot.team_id][:players][shot.player_id] = {}
+      end
+
       # create shot type keys if necessary
-      if !data_table[shot.shot_type.to_sym] 
-        data_table[shot.shot_type.to_sym] = {}
+      if !data_table[shot.team_id][:team_stats][shot.shot_type.to_sym] 
+        data_table[shot.team_id][:team_stats][shot.shot_type.to_sym] = {}
+      end
+      if !data_table[shot.team_id][:players][shot.player_id][shot.shot_type.to_sym] 
+        data_table[shot.team_id][:players][shot.player_id][shot.shot_type.to_sym] = {}
       end
 
       # create rotation key if necessary
-      if !data_table[shot.shot_type.to_sym][shot.rotation.to_sym]
-        data_table[shot.shot_type.to_sym][shot.rotation.to_sym] = {}
+      if !data_table[shot.team_id][:team_stats][shot.shot_type.to_sym][shot.rotation.to_sym]
+        data_table[shot.team_id][:team_stats][shot.shot_type.to_sym][shot.rotation.to_sym] = {}
+      end
+      if !data_table[shot.team_id][:players][shot.player_id][shot.shot_type.to_sym][shot.rotation.to_sym]
+        data_table[shot.team_id][:players][shot.player_id][shot.shot_type.to_sym][shot.rotation.to_sym] = {}
       end
 
       # add basic shot type data to appropiate keys
-      data_table[shot.shot_type.to_sym][shot.rotation.to_sym].merge!({sum: shot.sum, count: shot.count}) {|key, oldval, newval| oldval + newval}
-
-      data_table[shot.shot_type.to_sym][shot.rotation.to_sym][:percent] = data_table[shot.shot_type.to_sym][shot.rotation.to_sym][:sum] / (data_table[shot.shot_type.to_sym][shot.rotation.to_sym][:count] * 4.0) * 100.00
+      data_table[shot.team_id][:team_stats][shot.shot_type.to_sym][shot.rotation.to_sym].merge!({sum: shot.sum, count: shot.count}) {|key, oldval, newval| oldval + newval}
+      data_table[shot.team_id][:players][shot.player_id][shot.shot_type.to_sym][shot.rotation.to_sym].merge!({sum: shot.sum, count: shot.count}) {|key, oldval, newval| oldval + newval}
       
+      # Calculate percentage
+      data_table[shot.team_id][:team_stats][shot.shot_type.to_sym][shot.rotation.to_sym][:percent] = data_table[shot.team_id][:team_stats][shot.shot_type.to_sym][shot.rotation.to_sym][:sum] / (data_table[shot.team_id][:team_stats][shot.shot_type.to_sym][shot.rotation.to_sym][:count] * 4.0) * 100.00
+      data_table[shot.team_id][:players][shot.player_id][shot.shot_type.to_sym][shot.rotation.to_sym][:percent] = data_table[shot.team_id][:players][shot.player_id][shot.shot_type.to_sym][shot.rotation.to_sym][:sum] / (data_table[shot.team_id][:players][shot.player_id][shot.shot_type.to_sym][shot.rotation.to_sym][:count] * 4.0) * 100.00
       
-      if !data_table[shot.shot_type.to_sym][:combined]
-        data_table[shot.shot_type.to_sym][:combined] = {}
+      # Create combined key if necessary
+      if !data_table[shot.team_id][:team_stats][shot.shot_type.to_sym][:combined]
+        data_table[shot.team_id][:team_stats][shot.shot_type.to_sym][:combined] = {}
       end
+      if !data_table[shot.team_id][:players][shot.player_id][shot.shot_type.to_sym][:combined]
+        data_table[shot.team_id][:players][shot.player_id][shot.shot_type.to_sym][:combined] = {}
+      end
+
       # add combined shots of types to appropiate keys      
-      data_table[shot.shot_type.to_sym][:combined].merge!({sum: shot.sum, count: shot.count})  {|key, oldval, newval| oldval + newval}
-      data_table[shot.shot_type.to_sym][:combined][:percent] = data_table[shot.shot_type.to_sym][:combined][:sum] / (data_table[shot.shot_type.to_sym][:combined][:count] * 4.0) * 100.00
+      data_table[shot.team_id][:team_stats][shot.shot_type.to_sym][:combined].merge!({sum: shot.sum, count: shot.count})  {|key, oldval, newval| oldval + newval}
+      data_table[shot.team_id][:players][shot.player_id][shot.shot_type.to_sym][:combined].merge!({sum: shot.sum, count: shot.count})  {|key, oldval, newval| oldval + newval}
+
+      # Calculate combined percentage
+      data_table[shot.team_id][:team_stats][shot.shot_type.to_sym][:combined][:percent] = data_table[shot.team_id][:team_stats][shot.shot_type.to_sym][:combined][:sum] / (data_table[shot.team_id][:team_stats][shot.shot_type.to_sym][:combined][:count] * 4.0) * 100.00
+      data_table[shot.team_id][:players][shot.player_id][shot.shot_type.to_sym][:combined][:percent] = data_table[shot.team_id][:players][shot.player_id][shot.shot_type.to_sym][:combined][:sum] / (data_table[shot.team_id][:players][shot.player_id][shot.shot_type.to_sym][:combined][:count] * 4.0) * 100.00
     
     }
 
