@@ -22,10 +22,8 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     '& .MuiTab-textColorInherit': {
       color: theme.palette.text.titles,
-    }
-  
+    },
   },
-
 }));
 
 const StatsView = ({ gameId }) => {
@@ -38,7 +36,6 @@ const StatsView = ({ gameId }) => {
       axios
         .get(`api/stats/${gameId}`)
         .then((res) => {
-          console.log(res.data);
           setStats(res.data);
         })
         .catch((err) => {
@@ -47,7 +44,7 @@ const StatsView = ({ gameId }) => {
     }
   }, [gameId]);
 
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -57,7 +54,7 @@ const StatsView = ({ gameId }) => {
     <div className={classes.root}>
       {stats.length > 0 && (
         <>
-          <AppBar position="static"> 
+          <AppBar position="static">
             <Tabs
               value={value}
               onChange={handleChange}
@@ -72,7 +69,7 @@ const StatsView = ({ gameId }) => {
         </>
       )}
 
-      {stats.length === 0 && <Loading/>}
+      {stats.length === 0 && <Loading />}
     </div>
   );
 };
