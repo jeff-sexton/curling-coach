@@ -22,7 +22,6 @@ const useStyles = makeStyles({
   allDraws: {
     borderTop: 'double',
   },
-
 });
 
 const shotTypes = [
@@ -39,14 +38,6 @@ const shotTypes = [
   'PromotionTakeOut',
 ];
 
-const calcPercent = (count, sum) => {
-  if (count) {
-    return Math.round((sum / (count * 4.00)) * 10000) / 100
-  }
-
-  return '-';
-}
-
 const displaySum = (sum) => {
   if (sum || sum === 0) {
     return sum;
@@ -56,8 +47,51 @@ const displaySum = (sum) => {
 };
 
 const StatsTable = ({ stats, name }) => {
-
   const classes = useStyles();
+
+  const cells = (type, rotation) => {
+    if (type === 'NotScored') {
+      return (
+        <>
+          <TableCell align="right">-</TableCell>
+          <TableCell align="right">-</TableCell>
+          <TableCell align="right">-</TableCell>
+          <TableCell align="right">-</TableCell>
+          <TableCell align="right">-</TableCell>
+          <TableCell align="right">-</TableCell>
+          <TableCell align="right">
+            {(stats[type] && stats[type].count) || '-'}
+          </TableCell>
+          <TableCell align="right">-</TableCell>
+          <TableCell align="right">-</TableCell>
+        </>
+      );
+    }
+
+    if (!stats[type] || !stats[type][rotation]) {
+      return (
+        <>
+          <TableCell align="right">-</TableCell>
+          <TableCell align="right">-</TableCell>
+          <TableCell align="right">-</TableCell>
+        </>
+      );
+    }
+
+    return (
+      <>
+        <TableCell align="right">
+          {stats[type][rotation].count || '-'}
+        </TableCell>
+        <TableCell align="right">
+          {displaySum(stats[type][rotation].sum)}
+        </TableCell>
+        <TableCell align="right">
+          {Math.round(stats[type][rotation].percent * 100) / 100}
+        </TableCell>
+      </>
+    );
+  };
 
   const rows = shotTypes.map((shotType, index) => {
     return (
@@ -65,40 +99,22 @@ const StatsTable = ({ stats, name }) => {
         <TableCell component="th" scope="row">
           {shotType}
         </TableCell>
-        <TableCell align="right">
-          {stats.clockwise.count[shotType] || '-'}
-        </TableCell>
-        <TableCell align="right">
-          {displaySum(stats.clockwise.sum[shotType])}
-        </TableCell>
-        <TableCell align="right">
-          {calcPercent(stats.clockwise.count[shotType], stats.clockwise.sum[shotType])}
-        </TableCell>
-        <TableCell align="right">
-          {stats.counterclockwise.count[shotType] || '-'}
-        </TableCell>
-        <TableCell align="right">
-          {displaySum(stats.counterclockwise.sum[shotType])}
-        </TableCell>
-        <TableCell align="right">
-          {calcPercent(stats.counterclockwise.count[shotType], stats.counterclockwise.sum[shotType])}
-        </TableCell>
-        <TableCell align="right">
-          {stats.combined.count[shotType] || '-'}
-        </TableCell>
-        <TableCell align="right">
-          {displaySum(stats.combined.sum[shotType])}
-        </TableCell>
-        <TableCell align="right">
-          {calcPercent(stats.combined.count[shotType], stats.combined.sum[shotType])}
-        </TableCell>
+        {cells(shotType, 'clockwise')}
+        {cells(shotType, 'counterclockwise')}
+        {cells(shotType, 'combined')}
       </TableRow>
     );
   });
 
   return (
-    <TableContainer component={Paper} elevation={3} style={{marginTop: '30px'}}>
-      <Typography variant="h5" style={{textAlign: 'center'}}>Shot Statistics for {name}</Typography>
+    <TableContainer
+      component={Paper}
+      elevation={3}
+      style={{ marginTop: '30px' }}
+    >
+      <Typography variant="h5" style={{ textAlign: 'center' }}>
+        Shot Statistics for {name}
+      </Typography>
       <Table className={classes.table} aria-label="stats table">
         <TableHead>
           <TableRow>
@@ -120,97 +136,33 @@ const StatsTable = ({ stats, name }) => {
             <TableCell component="th" scope="row">
               All Draws
             </TableCell>
-            <TableCell align="right">
-              {stats.clockwise.all_draws_count || '-'}
-            </TableCell>
-            <TableCell align="right">
-              {displaySum(stats.clockwise.all_draws_sum)}
-            </TableCell>
-            <TableCell align="right">
-              {calcPercent(stats.clockwise.all_draws_count, stats.clockwise.all_draws_sum)}
-            </TableCell>
-            <TableCell align="right">
-              {stats.counterclockwise.all_draws_count || '-'}
-            </TableCell>
-            <TableCell align="right">
-              {displaySum(stats.counterclockwise.all_draws_sum)}
-            </TableCell>
-            <TableCell align="right">
-              {calcPercent(stats.counterclockwise.all_draws_count, stats.counterclockwise.all_draws_sum)}
-            </TableCell>
-            <TableCell align="right">
-              {stats.combined.all_draws_count || '-'}
-            </TableCell>
-            <TableCell align="right">
-              {displaySum(stats.combined.all_draws_sum)}
-            </TableCell>
-            <TableCell align="right">
-              {calcPercent(stats.combined.all_draws_count, stats.combined.all_draws_sum)}
-            </TableCell>
+            {cells('all_draws', 'clockwise')}
+            {cells('all_draws', 'counterclockwise')}
+            {cells('all_draws', 'combined')}
           </TableRow>
           <TableRow>
             <TableCell component="th" scope="row">
               All Takeouts
             </TableCell>
-            <TableCell align="right">
-              {stats.clockwise.all_takeouts_count || '-'}
-            </TableCell>
-            <TableCell align="right">
-              {displaySum(stats.clockwise.all_takeouts_sum)}
-            </TableCell>
-            <TableCell align="right">
-              {calcPercent(stats.clockwise.all_takeouts_count, stats.clockwise.all_takeouts_sum)}
-            </TableCell>
-            <TableCell align="right">
-              {stats.counterclockwise.all_takeouts_count || '-'}
-            </TableCell>
-            <TableCell align="right">
-              {displaySum(stats.counterclockwise.all_takeouts_sum)}
-            </TableCell>
-            <TableCell align="right">
-              {calcPercent(stats.counterclockwise.all_takeouts_count, stats.counterclockwise.all_takeouts_sum)}
-            </TableCell>
-            <TableCell align="right">
-              {stats.combined.all_takeouts_count || '-'}
-            </TableCell>
-            <TableCell align="right">
-              {displaySum(stats.combined.all_takeouts_sum)}
-            </TableCell>
-            <TableCell align="right">
-              {calcPercent(stats.combined.all_takeouts_count, stats.combined.all_takeouts_sum)}
-            </TableCell>
+            {cells('all_takeouts', 'clockwise')}
+            {cells('all_takeouts', 'counterclockwise')}
+            {cells('all_takeouts', 'combined')}
           </TableRow>
+          {stats.NotScored && (
+            <TableRow>
+              <TableCell component="th" scope="row">
+                Not Scored
+              </TableCell>
+              {cells('NotScored')}
+            </TableRow>
+          )}
           <TableRow className={classes.totalRow}>
             <TableCell component="th" scope="row">
               Totals
             </TableCell>
-            <TableCell align="right">
-              {stats.clockwise.total_count || '-'}
-            </TableCell>
-            <TableCell align="right">
-              {displaySum(stats.clockwise.total_sum)}
-            </TableCell>
-            <TableCell align="right">
-              {calcPercent(stats.clockwise.total_count, stats.clockwise.total_sum)}
-            </TableCell>
-            <TableCell align="right">
-              {stats.counterclockwise.total_count || '-'}
-            </TableCell>
-            <TableCell align="right">
-              {displaySum(stats.counterclockwise.total_sum)}
-            </TableCell>
-            <TableCell align="right">
-              {calcPercent(stats.counterclockwise.total_count, stats.counterclockwise.total_sum)}
-            </TableCell>
-            <TableCell align="right">
-              {stats.combined.total_count || '-'}
-            </TableCell>
-            <TableCell align="right">
-              {displaySum(stats.combined.total_sum)}
-            </TableCell>
-            <TableCell align="right">
-              {calcPercent(stats.combined.total_count, stats.combined.total_sum)}
-            </TableCell>
+            {cells('total', 'clockwise')}
+            {cells('total', 'counterclockwise')}
+            {cells('total', 'combined')}
           </TableRow>
         </TableBody>
       </Table>
