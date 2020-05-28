@@ -1,17 +1,16 @@
 import React from 'react';
 
 import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
 
 import StatsTable from './StatsTable';
 
-const StatsPanel = (props) => {
-  const { value, index, stats } = props;
-
+const StatsPanel = ({ value, index, stats }) => {
   const players = stats.players.map((player, index) => {
     return (
       <div key={index}>
-        <StatsTable stats={player.player_stats} name={player.player.name} />
+        {player.player_stats && (
+          <StatsTable stats={player.player_stats} name={player.player.name} />
+        )}
       </div>
     );
   });
@@ -25,7 +24,9 @@ const StatsPanel = (props) => {
     >
       {value === index && (
         <Box p={3}>
-          <StatsTable stats={stats.team_stats} name={stats.team.team_name} />
+          {stats.team_stats && (
+            <StatsTable stats={stats.team_stats} name={stats.team.team_name} />
+          )}
           {players}
         </Box>
       )}
