@@ -49,12 +49,12 @@ RSpec.describe 'Api:games', type: :request do
     end
 
     it 'response contains all defined games and associated teams' do
-      expect(response.body).to include('Game1Location')
-      expect(response.body).to include('Game2Location')
-      expect(response.body).to include('Team1')
-      expect(response.body).to include('Team2')
-      expect(response.body).to include('Team3')
-      expect(response.body).to include('Team4')
+      expect(response.body).to include(@game1[:location])
+      expect(response.body).to include(@game2[:location])
+      expect(response.body).to include(@team1[:team_name])
+      expect(response.body).to include(@team2[:team_name])
+      expect(response.body).to include(@team3[:team_name])
+      expect(response.body).to include(@team4[:team_name])
     end
 
     it 'response is an array of hashes' do
@@ -65,12 +65,28 @@ RSpec.describe 'Api:games', type: :request do
   end
 
   describe '.show' do
-    it 'responds with a valid json' do
+    before :each do
       headers = { 'ACCEPT' => 'application/json' }
       get "/api/games/#{@game1[:id]}", params: {}, headers: headers
-
+    end
+    it 'responds with a valid json' do
       expect(response.content_type).to eq('application/json; charset=utf-8')
       expect(response).to have_http_status(:ok)
+    end
+
+    it 'response contains only the specified game' do
+      expect(response.body).to include(@game1[:location])
+      expect(response.body).to_not include(@game2[:location])
+    end
+
+    it 'response is an object with all expected keys ' do
+      data = JSON.parse(response.body)
+
+      expect(data['game']).to eq(JSON.parse(@game1.to_json))
+      expect(data['ends']).to be_an_instance_of(Array)
+      expect(data['teams_with_players']).to be_an_instance_of(Array)
+      expect(data['teams_with_players'][0]['team']).to include('id' => @team1[:id])
+      expect(data['teams_with_players'][0]['players']).to be_an_instance_of(Array)
     end
   end
 end
