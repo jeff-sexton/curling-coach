@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Api:games', type: :request do
+RSpec.describe 'games', type: :request do
   # Setup
   before :each do
     @game1 = Game.create!({
