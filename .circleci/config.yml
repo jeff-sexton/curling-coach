@@ -7,23 +7,23 @@ orbs:
   node: circleci/node@2
 
 jobs:
-  build: # our first job, named "build"
-    docker:
-      - image: cimg/ruby:2.7-node # use a tailored CircleCI docker image.
-    steps:
-      - checkout # pull down our git code.
-      - ruby/install-deps # use the ruby orb to install dependencies
-      # use the node orb to install our packages
-      # specifying that we use `yarn` and to cache dependencies with `yarn.lock`
-      # learn more: https://circleci.com/docs/2.0/caching/
-      - node/install-packages: 
-          pkg-manager: yarn
-          cache-key: "yarn.lock"
+  # build: # our first job, named "build"
+  #   docker:
+  #     - image: cimg/ruby:2.7-node # use a tailored CircleCI docker image.
+  #   steps:
+  #     - checkout # pull down our git code.
+  #     - ruby/install-deps # use the ruby orb to install dependencies
+  #     # use the node orb to install our packages
+  #     # specifying that we use `yarn` and to cache dependencies with `yarn.lock`
+  #     # learn more: https://circleci.com/docs/2.0/caching/
+  #     - node/install-packages: 
+  #         pkg-manager: yarn
+  #         cache-key: "yarn.lock"
           
-  test:  # our next job, called "test"
+  build: 
     # we run "parallel job containers" to enable speeding up our tests;
     # this splits our tests across multiple containers.
-    parallelism: 3 
+    # parallelism: 3 
     # here we set TWO docker images.
     docker:
       - image: cimg/ruby:2.7-node # this is our primary docker image, where step commands run.
@@ -57,13 +57,32 @@ jobs:
           command: bundle exec rails db:schema:load --trace
       # Run rspec in parallel
       - ruby/rspec-test
+  deploy:
+    machine:
+      enabled: true
 
-# We use workflows to orchestrate the jobs that we declared above.
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "f6:99:c9:83:18:84:8e:cb:f5:e2:51:b6:e9:45:2d:47"
+      - checkout
+      - run:
+          name: Push Master to Production
+          command: |
+            git push https://github.com/jeff-sexton/curling-coach.git master:production
+
+
 workflows:
   version: 2
-  build_and_test:     # The name of our workflow is "build_and_test"
-    jobs:             # The list of jobs we run as part of this workflow.
-      - build         # Run build first.
-      - test:         # Then run test,
-          requires:   # Test requires that build passes for it to run.
-            - build   # Finally, run the build job.
+  build_test_and_deploy:     
+    jobs:            
+      - build:
+          filters:
+            branches:
+              ignore: production
+      - deploy: 
+          filters:
+            branches:
+              ignore: production       
+          requires:  
+            - build   
