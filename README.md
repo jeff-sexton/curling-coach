@@ -1,4 +1,7 @@
+
 # Curling Coach
+[![jeff-sexton](https://circleci.com/gh/jeff-sexton/curling-coach.svg?style=svg)](https://app.circleci.com/pipelines/github/jeff-sexton/curling-coach)
+
 
 An app to assist coaching a curling team - Provides an interactive UI to record shot by shot rock positions and record statistics for each shot. Provides animated playback of game progress to discuss strategy with players and shot analytics.
 
