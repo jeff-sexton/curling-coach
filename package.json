@@ -2,7 +2,7 @@
   "name": "curling_coach",
   "private": false,
   "dependencies": {
-    "@babel/preset-react": "^7.9.4",
+    "@babel/preset-react": "^7.10.1",
     "@date-io/date-fns": "1.x",
     "@material-ui/core": "^4.9.13",
     "@material-ui/icons": "^4.9.1",
@@ -23,10 +23,13 @@
   "version": "0.1.0",
   "devDependencies": {
     "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.10.2",
     "@storybook/addon-actions": "^5.3.18",
     "@storybook/addon-links": "^5.3.18",
     "@storybook/addons": "^5.3.18",
     "@storybook/react": "^5.3.18",
+    "@testing-library/react": "^10.2.0",
+    "babel-jest": "^26.0.1",
     "babel-loader": "^8.1.0",
     "eslint": "^7.0.0",
     "eslint-config-prettier": "^6.11.0",
@@ -36,7 +39,9 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-standard": "^4.0.1",
+    "jest": "^26.0.1",
     "prettier": "2.0.5",
+    "react-test-renderer": "^16.13.1",
     "webpack-dev-server": "^3.11.0"
   },
   "main": "index.js",
@@ -45,6 +50,7 @@
   "license": "MIT",
   "scripts": {
     "storybook": "start-storybook -p 6006",
+    "test": "jest",
     "build-storybook": "build-storybook"
   }
 }
