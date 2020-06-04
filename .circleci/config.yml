@@ -40,11 +40,15 @@ jobs:
       PGUSER: curling-coach
       PGPASSWORD: development
       RAILS_ENV: test
-      BUNDLE_PATH: ./vendor/bundle
+  
+
+    working_directory: ~/client
     # A series of steps to run, some are similar to those in "build".
     steps:
       - checkout 
-      - ruby/install-deps 
+      - ruby/install-deps:
+          with-cache: true
+
       - node/install-packages:
           pkg-manager: yarn
           cache-key: "yarn.lock"
@@ -61,6 +65,8 @@ jobs:
   deploy:
     machine:
       enabled: true
+    
+    working_directory: ~/client
 
     steps:
       - add_ssh_keys:
