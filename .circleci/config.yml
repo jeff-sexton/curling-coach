@@ -80,10 +80,10 @@ workflows:
       - build:
           filters:
             branches:
-              ignore: production
+              only: master
       - deploy: 
           filters:
             branches:
-              ignore: production       
+              only: master       
           requires:  
             - build   
