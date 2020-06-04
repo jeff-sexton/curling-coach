@@ -41,15 +41,10 @@ jobs:
       PGPASSWORD: development
       RAILS_ENV: test
   
-
-    working_directory: ~/client
     # A series of steps to run, some are similar to those in "build".
     steps:
       - checkout 
-      - ruby/install-deps:
-          with-cache: true
-          key: 'gems-v2'
-
+      - ruby/install-deps
       - node/install-packages:
           pkg-manager: yarn
           cache-key: "yarn.lock"
@@ -66,8 +61,6 @@ jobs:
   deploy:
     machine:
       enabled: true
-    
-    working_directory: ~/client
 
     steps:
       - add_ssh_keys:
