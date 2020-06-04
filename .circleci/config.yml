@@ -48,6 +48,7 @@ jobs:
       - checkout 
       - ruby/install-deps:
           with-cache: true
+          key: 'gems-v2'
 
       - node/install-packages:
           pkg-manager: yarn
@@ -71,7 +72,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "f6:99:c9:83:18:84:8e:cb:f5:e2:51:b6:e9:45:2d:47"
+            - "cd:32:a9:72:da:71:fe:73:47:2e:a3:72:86:80:9e:61"
       - checkout
       - run:
           name: Push Master to Production
