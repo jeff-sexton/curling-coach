@@ -14,20 +14,17 @@ import {
 
 import Dashboard from "./Dashboard";
 
-import { cleanUpFixture } from "__mocks__/axios";
-import axios from "axios";
+import gameData from '../../__mocks__/dashboardViewSeed';
 
-beforeEach(() => {
-  cleanUpFixture();
-});
 
 
 afterEach(cleanup);
 
-describe("Application", () => {
-  it("defaults to Current weekday and changes the schedule when a new day is selected", async () => {
-
-    expect(true).toBe(true);
+describe("Dashboard", () => {
+  it("Loads a list of games", async () => {
+    const { getByText } = render(<Dashboard gameList={gameData}/>);
+    // await waitForElement(() => getByText("Dashboard"));
+    expect(getByText(/Calgary/i));
   });
 
 
