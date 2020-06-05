@@ -14,6 +14,13 @@ import {
 
 import Dashboard from "./Dashboard";
 
+import { cleanUpFixture } from "__mocks__/axios";
+import axios from "axios";
+
+beforeEach(() => {
+  cleanUpFixture();
+});
+
 
 afterEach(cleanup);
 
