@@ -52,5 +52,9 @@
     "storybook": "start-storybook -p 6006",
     "test": "jest",
     "build-storybook": "build-storybook"
+  },
+  "jest": {
+    "rootDir": "./app/javascript"
+
   }
 }
