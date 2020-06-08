@@ -45,8 +45,9 @@ jobs:
     steps:
       - checkout 
       - ruby/install-deps:
-          key: gems-v2
+          key: gems-v3
           with-cache: true
+          path: './vendor/cache'
       - node/install-packages:
           pkg-manager: yarn
           cache-version: v2
