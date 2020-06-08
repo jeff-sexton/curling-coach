@@ -29,7 +29,7 @@ const GamePreview = ({ handleGameSelection, handleStatsSelection, game }) => {
   }
 
   return (
-    <Box display="flex" justifyContent="space-between" mb={3}>
+    <Box data-testid="game-preview" display="flex" justifyContent="space-between" mb={3}>
       <Box
         className={classes.root}
         flexGrow={2}
