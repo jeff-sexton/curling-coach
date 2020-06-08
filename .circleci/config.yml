@@ -61,7 +61,9 @@ jobs:
           command: bundle exec rails db:schema:load --trace
       # Run rspec in parallel
       - ruby/rspec-test
-      - node/test
+      - run:
+          name: Run JEST Tests
+          command: yarn run test
   deploy:
     machine:
       enabled: true
