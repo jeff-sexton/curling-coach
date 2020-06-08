@@ -44,9 +44,12 @@ jobs:
     # A series of steps to run, some are similar to those in "build".
     steps:
       - checkout 
-      - ruby/install-deps
+      - ruby/install-deps:
+          key: gems-v2
+          with-cache: true
       - node/install-packages:
           pkg-manager: yarn
+          cache-version: v2
           cache-key: "yarn.lock"
       # Here we make sure that the secondary container boots 
       # up before we run operations on the database.
