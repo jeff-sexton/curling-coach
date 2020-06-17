@@ -69,7 +69,6 @@ const EndMenu = ({ gameState, setEnd }) => {
         display="flex" 
         flexDirection="column" 
         justifyContent="center" 
-        alignItems="center"  
       >
           {endItems}
       </Box>
