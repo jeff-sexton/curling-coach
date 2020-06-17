@@ -86,7 +86,7 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.root}>
-        <NavBar handleHome={handleHome} color="primary" />
+        <NavBar handleHome={handleHome} handleGameSelection={handleGameSelection} color="primary" />
         {view === DASHBOARD && (
           <DashboardView
             handleGameSelection={handleGameSelection}

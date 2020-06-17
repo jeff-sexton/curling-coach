@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     resources :ends, only: [:index, :create, :update]
     resources :shots, except: [:new, :show]
     resources :stats, only: [:show]
+    resources :teams, only: [:index, :create]
 
   end
 end

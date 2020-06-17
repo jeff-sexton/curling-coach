@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -21,6 +21,8 @@ import HomeIcon from '@material-ui/icons/Home';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 // import Divider from '@material-ui/core/Divider';
 
+import CreateNewGame from '../CreateNewGame';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -32,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     cursor: 'pointer',
     fontFamily: "'Roboto Slab', 'serif'",
-    color: theme.palette.text.titles
+    color: theme.palette.text.titles,
   },
   logo: {
     width: 'auto',
@@ -55,11 +57,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NavBar = ({ handleHome }) => {
+const NavBar = ({ handleHome, handleGameSelection}) => {
   const classes = useStyles();
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     right: false,
   });
+
+  const [open, setOpen] = useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -95,11 +106,11 @@ const NavBar = ({ handleHome }) => {
           </ListItemText>
         </ListItem>
         <ListItem>
-          <ListItemIcon onClick={handleHome}>
+          <ListItemIcon onClick={handleOpen}>
             <CreateNewFolderIcon cursor="pointer" />
           </ListItemIcon>
           <ListItemText
-            onClick={handleHome}
+            onClick={handleOpen}
             classes={{ root: classes.listItemText }}
             variant="body1"
           >
@@ -146,6 +157,7 @@ const NavBar = ({ handleHome }) => {
           </Toolbar>
         </AppBar>
       </React.Fragment>
+      <CreateNewGame open={open} handleClose={handleClose} handleGameSelection={handleGameSelection}/>
     </div>
   );
 };
