@@ -41,6 +41,10 @@ https://youtu.be/sFFX88RGneU
 8. Start web pack for live updates during development and initial pack ```bin/webpack-dev-server```
 9. Start rails server ``` rails server ```
 
+## Testing
+
+* For testing of React front end run ```yarn run test```
+* For testing of Rails back end run ```bundle exec rspec```
 
 ## Dependencies
 
