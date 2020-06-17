@@ -6,12 +6,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+
 
 import DateTime from './DateTime';
 import Location from './Location';
+import TeamSelector from './TeamSelector';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -80,30 +79,11 @@ const CreateNewGame = ({ open, handleClose }) => {
             setSelectedDate={setSelectedDate}
           />
           <Location location={location} setLocation={setLocation} />
+          <TeamSelector teamNumber='one' teamId={teamOneId} setTeamId={setTeamOneId} teamList={teamList}/>
+          <TeamSelector teamNumber='two' teamId={teamTwoId} setTeamId={setTeamTwoId} teamList={teamList}/>
           <Button variant="contained" color="primary" onClick={onSave}>
             Start Game
           </Button>
-          <FormControl
-            className={classes.formControl}
-            fullWidth={true}
-            required={true}
-          >
-            <InputLabel htmlFor="team-one-select">Team One</InputLabel>
-            <Select
-              native
-              value={teamOneId}
-              onChange={(event) => setTeamOneId(event.target.value)}
-              inputProps={{
-                id: 'team-one-select',
-              }}
-              required={true}
-            >
-              <option aria-label="None" value="" />
-              <option value={1}>Team 1</option>
-              <option value={2}>Team 2</option>
-              <option value={3}>Team 3</option>
-            </Select>
-          </FormControl>
         </Box>
       </form>
     </div>

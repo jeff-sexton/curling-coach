@@ -1,4 +1,7 @@
 class Api::GamesController < ApplicationController
+  skip_before_action :verify_authenticity_token
+  # Fix problem with ActionController::InvalidAuthenticityToken
+  
   def index
     games = Game.all
 
