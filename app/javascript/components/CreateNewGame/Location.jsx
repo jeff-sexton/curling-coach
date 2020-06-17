@@ -1,28 +1,28 @@
 import React from 'react';
-import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import CreateNewGameStyles from './CreateNewGameStyles';
 
-const useStyles = makeStyles(CreateNewGameStyles, (theme) => ({
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: 200,
+const useStyles = makeStyles((theme) => ({
+  locationField: {
+    width: '100%',
   },
 }));
 
-const Location = () => {
+const Location = ({ location, setLocation }) => {
   const classes = useStyles();
 
+  const handleChange = (event) => {
+    setLocation(event.target.value);
+  };
+
   return (
-    <Box>
-      <TextField
-        className={classes.locationField}
-        id="standard-basic"
-        label="Location"
-      />
-    </Box>
+    <TextField
+      className={classes.locationField}
+      id="game-location"
+      label="Location"
+      value={location}
+      onChange={handleChange}
+    />
   );
 };
 
