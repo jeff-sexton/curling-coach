@@ -7,7 +7,6 @@ import Box from '@material-ui/core/Box';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 
-
 import DateTime from './DateTime';
 import Location from './Location';
 import TeamSelector from './TeamSelector';
@@ -32,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CreateNewGame = ({ open, handleClose }) => {
+const CreateNewGame = ({ open, handleClose, handleGameSelection }) => {
   const classes = useStyles();
   const [teamList, setTeamList] = useState([]);
   const [selectedDate, setSelectedDate] = useState(Date.now());
@@ -47,23 +46,20 @@ const CreateNewGame = ({ open, handleClose }) => {
   }, []);
 
   const onSave = () => {
-    console.log('Did this work?');
-    console.log('direct location is:', location);
-
     const newGame = {
-      date_time: '2009-03-10 01:30:00',
+      date_time: selectedDate,
       location,
       completed: false,
-      team1_id: 1,
-      team2_id: 2,
+      team1_id: teamOneId,
+      team2_id: teamTwoId,
     };
-    console.log(newGame);
 
     axios
       .post('/api/games', newGame)
       .then((res) => {
         console.log('res.data', res.data);
-        return res.data;
+        handleClose()
+        handleGameSelection(res.data.id);
       })
       .catch((err) => {
         console.err(err);
@@ -79,8 +75,18 @@ const CreateNewGame = ({ open, handleClose }) => {
             setSelectedDate={setSelectedDate}
           />
           <Location location={location} setLocation={setLocation} />
-          <TeamSelector teamNumber='one' teamId={teamOneId} setTeamId={setTeamOneId} teamList={teamList}/>
-          <TeamSelector teamNumber='two' teamId={teamTwoId} setTeamId={setTeamTwoId} teamList={teamList}/>
+          <TeamSelector
+            teamNumber="one"
+            teamId={teamOneId}
+            setTeamId={setTeamOneId}
+            teamList={teamList}
+          />
+          <TeamSelector
+            teamNumber="two"
+            teamId={teamTwoId}
+            setTeamId={setTeamTwoId}
+            teamList={teamList}
+          />
           <Button variant="contained" color="primary" onClick={onSave}>
             Start Game
           </Button>

@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NavBar = ({ handleHome }) => {
+const NavBar = ({ handleHome, handleGameSelection}) => {
   const classes = useStyles();
   const [state, setState] = useState({
     right: false,
@@ -157,7 +157,7 @@ const NavBar = ({ handleHome }) => {
           </Toolbar>
         </AppBar>
       </React.Fragment>
-      <CreateNewGame open={open} handleClose={handleClose}/>
+      <CreateNewGame open={open} handleClose={handleClose} handleGameSelection={handleGameSelection}/>
     </div>
   );
 };
