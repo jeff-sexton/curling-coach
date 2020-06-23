@@ -38,6 +38,7 @@ const Dashboard = ({ handleGameSelection, handleStatsSelection, gameList }) => {
           game={game}
         />
       ))}
+      
     </div>
   );
 };

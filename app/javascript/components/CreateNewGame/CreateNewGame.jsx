@@ -10,6 +10,7 @@ import Button from '@material-ui/core/Button';
 import DateTime from './DateTime';
 import Location from './Location';
 import TeamSelector from './TeamSelector';
+import TeamAutoComplete from './TeamAutoComplete';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -87,6 +88,7 @@ const CreateNewGame = ({ open, handleClose, handleGameSelection }) => {
             setTeamId={setTeamTwoId}
             teamList={teamList}
           />
+          <TeamAutoComplete />
           <Button variant="contained" color="primary" onClick={onSave}>
             Start Game
           </Button>
