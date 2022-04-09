@@ -14,7 +14,7 @@
     "axios": "^0.19.2",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "date-fns": "^2.13.0",
-    "moment": "^2.25.3",
+    "moment": "^2.29.2",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
